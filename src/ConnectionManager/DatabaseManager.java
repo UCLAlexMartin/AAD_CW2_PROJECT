@@ -1,6 +1,14 @@
 package ConnectionManager;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
 
 import staticResources.Configuration;
 
@@ -100,6 +108,33 @@ public class DatabaseManager {
         	 closeConn();
              	 
     	 return result;
+     }
+     
+     public static Map<Integer,ArrayList<String>> readFormData(int form_id) throws Exception {
+    	 //String result = "";
+    	 Map<Integer,ArrayList<String>> dataMap = new TreeMap<Integer,ArrayList<String>>();
+    	 getCharityConn("Charity_Db_Test_Model");
+    	 statement = conn.createStatement();
+    	 resultSet = statement.executeQuery
+    	        	("select B.Field_Id, Field_Label,Field_Type, Field_DataType, isRequired" +
+    	        			" FROM Form A INNER JOIN Form_Fields B ON A.Form_Id = B.Form_Id " +
+    	        			" INNER JOIN Field_Type C ON B.Field_Type_Id = C.Field_Type_Id " +
+    	        			"WHERE A.isActive = 1 AND B.isActive = 1 AND C.isActive = 1 AND A.Form_Id =" +form_id);
+    	 while(resultSet.next())
+    	 {
+    		//result += String.format("['%s',%d],", resultSet.getString("u"), resultSet.getInt("c"));
+    		 
+    		 ArrayList<String> datatypes = new ArrayList<String>();
+    		 datatypes.add(resultSet.getString(2));
+    		 datatypes.add(resultSet.getString(3));
+    		 datatypes.add(resultSet.getString(4));
+    		 datatypes.add(resultSet.getString(5));
+    		 
+    		 dataMap.put(resultSet.getInt(1), datatypes);
+    	 }
+    	 closeConn();
+     	 
+    	 return dataMap;
      }
          
 }
