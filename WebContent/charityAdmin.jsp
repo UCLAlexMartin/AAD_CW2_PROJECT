@@ -55,17 +55,7 @@
 	<div class="body1">
 		<div class="main">
 	  
-	    <!-- header -->
-	    <header>    
-	    <div class="wrapper">
-	   		<h1 id="Mh1"> <a href="default.html" id="footer_logo"><span>&nbsp;Charity</span>Ware</a></h1>
-	          <ul id="menubar">
-		          <li><a href="default.html">Home</a></li> 
-		          <li><a href="info.html">About Us</a></li>
-			  </ul> 		
-	    </div>
-	    </header>
-	    <!-- header -->
+	   <jsp:include page="HeaderLoggedIn.jsp"></jsp:include>
 	    
 	          
 	    <!-- Main Content -->
@@ -183,53 +173,7 @@
 		</article>
 	    <!-- Main content -->
 	    
-	    
-	    <!-- Contact Us Footer -->
-	    <footer>	     
-	      <div class="wrapper">
-			  <h3>Contact Us</h3>
-			  <div style="display:block; padding:10px;">
-				  <div style="float:left; width:300px; display:inline-block;">
-				  	University College London,<br/>
-					Gower Street, <br/>
-					London, WC1E 6BT <br/>
-					<br/>
-					Tel: +44 (0) 20 7679 2000 	
-					<br/>
-					
-					<ul id="icons">
-			          <li><a href="#" class="normaltip"><img src="images/icon1.gif" alt=""></a></li>
-			          <li><a href="#" class="normaltip"><img src="images/icon2.gif" alt=""></a></li>
-			          <li><a href="#" class="normaltip"><img src="images/icon3.gif" alt=""></a></li>
-			          <li><a href="#" class="normaltip"><img src="images/pp.png" height="20" alt=""></a></li>
-			        </ul>
-				  </div>
-				  
-				  <div style="float:left; width:600px;display:inline-block;">
-					<table style="border-spacing:5px;border-collapse: inherit;">
-						<tr>
-							  	<td>Name<br/>
-							  		<input type="text" class="contactTextbox" style="width:240px;">
-							  	</td>
-							  	<td>Email<br/>
-							  		<input type="text" class="contactTextbox" style="width:240px;">
-							  	</td>
-						</tr>
-						<tr>
-								<td colspan=2>Comment<br/>
-							  		<textarea cols=70 height=150 class="contactTextbox"></textarea>
-							  	</td>
-						</tr>
-						<tr>
-							  	<td colspan=2>
-							  		<input type="submit" value="SUBMIT" class="contactSubmit"/>
-							  	</td>
-						</tr>
-				 	</table>
-				 </div>
-		     </div>
-	     </div>
-	      <!-- Contact Us Footer -->
+		 <jsp:include page="Footer.jsp"></jsp:include>   
 	      
 	      <div id="footer_text">Copyright &copy; <a href="http://www.ucl.ac.uk">UCL</a> All Rights Reserved &nbsp;&nbsp;&nbsp;&nbsp;
 	        Design by <a target="_blank" href="http://www.ucl.ac.uk">UCL Computer Science</a></div>

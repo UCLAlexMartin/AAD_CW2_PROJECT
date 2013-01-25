@@ -14,6 +14,9 @@
 </head>
 <body>
 <form>
+
+<table>
+
 <% 
 	TreeMap<Integer,ArrayList<String>> datamap =  (TreeMap<Integer,ArrayList<String>>)DatabaseManager.readFormData(1);
 	Set<Entry<Integer,ArrayList<String>>> entryset = datamap.entrySet();
@@ -22,13 +25,25 @@
 		ArrayList<String> iterlist =  iter.next().getValue();
 		//if(iterlist.get(1).equals("Textbox")){
 			%>
-			<label for="txtUsername"><%=iterlist.get(0) %></label>
+			<tr>
+				<td><label for="lbl<%=iterlist.get(0) %>"><%=iterlist.get(0) %></label></td>
+			</tr>
 			
-			 <input type="<%=iterlist.get(1) %>" class="loginTextbox" style="width:240px;" name="txtUsername" id="txtUsername" required>
+			<tr>
+				<td>
+				
+				<input type="<%=iterlist.get(1) %>" class="loginTextbox" style="width:240px;" name="txt<%=iterlist.get(0) %>" id="txt<%=iterlist.get(0) %>" 
+				<% if (Integer.parseInt(iterlist.get(3)) == 1) { %>
+					required
+					<%} %>></td>
+			</tr>
 						
 		<% //}else if ()
 	}
 %>
+
+</table>
+
 </form>
 </body>
 </html>
