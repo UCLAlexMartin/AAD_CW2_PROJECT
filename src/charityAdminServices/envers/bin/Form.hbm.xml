@@ -15,6 +15,10 @@
         <property name="isActive" type="boolean" column="isActive"/>
         <property name="url" type="string" column="url"/>
         <property name="timestamp" type="java.sql.Timestamp" column="Timestamp"/>
+        <set name="permissions">
+        	<key on-delete="cascade" column="form_permission_id"/>
+        		<one-to-many  class="env.Entities.FormPermissions"/>
+        </set> 
     </class>
 
 </hibernate-mapping>

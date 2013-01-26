@@ -7,12 +7,23 @@
       <meta attribute="class-description">
          This class contains the filled form detail. 
       </meta>
-      <id name="form_id" type="int" column="form_id">
+      <id name="filled_form_id" type="int" column="field_form_id">
          <generator class="native"/>
       </id>
-      <property name="column_id" column="column_id" type="int"/>
-      <property name="value" column="value" type="string"/>
-      <property name="user_id" column="user_id" type="int"/>
-      <property name="isActive" column="isActive" type="boolean"/>
+	<many-to-one unique="true" cascade="update" class="env.Entities.Form">
+		<column name="form_id" not-null="true"/>
+	</many-to-one>
+	<set name="field_id" cascade="update">
+		<key column="field_id" not-null="true" />
+		<one-to-many class="env.Entities.FormFields" />
+	</set>
+	<property name="value" column="value" type="string"/>
+	<many-to-one unique="true" class="env.Entities.User">
+		<column name="user_id" not-null="true"/>
+	</many-to-one>
+	<property name="record_id" column="record_id" type="int"/>
+	<property name="isActive" column="isActive" type="boolean"/>
+	<property name="timestamp" column="timestamp" type="java.sql.Timestamp"/>
+
    </class>
 </hibernate-mapping>

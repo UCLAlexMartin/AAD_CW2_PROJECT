@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+<hibernate-mapping>
+   <class name="env.Entities.FieldType" table="field_type">
+      <meta attribute="class-description">
+         This class contains the filled form detail. 
+      </meta>
+      <id name="field_type_id" type="int" column="field_type_id">
+         <generator class="native"/>
+      </id>
+      <property name="field_type" column="field_type" type="string"/>
+      <property name="field_dataType" column="field_DataType" type="string"/>
+      <property name="field_Description" column="field_Description" type="string"/>
+      <property name="isActive" column="isActive" type="boolean"/>
+      <property name="timestamp" column="Timestamp" type="java.sql.Timestamp"/>
+   </class>
+</hibernate-mapping>
