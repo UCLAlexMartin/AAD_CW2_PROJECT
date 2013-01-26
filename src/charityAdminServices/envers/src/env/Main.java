@@ -80,33 +80,9 @@ public class Main {
 
 			Integer id=m.addUserSample("George", "Gregory");
 			System.out.println("I just created a user with userId"+id);
-			Integer f_id=m.addFilledForm(id);
-			System.out.println("I just created a filled form with formId"+f_id);
 		}
 		
 		
-		public Integer addFilledForm(Integer id){
-			 Session session = factory.openSession();
-			    Transaction tx = null;
-			    Integer formId = null;
-			    try{
-			    tx = session.beginTransaction();
-			    FilledForm form = new FilledForm ();
-			    form.setUser_id(id);
-			    form.setValue("Last Angel");
-			    formId = (Integer) session.save(form);
-			    tx.commit();
-			    }catch(HibernateException hx) {
-			    	if (tx!=null) {
-			    		tx.rollback();
-			    	}
-			    	hx.printStackTrace();
-			    }finally{
-			    	session.close();
-			    }
-				
-				return formId;
-		}
 	
 		
 		public Integer addUserSample (String name,String pass) {
