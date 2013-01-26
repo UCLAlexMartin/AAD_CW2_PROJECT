@@ -89,6 +89,37 @@ public class DatabaseManager {
     	 return result;
      }
      
+     public static Map<Integer,ArrayList<String>> readEvents() throws Exception{
+     
+    	 Map<Integer,ArrayList<String>> dataMap = new TreeMap<Integer,ArrayList<String>>();
+    	 
+    	 getCharityConn("Charity_Db_Test_Model");
+    	 statement = conn.createStatement();
+    	 
+    	 resultSet = statement.executeQuery
+    	("	select a.Event_Name,a.Event_Description,Event_Location,a.Event_Date,a.Event_Time,a.Event_Id " +
+    		"from `Event` A " +
+    		"where a.Event_Date > Now() ");
+    	 
+    	 while (resultSet.next()){
+        
+    		 ArrayList<String> datatypes = new ArrayList<String>();
+    		 datatypes.add(resultSet.getString(4));
+    		 datatypes.add(resultSet.getString(1));
+    		 datatypes.add(resultSet.getString(3));
+    		 datatypes.add(resultSet.getString(5));
+    		 datatypes.add(resultSet.getString(2));
+    		 
+    		 dataMap.put(resultSet.getInt(6), datatypes);
+         }
+         
+    	 
+    	 
+    	closeConn();
+    	return dataMap; 
+     }
+     
+     
      public static String readCharityDataV2() throws Exception {
          
     	 String result = "";
