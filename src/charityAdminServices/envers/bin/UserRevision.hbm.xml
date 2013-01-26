@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+ <hibernate-mapping>
+   <class name="env.Entities.UserRevision" table="Revinfo">
+ 		<id name="id" type="int">
+            <column name="rev" not-null="true"/>
+            <generator class="native"/>
+        </id>
+        <property name="timestamp" type="long" column="timestamp" />
+        <property name="username" type="string" not-null="true"/>
+    </class>
+
+</hibernate-mapping>

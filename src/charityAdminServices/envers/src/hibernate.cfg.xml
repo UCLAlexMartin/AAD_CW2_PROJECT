@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+   <session-factory>
+         <property name="hibernate.hbm2ddl.auto">update</property>
+   <property name="hibernate.dialect">
+      org.hibernate.dialect.MySQLDialect
+   </property>
+   <property name="hibernate.connection.driver_class">
+      com.mysql.jdbc.Driver
+   </property>
+   <property name="hibernate.ejb.event.post-insert">
+            org.hibernate.ejb.event.EJB3PostInsertEventListener,org.hibernate.envers.event.AuditEventListener
+</property>
+<property name="hibernate.ejb.event.post-update">
+             org.hibernate.ejb.event.EJB3PostUpdateEventListener,org.hibernate.envers.event.AuditEventListener
+      </property>
+<property name="hibernate.ejb.event.post-delete">
+org.hibernate.ejb.event.EJB3PostDeleteEventListener,org.hibernate.envers.event.AuditEventListener
+</property>   
+<property name="hibernate.ejb.event.pre-collection-update">
+org.hibernate.envers.event.AuditEventListener
+</property>
+<property name="hibernate.ejb.event.pre-collection-remove">
+org.hibernate.envers.event.AuditEventListener
+</property>
+<property name="hibernate.ejb.event.post-collection-recreate">
+org.hibernate.envers.event.AuditEventListener
+</property>
+    <property name="org.hibernate.envers.audit_table_suffix" >_VER</property>
+      <property name="org.hibernate.envers.revision_field_name">REV</property>
+      <property name="org.hibernate.envers.revision_type_field_name">REVTYPE</property>  
+      <property name="org.hibernate.envers.default_schema">charity_db</property>   
+      <property name="org.hibernate.envers.revision_on_collection_change">false</property>              
+
+   <!-- Assume test is the database name -->
+   <property name="hibernate.connection.url">
+      jdbc:mysql://localhost/charity_db
+   </property>
+   <property name="hibernate.connection.username">
+      root
+   </property>
+   <property name="hibernate.connection.password">
+      hasvad379
+   </property>
+
+   <!-- List of XML mapping files -->
+   <mapping resource="User.hbm.xml"/>
+   <!-- 
+   <mapping resource="UserRevision.hbm.xml"/>
+    -->
+   <mapping resource="FilledForm.hbm.xml"/>
+   <mapping resource="UserType.hbm.xml"/>
+ 
+</session-factory>
+
+</hibernate-configuration>
