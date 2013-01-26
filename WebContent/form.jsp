@@ -21,27 +21,61 @@
 	TreeMap<Integer,ArrayList<String>> datamap =  (TreeMap<Integer,ArrayList<String>>)DatabaseManager.readFormData(1);
 	Set<Entry<Integer,ArrayList<String>>> entryset = datamap.entrySet();
 	Iterator<Entry<Integer, ArrayList<String>>> iter =  entryset.iterator();
+	
 	while(iter.hasNext()){
 		ArrayList<String> iterlist =  iter.next().getValue();
 		//if(iterlist.get(1).equals("Textbox")){
 			%>
+			
 			<tr>
-				<td><label for="lbl<%=iterlist.get(0) %>"><%=iterlist.get(0) %></label></td>
+				<td>
+					<label for="lbl<%=iterlist.get(0) %>">
+						<%=iterlist.get(0) %>
+					</label>
+				</td>
 			</tr>
 			
 			<tr>
 				<td>
 				
-				<input type="<%=iterlist.get(1) %>" class="loginTextbox" style="width:240px;" name="txt<%=iterlist.get(0) %>" id="txt<%=iterlist.get(0) %>" 
-				<% if (Integer.parseInt(iterlist.get(3)) == 1) { %>
+
+				
+				<% if ((iterlist.get(3)).contentEquals("Dropdown")) { 
+					ArrayList<String> dropdownData = DatabaseManager.readSelectionValues(Integer.parseInt(iterlist.get(5)));
+				%>
+					<select id= <%=iterlist.get(0) %> >
+					
+						<%
+						int j = 0;
+						while (dropdownData.size() > j) {
+																
+						%>											
+						   <option value="<%=dropdownData.get(j)%>"> <%=dropdownData.get(j)%> </option>
+						   
+						   
+						<% j++; 
+						} %> 
+						</select>		
+				
+				<% } else { %>						
+				<input type="<%=iterlist.get(1) %>" style="width:240px;" name="txt<%=iterlist.get(0) %>" id="txt<%=iterlist.get(0) %>" 
+				<% if (Integer.parseInt(iterlist.get(4)) == 1) { %>
 					required
-					<%} %>></td>
+					<%} %>>
+					
+				<%} %>
+				</td>
 			</tr>
 						
 		<% //}else if ()
 	}
 %>
 
+	<tr>
+		<td>
+			<input name="btnSubmitForm" type="submit" id="btnSubmitForm" value="Submit">
+		</td>
+	</tr>
 </table>
 
 </form>
