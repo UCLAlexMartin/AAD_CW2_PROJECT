@@ -1,63 +1,67 @@
 package env.Entities;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Set;
 
 public class FormFields {
-	private Integer fieldId;
-	private Integer formId;
-	private String fieldLabel;
-	private Integer fieldTypeId;
-	private Integer fieldSelectionId;
-	private Float xCoordinate;
-	private Float yCoordinate;
+	private Integer field_id;
+	private Form form_id;
+	private String field_label;
+	private FieldType field_type_id;
+	private Set<FieldSelection> field_selection_Id;
+	private Float X_coordinate;
+	private Float Y_coordinate;
 	private Boolean isRequired;
-	private Boolean defaultValue;
+	private Boolean default_value;
 	private Float minValue;
 	private Float maxValue;
-	private Float userId;
+	private User user_id;
 	private Boolean isActive;
+	private Date date_created;
 	private Timestamp timeStamp;
+	
 	public Integer getFieldId() {
-		return fieldId;
+		return field_id;
 	}
-	public void setFieldId(Integer fieldId) {
-		this.fieldId = fieldId;
+	public void setFieldId(Integer field_Id) {
+		this.field_id = field_Id;
 	}
-	public Integer getFormId() {
-		return formId;
+	public Form getFormId() {
+		return form_id;
 	}
-	public void setFormId(Integer formId) {
-		this.formId = formId;
+	public void setFormId(Form form_Id) {
+		this.form_id = form_Id;
 	}
 	public String getFieldLabel() {
-		return fieldLabel;
+		return field_label;
 	}
 	public void setFieldLabel(String fieldLabel) {
-		this.fieldLabel = fieldLabel;
+		this.field_label = fieldLabel;
 	}
-	public Integer getFieldTypeId() {
-		return fieldTypeId;
+	public FieldType getFieldTypeId() {
+		return field_type_id;
 	}
-	public void setFieldTypeId(Integer fieldTypeId) {
-		this.fieldTypeId = fieldTypeId;
+	public void setFieldTypeId(FieldType fieldTypeId) {
+		this.field_type_id = fieldTypeId;
 	}
-	public Integer getFieldSelectionId() {
-		return fieldSelectionId;
+	public Set<FieldSelection> getFieldSelectionId() {
+		return field_selection_Id;
 	}
-	public void setFieldSelectionId(Integer fieldSelectionId) {
-		this.fieldSelectionId = fieldSelectionId;
+	public void setFieldSelectionId(Set<FieldSelection> fieldSelectionId) {
+		this.field_selection_Id = fieldSelectionId;
 	}
 	public Float getxCoordinate() {
-		return xCoordinate;
+		return X_coordinate;
 	}
 	public void setxCoordinate(Float xCoordinate) {
-		this.xCoordinate = xCoordinate;
+		this.X_coordinate = xCoordinate;
 	}
 	public Float getyCoordinate() {
-		return yCoordinate;
+		return Y_coordinate;
 	}
 	public void setyCoordinate(Float yCoordinate) {
-		this.yCoordinate = yCoordinate;
+		this.Y_coordinate = yCoordinate;
 	}
 	public Boolean getIsRequired() {
 		return isRequired;
@@ -66,10 +70,10 @@ public class FormFields {
 		this.isRequired = isRequired;
 	}
 	public Boolean getDefaultValue() {
-		return defaultValue;
+		return default_value;
 	}
 	public void setDefaultValue(Boolean defaultValue) {
-		this.defaultValue = defaultValue;
+		this.default_value = defaultValue;
 	}
 	public Float getMinValue() {
 		return minValue;
@@ -83,11 +87,17 @@ public class FormFields {
 	public void setMaxValue(Float maxValue) {
 		this.maxValue = maxValue;
 	}
-	public Float getUserId() {
-		return userId;
+	public User getUserId() {
+		return user_id;
 	}
-	public void setUserId(Float userId) {
-		this.userId = userId;
+	public void setUserId(User userId) {
+		this.user_id = userId;
+	}
+	public Date getDate_created() {
+		return date_created;
+	}
+	public void setDate_created(Date date_created) {
+		this.date_created = date_created;
 	}
 	public Boolean getIsActive() {
 		return isActive;

@@ -4,6 +4,12 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Set;
 
+import javax.persistence.Entity;
+
+import org.hibernate.envers.Audited;
+
+@Entity
+@Audited
 public class Form {
 
 	
