@@ -11,17 +11,12 @@
          <generator class="native"/>
       </id>
       <property name="userName" column="username" type="string"/>
-      <!-- 
-      <property name="userTypeId"  type="int">
-      		<column name="userTypeId"/>
-      </property>
-        -->
       <property name="userPassword" column="userPassword" type="string"/>
       <property name="userEmail" column="userEmail" type="string"/>
       <property name="dateCreated" column="dateCreated" type="java.sql.Date"/>
       <property name="isActive" column="isActive" type="boolean"/>
-      
-     <many-to-one unique="true" name="userTypeId" class="env.Entities.UserType" cascade="all"  >
+      <property name="salt" column="salt" type="string"/>
+     <many-to-one unique="true" name="userTypeId" class="env.Entities.UserType" cascade="update"  >
             <column name="user_type_id" not-null="true" />
         </many-to-one>
       

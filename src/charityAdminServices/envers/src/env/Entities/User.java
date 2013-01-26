@@ -20,28 +20,32 @@ public class User {
 	private String userName;
 	private UserType userTypeId;
 	private String userPassword;
+	private String salt;
+
 	private String userEmail;
 	private Date dateCreated;
 	private Boolean isActive;
-	//private UserType userType;
 	
-	
-	/*
-	public UserType getUserType() {
-		return userType;
-	}
-	public void setUserType(UserType userType) {
-		this.userType = userType;
-	}*/
+
 	public User(){}
 	public User(String name, String pass) {
 		this.userName=name;
 		this.userPassword=pass;
 		this.dateCreated = new Date(1);
 		this.userTypeId = new UserType();
-		this.userTypeId.setUserTypeId(3);
+		this.userTypeId.setUserTypeId(1);
 		this.userTypeId.setIsActive(true);
 		this.userTypeId.setTimestamp(new Timestamp(1));
+	}
+	
+	
+	
+	
+	public String getSalt() {
+		return salt;
+	}
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 	public Integer getUserId() {
 		return userId;

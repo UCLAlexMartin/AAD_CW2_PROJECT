@@ -4,7 +4,7 @@ package env;
 
 
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +24,6 @@ import org.hibernate.envers.query.AuditQuery;
 
 import env.Entities.FilledForm;
 import env.Entities.User;
-import env.Entities.UserRevision;
 import env.Entities.UserType;
 
  
@@ -80,6 +79,7 @@ public class Main {
 
 			Integer id=m.addUserSample("George", "Gregory");
 			System.out.println("I just created a user with userId"+id);
+			m.updateUserPassword(id, "Corswain");
 		}
 		
 		

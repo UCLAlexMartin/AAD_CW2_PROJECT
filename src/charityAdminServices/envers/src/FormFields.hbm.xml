@@ -28,7 +28,7 @@
         	<column name="user_id" not-null="true"/>
         </many-to-one>
         <property name="isActive" column="isActive" type="boolean"/>
-        <propert name="date_created" column="date_created" type="java.sql.Date"/>
+        <property name="date_created" column="date_created" type="java.sql.Date"/>
         <property name="timestamp" column="Timestamp" type="java.sql.Timestamp"/>
     </class>
 

@@ -32,12 +32,12 @@ org.hibernate.envers.event.AuditEventListener
     <property name="org.hibernate.envers.audit_table_suffix" >_VER</property>
       <property name="org.hibernate.envers.revision_field_name">REV</property>
       <property name="org.hibernate.envers.revision_type_field_name">REVTYPE</property>  
-      <property name="org.hibernate.envers.default_schema">charity_db</property>   
+      <property name="org.hibernate.envers.default_schema">charity_newdb</property>   
       <property name="org.hibernate.envers.revision_on_collection_change">false</property>              
 
    <!-- Assume test is the database name -->
    <property name="hibernate.connection.url">
-      jdbc:mysql://localhost/charity_db
+      jdbc:mysql://localhost/charity_newdb
    </property>
    <property name="hibernate.connection.username">
       root
@@ -48,9 +48,12 @@ org.hibernate.envers.event.AuditEventListener
 
    <!-- List of XML mapping files -->
    <mapping resource="User.hbm.xml"/>
-   <!-- 
-   <mapping resource="UserRevision.hbm.xml"/>
-    -->
+   <mapping resource="FormPermissions.hbm.xml"/>
+   <mapping resource="FormFields.hbm.xml"/>
+   <mapping resource="FormType.hbm.xml"/>
+   <mapping resource="FieldType.hbm.xml"/>
+   <mapping resource="FieldSelection.hbm.xml"/>
+   <mapping resource="Form.hbm.xml"/>
    <mapping resource="FilledForm.hbm.xml"/>
    <mapping resource="UserType.hbm.xml"/>
  
