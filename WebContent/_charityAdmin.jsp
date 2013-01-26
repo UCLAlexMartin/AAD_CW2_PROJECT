@@ -12,7 +12,6 @@
 		<link rel="stylesheet" href="css/style1.css" type="text/css" media="all">
 			
 		<script type="text/javascript" src="js/tabsScript.js"></script>
-		<script type="text/javascript" src="js/charityManager.js"></script>
 
 		<!-- Google Charts Stuff -->
 
@@ -59,7 +58,11 @@
 	   <jsp:include page="HeaderLoggedIn.jsp"></jsp:include>
 	    
 	          
-	    <!-- Main Content -->  
+	    <!-- Main Content -->
+	    <div class="wrapper">
+	    	<p class="quot"> Help all charities to reach out to people and help them. The data exchange feature allows your charity workers to exchange data and be informed about what is happening around in the world. <img src="images/quot2.png" alt=""> </p>
+	    </div>
+	    
 	    <article id="content">
 	      <div class="wrapper">
 	        <div class="box1">
@@ -79,52 +82,25 @@
 			    </div> 
 			    <div class="tabbed_area">       
 			       <div id="content_1" class="tabContent">
-      					<fieldset id="myforms">
-      					<legend>My forms</legend>
-      					<div id="myformslist">
-      					<% out.print("Sorry, it appears you have no forms defined yet!"); %>
-      					</div>
-      					<button type="button" onclick="showWizard(this)">Add new Form</button>
-      					</fieldset>
-      					<hr/>
-      					<fieldset id="formwizard" class="nodisplay">
-      					<legend>Form Wizard</legend>
-      					<div id = "fieldselect">
-      					<label>Form name:</label>
-      					<input type="text"/>
-      					<label>Description</label>
-      					<input type="text"/>
-      					<hr/>
-      					<hr/>
-      					<label for="fieldname">Field name</label>
-      					<input id="fieldname" type="text"/>
-      					<label for="typeoptions">Input type</label>
-      					<select id="typeoptions" onchange="onRowTypeChanged()">
-      					<option value="int" selected>Integer</option>
-      					<option value="string">String</option>
-      					<option value="datetime">Date</option>
-      					<option value="text">Text</option>
-      					<option value="bool">Yes/No</option>
-      					<option value="img">Image</option>
-      					<option value="enum">Dropdown</option>
-      					</select>
-      					<br/>
-      					<div id="extra" class="nodisplay"></div>
-      					<div id="errmsg" class="nodisplay"></div>
-      					<button onclick="addRow()" type="button" >Add row</button>
-      					</div>
-      					<fieldset id="rowset">
-      					<legend>Current rows:</legend>
-      					<div>
-      					<form id="rowsetrows" action="CreateTableServlet" method="post">
-      					<input type="hidden" id="argc" name="argc" value="piu"/>
-      					</form>
-      					</div>
-      					<button type="button" id="clearbtn" onclick='removeChildren(document.getElementById("rowsetrows") )'>Clear all rows</button>
-      					</fieldset>
-      					<button type="button" id="btnSubmitForm" onclick="submitForm(this)">Create this form</button>
-      					</fieldset>
-				   
+			         <form name="frmManageForms" method="post" action="">
+      					Manage Charity Mobile Application
+				        <br/>
+				        <br/>
+				        
+				        <table>
+				        <tr>
+				        	<td>
+				        		
+				        	</td>
+				        	<td>
+				        	</td>
+				        </tr>
+				        
+				        </table>
+				        
+				        
+				        
+     				</form>
 			     </div>
 			     
 			     <div id="content_2" class="tabContent">
