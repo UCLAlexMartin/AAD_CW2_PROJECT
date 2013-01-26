@@ -2,6 +2,7 @@ package env.Entities;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Set;
 
 public class Form {
 
@@ -13,6 +14,15 @@ public class Form {
 	private String url;
 	private Boolean isActive;
 	private Timestamp timestamp;
+	private Set<FormPermissions> permissions;
+	
+	
+	public Set<FormPermissions> getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(Set<FormPermissions> permissions) {
+		this.permissions = permissions;
+	}
 	public Integer getFormId() {
 		return formId;
 	}
