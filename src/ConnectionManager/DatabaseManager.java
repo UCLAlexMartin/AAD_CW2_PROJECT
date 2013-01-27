@@ -189,5 +189,43 @@ public class DatabaseManager {
      	 
     	 return dataMap;
      }
+     
+     public static List<Charity> readCharityTable() throws Exception {
+        Charity ch;
+        List<Charity> chs = new ArrayList<Charity>();
+        getCharityConn("System_Db_Test_Model");
+        statement = conn.createStatement();
+
+        resultSet = statement.executeQuery
+       ("SELECT Charity_ID, Charity_Name, Charity_Description, Address_Line1, Address_Line2, Location, PostCode, Email, Phone, User_Id, Registration_No, Account_No, Connection_String, isVerified, isActive, Timestamp from Charity order by Charity_ID");	
+
+        while(resultSet.next())
+        {
+               //result += String.format("['%s',%d],", resultSet.getString("u"), resultSet.getInt("c"));
+            ch = new Charity();
+            ch.setCharityID(resultSet.getInt("Charity_ID"));
+            ch.setCharityName(resultSet.getString("Charity_Name"));
+            ch.setCharityDescription(resultSet.getString("Charity_Description"));
+            ch.setAddressLine1(resultSet.getString("Address_Line1"));
+            ch.setAddressLine2(resultSet.getString("Address_Line2"));
+            ch.setLocation(resultSet.getString("Location"));
+            ch.setPostCode(resultSet.getString("PostCode"));
+            ch.setEmail(resultSet.getString("Email"));
+            ch.setPhone(resultSet.getString("Phone"));
+            ch.setUserId(resultSet.getInt("UserId"));
+            ch.setRegistrationNo(resultSet.getString("RegistrationNo"));
+            ch.setAccountNo(resultSet.getString("AccountNo"));
+            ch.setConnectionString(resultSet.getString("ConnectionString"));
+            ch.setIsVerified(resultSet.getBoolean("IsVerified"));
+            ch.setIsActive(resultSet.getBoolean("IsActive"));
+            ch.setTimestamp(resultSet.getTime("Timestamp"));          
+            
+            chs.add(ch);
+        }
+
+        closeConn();
+
+        return chs;
+     }
          
 }
