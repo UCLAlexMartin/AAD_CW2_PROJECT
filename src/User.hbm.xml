@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+<hibernate-mapping>
+   <class name="hibernateEntities.User" table="Users">
+      <id unsaved-value="-1" name="user_id"  type="int" column="user_id">
+         <generator  class="native"/>
+      </id>
+      <property name="userName" column="username" type="string"/>
+      <property name="userPassword" column="user_password" type="string"/>
+      <property name="userEmail" column="user_email" type="string"/>
+      <property name="dateCreated" column="date_created" type="java.sql.Date"/>
+      <property name="isActive" column="isActive" type="boolean"/>
+      <property name="salt" column="salt" type="string"/>
+     <many-to-one lazy="false" unique="true" name="userTypeId" class="hibernateEntities.UserType" >
+            <column name="user_type_id" not-null="true" />
+        </many-to-one>
+
+   </class>
+</hibernate-mapping>

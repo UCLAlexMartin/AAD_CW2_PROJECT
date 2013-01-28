@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+ <hibernate-mapping>
+  <class name="hibernateEntities.Test" table="fir">
+      <meta attribute="class-description">
+         This class contains the filled form detail. 
+      </meta>
+      <id name="fir" type="int" column="fir">
+         <generator class="native"/>
+      </id>
+
+   </class>
+ </hibernate-mapping>
+ 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+ <hibernate-mapping>
+   <class name="hibernateEntities.FormFields" table="form_fields">
+ 	<id name="f_id" type="int" column="field_id">
+         <generator class="native"/>
+      </id>
+      	<property name="field_label" column="field_label" type="string"/>
+       <many-to-one lazy="false" cascade="save-update" unique="true" name="field_type_id" class="hibernateEntities.FieldType">
+			<column name="field_type_id" not-null="true"/>       	
+       </many-to-one>
+       <!--  
+           <set name="field_selection_Id">
+        		<key column="field_selection_id" />
+        	<one-to-many  class="hibernateEntities.FieldSelection"/>
+        </set>
+        -->  
+        <many-to-one  lazy="false" name="form_id" class="hibernateEntities.Form">
+        	<column name="form_id" not-null="true"/>
+        </many-to-one>
+        <property name="x_coordinate" column="x_coordinate" type="float"/>
+        <property name="y_coordinate" column="y_coordinate" type="float"/>
+        <property name="isRequired" column="isRequired" type="boolean"/>
+        <property name="default_value" column="default_value" type="boolean"/>
+        <property name="minValue" column="min_value" type="float"/>
+        <property name="maxValue" column="max_value" type="float"/>
+        <many-to-one lazy="false" unique="true" name="user_id" class="hibernateEntities.User">
+        	<column  name="user_id" not-null="true"/>
+        </many-to-one>
+        <property name="isActive" column="isActive" type="boolean"/>
+        <property name="date_created" column="date_created" type="java.sql.Date"/>
+        <property name="timestamp" not-null="true" column="Timestamp" type="java.sql.Timestamp"/>
+    </class>
+
+</hibernate-mapping>
