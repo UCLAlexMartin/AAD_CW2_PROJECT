@@ -66,5 +66,6 @@
 	<classpathentry kind="lib" path="lib/stax2-api-3.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/staxmapper-1.1.0.Final.jar"/>
 	<classpathentry kind="lib" path="lib/woodstox-core-asl-4.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/geronimo-validation_1.0_spec-1.0-CR5.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
