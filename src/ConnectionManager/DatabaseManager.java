@@ -121,25 +121,25 @@ public class DatabaseManager {
      
      
      public static String readCharityDataV2() throws Exception {
-         
+
     	 String result = "";
-    	 
-        	 getCharityConn("Charity_Db_Test_Model");
-        	 statement = conn.createStatement();
-        	 
-        	 resultSet = statement.executeQuery
-        	("SELECT Username as u,COUNT(*) as c FROM( SELECT Users.Username AS Username,Filled_Form.User_Id as UserID, count(Filled_Form.Filled_Form_Id) as TotalInputs FROM 	Filled_Form INNER JOIN Form ON Filled_Form.Form_Id = Form.Form_Id INNER JOIN Form_Fields ON Filled_Form.Field_Id = Form_Fields.Field_Id	INNER JOIN Users ON Filled_Form.User_Id = Users.User_Id WHERE	Users.isActive = 1  AND Filled_Form.isActive = 1 AND Form_Fields.isActive = 1 AND Form.isActive = 1 GROUP BY Filled_Form.Record_Id) AS TEMP GROUP BY UserID");	
-           
-        	   
-        	 while(resultSet.next())
-        	 {
-        		result += String.format("['%s',%d],", resultSet.getString("u"), resultSet.getInt("c"));
-        	 }
-        	          
-        	 closeConn();
-             	 
+
+    	 getCharityConn("Charity_Db_Test_Model");
+    	 statement = conn.createStatement();
+
+    	 resultSet = statement.executeQuery
+    	 ("SELECT Username as u,COUNT(*) as c FROM ( SELECT Users.Username AS Username,Filled_Form.User_Id as UserID, count(Filled_Form.Record_Id) as TotalInputs FROM Filled_Form INNER JOIN Form_Fields ON Filled_Form.Field_Id = Form_Fields.Field_Id INNER JOIN Users ON Filled_Form.User_Id = Users.User_Id WHERE Users.isActive = 1 AND Filled_Form.isActive = 1 AND Form_Fields.isActive = 1 GROUP BY Filled_Form.Record_Id) AS TEMP GROUP BY UserID"); 
+
+    	 while(resultSet.next())
+    	 {
+    	 result += String.format("['%s',%d],", resultSet.getString("u"), resultSet.getInt("c"));
+    	 }
+
+    	 closeConn();
+
     	 return result;
-     }
+    }
+
      
      
      public static ArrayList<String> readSelectionValues(int field_id) throws Exception{
