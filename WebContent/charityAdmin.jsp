@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="ConnectionManager.*" %>   
+<%@ page import="ConnectionManager.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,7 +14,7 @@
 			
 		<script type="text/javascript" src="js/tabsScript.js"></script>
 		<script type="text/javascript" src="js/charityManager.js"></script>
-
+		<script type="text/javascript" src="js/xhr.js"></script>
 		<!-- Google Charts Stuff -->
 
 		<!--Load the AJAX API-->
@@ -29,17 +30,19 @@
 	      // Callback that creates and populates a data table,
 	      // instantiates the pie chart, passes in the data and
 	      // draws it.
+	      function populateData(data)
+	      {
+	    	  resp = xhr("/CharityWare/StatisticsDataServlet",false);
+	    	  obj = JSON.parse(resp);
+	    	  data.addRows(obj);
+	      }
 	      function drawChart() {
 	
 	        // Create the data table.
 	        var data = new google.visualization.DataTable();
 	        data.addColumn('string', 'User');
 	        data.addColumn('number', 'Records');
-	        data.addRows([
-			<%= DatabaseManager.readCharityDataV2() %>
-	        ]);
-	
-	        // Set chart options
+	        populateData(data);
 	        var options = {'title':'Records inputted by each User',
 	                       'width':500,
 	                       'height':400};
@@ -59,7 +62,8 @@
 	   <jsp:include page="HeaderLoggedIn.jsp"></jsp:include>
 	    
 	          
-	    <!-- Main Content -->  
+	    <!-- Main Content -->
+	    
 	    <article id="content">
 	      <div class="wrapper">
 	        <div class="box1">
@@ -82,20 +86,41 @@
       					<fieldset id="myforms">
       					<legend>My forms</legend>
       					<div id="myformslist">
-      					<% out.print("Sorry, it appears you have no forms defined yet!"); %>
+      					<c:choose>
+      					<c:when test='${sentForms!= null && sentForms.size() > 0}'>
+      				 	<c:forEach items="${sentForms}" var="theform">
+      				 	<div>
+      				 	<input type="hidden" value="${theform.getFormId() }" />
+      				 	<label for="myform_${theform.getFormId()}">Form name:</label>
+      				 	<input type="text" readonly id="myform_${theform.getFormId()}" value='${theform.getFormName() }'/>
+      				 	<button type="button" onclick="viewCurrentFormStructure(this)">View structure</button>
+      				 	<button type="button" onclick="viewCurrentFormData(this)">View data</button>
+      				 	<button type="button" onclick="">Remove</button>
+      				 	</div>
+      				 	</c:forEach>
+      					</c:when>
+      					<c:otherwise>
+      						Sorry, it appears you have no forms defined!
+      				 	</c:otherwise>
+      				 	</c:choose>     				 	
       					</div>
       					<button type="button" onclick="showWizard(this)">Add new Form</button>
       					</fieldset>
-      					<hr/>
+      					<fieldset id="currentformrows" class="nodisplay"></fieldset>
       					<fieldset id="formwizard" class="nodisplay">
       					<legend>Form Wizard</legend>
-      					<div id = "fieldselect">
+      					
+      					<fieldset>
+      					<legend>Form description</legend>
       					<label>Form name:</label>
-      					<input type="text"/>
+      					<input id="formname" type="text" />
       					<label>Description</label>
-      					<input type="text"/>
-      					<hr/>
-      					<hr/>
+      					<input id="formdesc" type="text"/>
+      					<button type="button" id="btnSubmitForm" onclick="submitForm()">Create this form!</button>
+      					</fieldset>
+      					
+      					<fieldset id = "fieldselect">
+      					<legend>Field wizard</legend>
       					<label for="fieldname">Field name</label>
       					<input id="fieldname" type="text"/>
       					<label for="typeoptions">Input type</label>
@@ -108,21 +133,21 @@
       					<option value="img">Image</option>
       					<option value="enum">Dropdown</option>
       					</select>
+      					<input type="checkbox" id="rowrequired" name="rowrequired"/>
+      					<label for="rowrequired">Mandatory?</label>
       					<br/>
+      					<button onclick="addRow()" type="button" >Add row</button>
       					<div id="extra" class="nodisplay"></div>
       					<div id="errmsg" class="nodisplay"></div>
-      					<button onclick="addRow()" type="button" >Add row</button>
-      					</div>
-      					<fieldset id="rowset">
-      					<legend>Current rows:</legend>
-      					<div>
-      					<form id="rowsetrows" action="CreateTableServlet" method="post">
-      					<input type="hidden" id="argc" name="argc" value="piu"/>
-      					</form>
-      					</div>
-      					<button type="button" id="clearbtn" onclick='removeChildren(document.getElementById("rowsetrows") )'>Clear all rows</button>
       					</fieldset>
-      					<button type="button" id="btnSubmitForm" onclick="submitForm(this)">Create this form</button>
+      					<form id="rowset" action="CreateTableServlet" method="post">
+      					<fieldset>
+      					<input type="hidden" id="argc" name="argc" />
+      					<legend>Current rows:</legend>
+      					<div id="rowsetrows"></div>
+      					</fieldset>
+      					<button type="button" id="clearbtn" onclick='removeChildren(document.getElementById("rowsetrows") ); document.getElementById("argc").value=0;'>Clear all rows</button>
+      					</form>
       					</fieldset>
 				   
 			     </div>
