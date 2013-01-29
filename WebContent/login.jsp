@@ -47,7 +47,7 @@
 						
 						<tr>
 							<td>
-								<label for="txtPassword">Password  </label>
+								<label for="txtPassword">Password</label>
 			        		</td>
 			        		<td>
 			        		  	<input type="password" class="jsrequired" style="width:240px;" name="txtPassword" id="txtPassword" required/>
