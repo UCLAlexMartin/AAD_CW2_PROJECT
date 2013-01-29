@@ -52,23 +52,19 @@ org.hibernate.envers.event.AuditEventListener
    </property>
 
    <!-- List of XML mapping files -->
-      <mapping resource="User.hbm.xml"/>
-   
-   <!-- 
-
-
-    -->
+   		  <mapping resource="User.hbm.xml"/>
+          <mapping resource="AccessLog.hbm.xml"/>	
           <mapping resource="FormFields.hbm.xml"/>
           <mapping resource="MailingGroup.hbm.xml"/>
           <mapping resource="MailingList.hbm.xml"/>
           <mapping resource="Event.hbm.xml"/>
-   <mapping resource="FilledForm.hbm.xml"/>	
-   <mapping resource="FormType.hbm.xml"/>
-   <mapping resource="FieldType.hbm.xml"/>
-   <mapping resource="FieldSelection.hbm.xml"/>
-      <mapping resource="Form.hbm.xml"/>
-      <mapping resource="FormPermissions.hbm.xml"/>
-   <mapping resource="UserType.hbm.xml"/>
+   		  <mapping resource="FilledForm.hbm.xml"/>	
+  		  <mapping resource="FormType.hbm.xml"/>
+ 	      <mapping resource="FieldType.hbm.xml"/>
+ 	      <mapping resource="FieldSelection.hbm.xml"/>
+    	  <mapping resource="Form.hbm.xml"/>
+    	  <mapping resource="FormPermissions.hbm.xml"/>
+   		  <mapping resource="UserType.hbm.xml"/>
  
 </session-factory>
 
