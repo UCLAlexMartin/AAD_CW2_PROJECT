@@ -393,10 +393,22 @@ public class DatabaseManager {
          boolean addSuccess;
     	 statement = conn.createStatement();
     	 addSuccess = statement.execute(
-    			 "Insert charity (Charity_name, Charity_Description,Address_Line1) values('" +
+    			 "Insert charity (Charity_name, Charity_Description, Address_Line1, Address_Line2, Location, PostCode, Email, Phone, User_Id, Registration_No, Account_No, Connection_String, isVerified, isActive, Timestamp) values('" +
                           ch.getCharityName() + "','" + 
                           ch.getCharityDescription()+ "','" +
-                          ch.getAddressLine1() + 
+                          ch.getAddressLine1() + "','" +
+                          ch.getAddressLine2() + "','" +
+                          ch.getLocation() + "','" +
+                          ch.getPostCode() + "','" +
+                          ch.getEmail() + "','" +
+                          ch.getPhone() + "','" +
+                          ch.getUserId() + "," +
+                          ch.getRegistrationNo() + "','" +
+                          ch.getAccountNo() + "','" +
+                          ch.getConnectionString() + "','" + 
+                          ch.getIsVerified() + "," +
+                          ch.getIsActive() + "," +
+                          ch.getTimestamp() +
                           "')");
          closeConn(); 
      }      
