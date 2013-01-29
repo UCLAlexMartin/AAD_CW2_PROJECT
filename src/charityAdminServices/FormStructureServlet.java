@@ -49,7 +49,6 @@ public class FormStructureServlet extends HttpServlet {
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonFF = mapper.writeValueAsString(ff);
 		response.getWriter().print(jsonFF);
-		
 	}
 
 	/**

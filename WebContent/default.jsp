@@ -1,6 +1,64 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="ConnectionManager.*" %>   
+<%@ page import="staticResources.*" %>
+
+
+
+
+<%
+		
+		if(request.getParameter("LogginAttempt")!=null &&
+			request.getParameter("txtUsername")!=null &&
+			request.getParameter("txtPassword")!=null)
+		{
+			out.println("Loggin Attempted<br/>");
+			out.println("LogginAttempt:"+request.getParameter("LogginAttempt") + "<br/>");
+			out.println("txtUsername:"+request.getParameter("txtUsername") + "<br/>");
+			out.println("txtPassword:"+request.getParameter("txtPassword") + "<br/>");
+			String whatever = PasswordEncryption.createSalt();
+			out.println("RandomSalt:"+whatever + "<br/>");
+			out.println("PasswordHash:"+PasswordEncryption.encryptPassword(request.getParameter("txtPassword"), whatever) + "<br/>");
+			
+			com.sun.jersey.api.client.config.ClientConfig 	JersyConfig = 	new com.sun.jersey.api.client.config.DefaultClientConfig();
+			com.sun.jersey.api.client.Client 				client 		= 	com.sun.jersey.api.client.Client.create(JersyConfig);
+			com.sun.jersey.api.client.WebResource 			service 	= 	client.resource(Configuration.SiteUrl);
+		    
+		    out.println(service.path("REST").path("UserLoginService").path("Username").path(request.getParameter("txtUsername")).accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(String.class));
+		    					
+			
+		}
+		else
+		{
+			out.println("Loggin Not-Attempted<br/>");
+			
+			if(request.getSession(false)!=null)
+			{
+				out.println("Session is ready<br/>");
+				if(session.getAttribute("Authorized")=="true")
+				{
+					//Carry on Sir/Ma'am
+				}
+				else
+				{
+					//GTFO!
+					response.sendRedirect("login.jsp");
+				}
+			}
+			else
+			{
+				out.println("Session isnt ready<br/>");
+				request.getSession(true);
+			    String AuthorizedVal = "false";
+			    session.setAttribute("Authorized", AuthorizedVal);
+			    //GTFO!
+			    response.sendRedirect("login.jsp");				
+			}
+		}
+
+%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>

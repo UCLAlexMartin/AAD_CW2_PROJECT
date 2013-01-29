@@ -21,8 +21,8 @@
 	      <div class="wrapper">
 	        <div class="box1">
 	          
-	        	<form name="frmLogin" method="post" action="">
-			      
+	        	<form name="frmLogin" method="post" action="default.jsp">
+			      <input type="hidden" name="LogginAttempt" id="LogginAttempt" value="LogginAttempt"/>
 			      	<table style="border-spacing:5px;border-collapse: inherit;">
 						<tr>
 							<td> 

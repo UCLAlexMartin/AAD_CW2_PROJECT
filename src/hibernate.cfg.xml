@@ -45,10 +45,10 @@ org.hibernate.envers.event.AuditEventListener
       jdbc:mysql://localhost/Charity_DB_Test_Model
    </property>
    <property name="hibernate.connection.username">
-      temp
+      root
    </property>
    <property name="hibernate.connection.password">
-      temp
+      root
    </property>
 
    <!-- List of XML mapping files -->
