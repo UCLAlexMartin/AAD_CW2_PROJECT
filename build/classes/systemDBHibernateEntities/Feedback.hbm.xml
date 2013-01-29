@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+<hibernate-mapping>
+   <class name="systemDBHibernateEntities.Feedback" table="Feedback">
+      <id unsaved-value="-1" name="feedback_id"  type="int" column="Feedback_Id">
+         <generator  class="native"/>
+      </id>
+      <property name="name" column="Name" type="string"/>
+      <property name="email" column="Email" type="string"/>
+      <property name="comment" column="Comment" type="string"/>
+         
+      <set name="reviewed_by" lazy="false">
+		<key column="ReviewedBy"/>
+		<one-to-many class="systemDBHibernateEntities.User"/>
+	  </set>
+                
+      <property name="reviewed_date" column="ReviewedDate" type="java.sql.Date"/>
+      <property name="isReviewed" column="isReviewed" type="boolean"/>
+      <property name="timestamp" column="timestamp" type="java.sql.Timestamp"/>
+
+   </class>
+</hibernate-mapping>

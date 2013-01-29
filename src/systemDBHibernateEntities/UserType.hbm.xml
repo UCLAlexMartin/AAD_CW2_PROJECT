@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+ <hibernate-mapping>
+   <class name="systemDBHibernateEntities.UserType" table="user_type">
+ 	<id name="userTypeId" type="int" column="user_type_id">
+         <generator class="native"/>
+      </id>
+      	<property name="userType" type="string" column="user_type" />
+        <property name="timestamp" type="java.sql.Timestamp" column="Timestamp" />
+        <property name="description" type="string" column="user_type_description"/>
+        <property name="isActive" type="boolean" column="isActive"/>
+    </class>
+
+</hibernate-mapping>
