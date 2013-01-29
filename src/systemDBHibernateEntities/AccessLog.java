@@ -1,9 +1,8 @@
-package hibernateEntities;
+package systemDBHibernateEntities;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Set;
 
 import javax.persistence.Entity;
 
@@ -14,8 +13,6 @@ import org.hibernate.envers.Audited;
 public class AccessLog {
 
 	private Integer access_log_id;
-	private Form form;
-	private Set<FormFields> fields;
 	private User user;
 	private Date access_start_time;
 	private Date access_end_time;
@@ -35,18 +32,7 @@ public class AccessLog {
 	public void setAccess_log_id(Integer access_log_id) {
 		this.access_log_id = access_log_id;
 	}
-	public Form getForm() {
-		return form;
-	}
-	public void setForm(Form form) {
-		this.form = form;
-	}
-	public Set<FormFields> getFields() {
-		return fields;
-	}
-	public void setFields(Set<FormFields> fields) {
-		this.fields = fields;
-	}
+	
 	public User getUser() {
 		return user;
 	}
@@ -71,17 +57,19 @@ public class AccessLog {
 	public void setDevice(String device) {
 		this.device = device;
 	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
+	
 	public Boolean getIsOnline() {
 		return isOnline;
 	}
 	public void setIsOnline(Boolean isOnline) {
 		this.isOnline = isOnline;
+	}
+	
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
 	}
 	public Timestamp getTimestamp() {
 		return timestamp;
