@@ -9,6 +9,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
@@ -43,7 +44,7 @@ public class CharityResource {
      */
     @GET
     @Produces("application/xml")
-    public List<Charity> getXml() {
+    public List<Charity> getCharities() {
         //TODO return proper representation object
 
         List<Charity> chs = new ArrayList<Charity>();
@@ -62,8 +63,42 @@ public class CharityResource {
      * @param content representation for the resource
      * @return an HTTP response with content of the updated or created resource.
      */
-    @PUT
+    @POST
     @Consumes("application/xml")
-    public void putXml(Charity content) {
+    public Charity postCharity(Charity ch) {
+     try{
+            DatabaseManager.addCharity(ch);
+        }
+        catch (Exception e)
+        {
+            ch = null;
+        }       
+        return ch;
     }
+    
+    
+    @Path("/{charityid}")
+    @GET
+    @Produces("application/xml")
+    public Charity getCharity(@PathParam("charityid") 
+    int charityid) {
+        //TODO return proper representation object
+
+        Charity ch = new Charity();
+        try {
+        ch = DatabaseManager.getCharity(charityid);
+        }
+        catch (Exception e)
+        {
+            ch = null;
+            
+        }
+        return ch;
+    }
+    /**
+     * PUT method for updating or creating an instance of CharityResource
+     * @param content representation for the resource
+     * @return an HTTP response with content of the updated or created resource.
+     */
+
 }

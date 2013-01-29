@@ -123,28 +123,62 @@ public class DatabaseManager {
      
      
      public static String readCharityDataV2() throws Exception {
-
-         StringBuilder result = new StringBuilder();
-
-         getCharityConn("Charity_Db_Test_Model");
-         statement = conn.createStatement();
-
-         resultSet = statement.executeQuery
-         ("SELECT Username as u,COUNT(*) as c FROM ( SELECT Users.Username AS Username,Filled_Form.User_Id as UserID, count(Filled_Form.Record_Id) as TotalInputs FROM Filled_Form INNER JOIN Form_Fields ON Filled_Form.Field_Id = Form_Fields.Field_Id INNER JOIN Users ON Filled_Form.User_Id = Users.User_Id WHERE Users.isActive = 1 AND Filled_Form.isActive = 1 AND Form_Fields.isActive = 1 GROUP BY Filled_Form.Record_Id) AS TEMP GROUP BY UserID"); 
-
-         result.append('[');
-         while(resultSet.next())
-         {
-         result.append(String.format("[\"%s\",%d],", resultSet.getString("u"), resultSet.getInt("c")));
-         }
-         result.setCharAt(result.length()-1, ']');
-         closeConn();
-
-         return result.toString();
-    }
-
+         
+    	 String result = "";
+    	 
+        	 getCharityConn("Charity_Db_Test_Model");
+        	 statement = conn.createStatement();
+        	 
+        	 resultSet = statement.executeQuery
+        	("SELECT Username as u,COUNT(*) as c FROM ( SELECT Users.Username AS Username,Filled_Form.User_Id as UserID, count(Filled_Form.Record_Id) as TotalInputs FROM Filled_Form INNER JOIN Form_Fields ON Filled_Form.Field_Id = Form_Fields.Field_Id INNER JOIN Users ON Filled_Form.User_Id = Users.User_Id WHERE Users.isActive = 1 AND Filled_Form.isActive = 1 AND Form_Fields.isActive = 1 GROUP BY Filled_Form.Record_Id) AS TEMP GROUP BY UserID"); 
+        	   
+        	 while(resultSet.next())
+        	 {
+        		result += String.format("['%s',%d],", resultSet.getString("u"), resultSet.getInt("c"));
+        	 }
+        	          
+        	 closeConn();
+             	 
+    	 return result;
+     }
      
-     
+     public static List<Charity> readCharityTable() throws Exception {
+        Charity ch;
+        List<Charity> chs = new ArrayList<Charity>();
+        getCharityConn("System_Db_Test_Model");
+        statement = conn.createStatement();
+
+        resultSet = statement.executeQuery
+       ("SELECT Charity_ID, Charity_Name, Charity_Description, Address_Line1, Address_Line2, Location, PostCode, Email, Phone, User_Id, Registration_No, Account_No, Connection_String, isVerified, isActive, Timestamp from Charity order by Charity_ID");	
+
+        while(resultSet.next())
+        {
+               //result += String.format("['%s',%d],", resultSet.getString("u"), resultSet.getInt("c"));
+            ch = new Charity();
+            ch.setCharityID(resultSet.getInt("Charity_ID"));
+            ch.setCharityName(resultSet.getString("Charity_Name"));
+            ch.setCharityDescription(resultSet.getString("Charity_Description"));
+            ch.setAddressLine1(resultSet.getString("Address_Line1"));
+            ch.setAddressLine2(resultSet.getString("Address_Line2"));
+            ch.setLocation(resultSet.getString("Location"));
+            ch.setPostCode(resultSet.getString("PostCode"));
+            ch.setEmail(resultSet.getString("Email"));
+            ch.setPhone(resultSet.getString("Phone"));
+            ch.setUserId(resultSet.getInt("User_Id"));
+            ch.setRegistrationNo(resultSet.getString("Registration_No"));
+            ch.setAccountNo(resultSet.getString("Account_No"));
+            ch.setConnectionString(resultSet.getString("Connection_String"));
+            ch.setIsVerified(resultSet.getBoolean("IsVerified"));
+            ch.setIsActive(resultSet.getBoolean("IsActive"));
+            ch.setTimestamp(resultSet.getDate("Timestamp"));  
+            
+            chs.add(ch);
+        }
+
+        closeConn();
+
+        return chs;
+     }
      public static ArrayList<String> readSelectionValues(int field_id) throws Exception{
     	 
     	 ArrayList<String> dropdownData = new ArrayList<String>();
@@ -193,7 +227,7 @@ public class DatabaseManager {
     	 return dataMap;
      }
      
-     /*** LU BEGIN ***/ 
+     /*** LU BEGIN ** 
      
      public static List<Charity> readCharityTable() throws Exception {
          Charity ch;
@@ -232,7 +266,7 @@ public class DatabaseManager {
 
          return chs;
       }
-     /*** LU END ***/ 
+     ** LU END ***/ 
      
       
 
@@ -314,6 +348,57 @@ public class DatabaseManager {
      
 /*** CHEN CHEN 2013-01-27 END ***/
      
-     
-         
+    public static Charity getCharity(int charityid) throws Exception {
+        Charity ch;
+        getCharityConn("System_Db_Test_Model");
+        statement = conn.createStatement();
+
+        resultSet = statement.executeQuery
+       ("SELECT Charity_ID, Charity_Name, Charity_Description, Address_Line1, " + 
+                "Address_Line2, Location, PostCode, Email, Phone, User_Id, Registration_No," + 
+                "Account_No, Connection_String, isVerified, isActive, Timestamp from Charity where charity_id ="
+                + charityid);	
+       ch = new Charity();
+        if(resultSet.next())
+        {
+               //result += String.format("['%s',%d],", resultSet.getString("u"), resultSet.getInt("c"));
+
+            ch.setCharityID(resultSet.getInt("Charity_ID"));
+            ch.setCharityName(resultSet.getString("Charity_Name"));
+            ch.setCharityDescription(resultSet.getString("Charity_Description"));
+            ch.setAddressLine1(resultSet.getString("Address_Line1"));
+            ch.setAddressLine2(resultSet.getString("Address_Line2"));
+            ch.setLocation(resultSet.getString("Location"));
+            ch.setPostCode(resultSet.getString("PostCode"));
+            ch.setEmail(resultSet.getString("Email"));
+            ch.setPhone(resultSet.getString("Phone"));
+            ch.setUserId(resultSet.getInt("User_Id"));
+            ch.setRegistrationNo(resultSet.getString("Registration_No"));
+            ch.setAccountNo(resultSet.getString("Account_No"));
+            ch.setConnectionString(resultSet.getString("Connection_String"));
+            ch.setIsVerified(resultSet.getBoolean("IsVerified"));
+            ch.setIsActive(resultSet.getBoolean("IsActive"));
+            ch.setTimestamp(resultSet.getDate("Timestamp"));          
+            
+        }
+
+        closeConn();
+
+        return ch;
+    }
+
+     public static void addCharity(Charity ch) throws Exception{
+
+    	 getSystemConn();
+         boolean addSuccess;
+    	 statement = conn.createStatement();
+    	 addSuccess = statement.execute(
+    			 "Insert charity (Charity_name, Charity_Description,Address_Line1) values('" +
+                          ch.getCharityName() + "','" + 
+                          ch.getCharityDescription()+ "','" +
+                          ch.getAddressLine1() + 
+                          "')");
+         closeConn(); 
+     }      
+    
 }
