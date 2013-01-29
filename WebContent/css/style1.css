@@ -438,7 +438,12 @@ top:10px;
 	background:#0e0c0a;
 	padding:25px 30px 32px
 }
-.box2 .line1, .box2 .line2 {
+/* Commented for ashima
+.box2 .line1{
+	background-image:url(../images/line_vert2.gif)
+}*/
+
+.box2 .line2 {
 	background-image:url(../images/line_vert2.gif)
 }
 #page4 .box2 {
@@ -446,12 +451,13 @@ top:10px;
 	padding-top:30px;
 	padding-bottom:28px
 }
+/* Commented for ashima
 .line1 {
 	background:url(../images/line_vert1.gif) 289px 0 repeat-y
 }
 .line2 {
 	background:url(../images/line_vert1.gif) 591px 0 repeat-y
-}
+}*/
 #page3 .line1 {
 	background-position:282px 0
 }
@@ -761,6 +767,9 @@ background-color:#f69c00;
 
 
 .loginTextbox{
+/* Ashima Append */
+width:240px;
+/*---------------*/
 -webkit-border-radius: 5px;
     
     border-radius: 5px;
@@ -925,3 +934,19 @@ fieldset {
   text-align:right;
   font-weight:bold;
   } */
+  /*------------Ashima event additions--------------------*/
+  /* add new */
+	  #marg_top {
+		border: 2px solid black;
+		height:25px;
+		margin-right:5px;
+		text-align:center;
+	  } 
+
+	/* add new */
+ 	#menubar2 .active  {
+		color:#999;
+	}
+  
+  
+  
