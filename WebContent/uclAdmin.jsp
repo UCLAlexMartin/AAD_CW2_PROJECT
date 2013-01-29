@@ -98,7 +98,8 @@
 						    <td></td>
 						    <td></td>
 						    <td></td>
-					        <td><input type="radio" name="Action" value="yes" > Approve <br/>
+					        <td>
+					        <input type="radio" name="Action" value="yes" > Approve <br/>
 						    <input type="radio" name="Action" value="no"> Decline </td>
 						</tr>
 				        </table>        

@@ -18,6 +18,7 @@
 	<property name="access_end_date" column="access_end_date" type="java.sql.Date"/>
 	<property name="device" column="device" type="string"/>
 	<property name="location" column="location" type="string"/>
+	 <property name="isOnline" column="isOnline" type="boolean"/>
 	<property name="timestamp" column="timestamp" type="java.sql.Timestamp"/>
    </class>
  </hibernate-mapping>

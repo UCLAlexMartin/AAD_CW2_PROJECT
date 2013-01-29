@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+<hibernate-mapping>
+   <class name="systemDBHibernateEntities.Charity" table="Charity">
+      <id unsaved-value="-1" name="charity_id"  type="int" column="Charity_ID">
+         <generator  class="native"/>
+      </id>
+      
+      <property name="charity_name" column="Charity_Name" type="string"/>
+      <property name="charity_description" column="Charity_Description" type="string"/>
+      <property name="address_line1" column="Address_Line1" type="string"/>
+      <property name="address_line2" column="Address_Line2" type="string"/>
+      <property name="location" column="Location" type="string"/>
+      <property name="postcode" column="PostCode" type="string"/>
+      <property name="email" column="Email" type="string"/>
+      <property name="phone" column="Phone" type="string"/> 
+                
+      <set name="user_id" lazy="false">
+		<key column="User_Id"/>
+		<one-to-many class="systemDBHibernateEntities.User"/>
+	  </set>
+      
+      <property name="registration_no" column="Registration_No" type="string"/>
+      <property name="account_no" column="Account_No" type="string"/>
+      <property name="connection_string" column="Connection_String" type="string"/>          
+      
+	  <property name="isVerified" column="isVerified" type="boolean"/>
+      <property name="isActive" column="isActive" type="boolean"/>
+      <property name="timestamp" column="timestamp" type="java.sql.Timestamp"/>
+
+   </class>
+</hibernate-mapping>
