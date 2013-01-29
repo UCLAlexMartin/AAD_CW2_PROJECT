@@ -8,7 +8,7 @@
 
 <%
 		
-		if(request.getParameter("LogginAttempt")!=null &&
+		/*if(request.getParameter("LogginAttempt")!=null &&
 			request.getParameter("txtUsername")!=null &&
 			request.getParameter("txtPassword")!=null)
 		{
@@ -54,7 +54,7 @@
 			    //GTFO!
 			    response.sendRedirect("login.jsp");				
 			}
-		}
+		}*/
 
 %>
 
