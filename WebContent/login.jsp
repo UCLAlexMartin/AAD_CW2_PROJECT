@@ -8,7 +8,11 @@
 		
 		<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
 		<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
-		<link rel="stylesheet" href="css/style1.css" type="text/css" media="all">	
+		<link rel="stylesheet" href="css/style1.css" type="text/css" media="all">
+
+		<script type="text/javascript" language="javascript" src="http://www.jsvalidate.com/scriptaculous/lib/prototype.js"></script>
+		<script type="text/javascript" language="javascript" src="http://www.jsvalidate.com/scriptaculous/src/scriptaculous.js"></script>
+		<script type="text/javascript" language="javascript" src="http://www.jsvalidate.com/versions/jsvalidate_beta04.js"></script>
 </head>
 <body id="page1">
 	<div class="body1">
@@ -37,7 +41,7 @@
 								<label for="txtUsername">Username</label>
 			        		</td>
 			        		<td>
-			        			<input type="text" class="loginTextbox" style="width:240px;" name="txtUsername" id="txtUsername" required>
+			        			<input type="text" class="jsrequired jsvalidate_alphanum" style="width:240px;" name="txtUsername" id="txtUsername" required>
 							</td>
 						</tr>
 						
@@ -46,7 +50,7 @@
 								<label for="txtPassword">Password  </label>
 			        		</td>
 			        		<td>
-			        		  	<input type="password" class="loginTextbox" style="width:240px;" name="txtPassword" id="txtPassword" required>
+			        		  	<input type="password" class="jsrequired" style="width:240px;" name="txtPassword" id="txtPassword" required/>
 							</td>
 						</tr>
 						
