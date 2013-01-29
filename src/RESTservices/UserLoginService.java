@@ -14,7 +14,7 @@ public class UserLoginService {
 		
 		RESTdataEntities.UserLoginEntity UserResult = new UserLoginEntity();
 		org.hibernate.Session HibernateSession = hibernateEntities.HibernateUtil.getSessionFactory().openSession();
-		try{
+		/*try{
 			org.hibernate.Query QueryResult = HibernateSession.createQuery("FROM Users");
 			java.util.List users = QueryResult.list();
 	        for (int i = 0; i < users.size(); i++) {
@@ -27,8 +27,8 @@ public class UserLoginService {
 	         e.printStackTrace(); 
 	      }finally {
 	    	  HibernateSession.close(); 
-	      }
-		
+	      }*/
+		HibernateSession.close();
 		return UserResult;
 	}
 }
