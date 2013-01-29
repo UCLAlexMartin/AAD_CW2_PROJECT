@@ -8,7 +8,11 @@
 		
 		<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
 		<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
-		<link rel="stylesheet" href="css/style1.css" type="text/css" media="all">	
+		<link rel="stylesheet" href="css/style1.css" type="text/css" media="all">
+
+		<script type="text/javascript" language="javascript" src="http://www.jsvalidate.com/scriptaculous/lib/prototype.js"></script>
+		<script type="text/javascript" language="javascript" src="http://www.jsvalidate.com/scriptaculous/src/scriptaculous.js"></script>
+		<script type="text/javascript" language="javascript" src="http://www.jsvalidate.com/versions/jsvalidate_beta04.js"></script>
 </head>
 <body id="page1">
 	<div class="body1">
@@ -38,7 +42,7 @@
 								<label for="txtCharity">Charity Name</label>
 			        		</td>
 			        		<td>
-			        			<input type="text" class="loginTextbox" style="width:240px;" name="txtCharity" id="txtCharity" required>
+			        			<input type="text" class="jsrequired jsvalidate_alphanum" style="width:240px;" name="txtCharity" id="txtCharity" required>
 							</td>
 						</tr>
 						
@@ -47,7 +51,7 @@
 								<label for="txtReg">Registration Number</label>
 			        		</td>
 			        		<td>
-			        		  	<input type="text" class="loginTextbox" style="width:240px;" name="txtReg" id="txtReg" required>
+			        		  	<input type="text" class="jsrequired jsvalidate_num" style="width:240px;" name="txtReg" id="txtReg" required>
 							</td>
 						</tr>
 						
@@ -56,7 +60,7 @@
 								<label for="txtChEmail">Charity Email</label>
 			        		</td>
 			        		<td>
-			        		  	<input type="text" class="loginTextbox" style="width:240px;" name="txtChEmail" id="txtChEmail" required>
+			        		  	<input type="text" class="jsrequired jsvalidate_email" style="width:240px;" name="txtChEmail" id="txtChEmail" required>
 							</td>
 						</tr>
 						
@@ -65,7 +69,7 @@
 								<label for="txtChDetails">Charity Details</label>
 			        		</td>
 			        		<td>
-			        		  	<input type="text" class="loginTextbox" style="width:240px;" name="txtChDetails" id="txtChDetails" required>
+			        		  	<input type="text" class="jsrequired" style="width:240px;" name="txtChDetails" id="txtChDetails" required>
 							</td>
 						</tr>
 						
