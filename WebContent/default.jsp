@@ -21,7 +21,7 @@
 
 
 <%
-		
+		/*
 		if(request.getParameter("LogginAttempt")!=null &&
 			request.getParameter("txtUsername")!=null &&
 			request.getParameter("txtPassword")!=null)
@@ -31,18 +31,18 @@
 			out.println("txtUsername:"+request.getParameter("txtUsername") + "<br/>");
 			out.println("txtPassword:"+request.getParameter("txtPassword") + "<br/>");
 			out.println("GenerateSalt:"+PasswordEncryption.createSalt()+ "<br/>");
-			/*
+			*//*
 			com.sun.jersey.api.client.config.ClientConfig 	JersyConfig = 	new com.sun.jersey.api.client.config.DefaultClientConfig();
 			com.sun.jersey.api.client.Client 				client 		= 	com.sun.jersey.api.client.Client.create(JersyConfig);
 			com.sun.jersey.api.client.WebResource 			service 	= 	client.resource(Configuration.SiteUrl);
-			*/
+			*//*
 			try
 			{
-				/*systemDBHibernateEntities.User user = */
+				*//*systemDBHibernateEntities.User user = *//*
 				System.out.println("default.jsp FormFieldsClient.get call");		
 				FormFieldsClient.get(request.getParameter("txtUsername"));
 				
-				/*
+				*//*
 				out.println("User-Username"+user.getUserName()+ "<br/>");
 				out.println("User-salt"+user.getSalt()+ "<br/>");
 				out.println("User-password"+user.getUserPassword()+ "<br/>");
@@ -54,7 +54,7 @@
 				{
 					out.println("Invalid User");
 				}
-				*/
+				*//*
 				
 				
 				
@@ -92,7 +92,7 @@
 			    response.sendRedirect("login.jsp");				
 			}
 		}
-
+*/
 %>
 
 
