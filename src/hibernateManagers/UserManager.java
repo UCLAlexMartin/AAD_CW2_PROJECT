@@ -1,8 +1,9 @@
 package hibernateManagers;
 
+import hibernateEntities.User;
+
 import java.util.ArrayList;
 
-import charityDBHibernateEntities.User;
 
 
 

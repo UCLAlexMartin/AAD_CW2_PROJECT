@@ -15,11 +15,13 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.sun.jersey.api.client.config.ClientConfig" %>
+<%@ page import="RESTClient.*"%>
+<%@ page import="hibernateEntities.*"%>
 
 
 
 <%
-		/*
+		
 		if(request.getParameter("LogginAttempt")!=null &&
 			request.getParameter("txtUsername")!=null &&
 			request.getParameter("txtPassword")!=null)
@@ -38,24 +40,19 @@
 			
 			try
 			{
-				*//*com.sun.jersey.api.client.ClientResponse clientresponse = service.path("REST")
+				/*com.sun.jersey.api.client.ClientResponse clientresponse = service.path("REST")
 																				 .path("userService")
 																				 .path("userName")
 																				 .path(request.getParameter("txtUsername"))
 																				 .accept(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 																				 .get(com.sun.jersey.api.client.ClientResponse.class);
-				
-				*//*out.println(clientresponse.getEntityInputStream());
-				ClientConfig clientConfig = new DefaultClientConfig();
-				clientConfig.getClasses().add(JacksonJsonProvider.class);
-				Client Myclient = Client.create(clientConfig);
-				ClientResponse clientresponse = Myclient.resource("http://localhost:8080/CharityWare/REST/")
-						.path("userService").path("userName").path(request.getParameter("txtUsername"))
-						.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).
-						get(ClientResponse.class);
-				Map<Integer,ArrayList<String>> ABC = clientresponse.getEntity(new GenericType<Map<Integer,ArrayList<String>>>		
 				*/
-				/*
+				
+				User user = FormFieldsClient.get(request.getParameter("txtUsername"));
+				//out.println(clientresponse.getEntityInputStream());
+				out.println("User ID from Hibernate is:"+user.getUser_id());
+				
+				
 																			
 			}catch(Exception e)
 			{
@@ -89,7 +86,7 @@
 			    //GTFO!
 			    response.sendRedirect("login.jsp");				
 			}
-		}*/
+		}
 
 %>
 
