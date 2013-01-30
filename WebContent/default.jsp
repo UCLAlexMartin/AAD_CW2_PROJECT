@@ -16,12 +16,12 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.sun.jersey.api.client.config.ClientConfig" %>
 <%@ page import="RESTClient.*"%>
-<%@ page import="hibernateEntities.*"%>
+<%@ page import="systemDBHibernateEntities.*"%>
 
 
 
 <%
-/*		
+		
 		if(request.getParameter("LogginAttempt")!=null &&
 			request.getParameter("txtUsername")!=null &&
 			request.getParameter("txtPassword")!=null)
@@ -30,27 +30,32 @@
 			out.println("LogginAttempt:"+request.getParameter("LogginAttempt") + "<br/>");
 			out.println("txtUsername:"+request.getParameter("txtUsername") + "<br/>");
 			out.println("txtPassword:"+request.getParameter("txtPassword") + "<br/>");
-			String whatever = PasswordEncryption.createSalt();
-			out.println("RandomSalt:"+whatever + "<br/>");
-			out.println("PasswordHash:"+PasswordEncryption.encryptPassword(request.getParameter("txtPassword"), whatever) + "<br/>");
-			
+			out.println("GenerateSalt:"+PasswordEncryption.createSalt()+ "<br/>");
+			/*
 			com.sun.jersey.api.client.config.ClientConfig 	JersyConfig = 	new com.sun.jersey.api.client.config.DefaultClientConfig();
 			com.sun.jersey.api.client.Client 				client 		= 	com.sun.jersey.api.client.Client.create(JersyConfig);
 			com.sun.jersey.api.client.WebResource 			service 	= 	client.resource(Configuration.SiteUrl);
-			
+			*/
 			try
 			{
-				/*com.sun.jersey.api.client.ClientResponse clientresponse = service.path("REST")
-																				 .path("userService")
-																				 .path("userName")
-																				 .path(request.getParameter("txtUsername"))
-																				 .accept(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-																				 .get(com.sun.jersey.api.client.ClientResponse.class);
-				*/
+				/*systemDBHibernateEntities.User user = */
+				System.out.println("default.jsp FormFieldsClient.get call");		
+				FormFieldsClient.get(request.getParameter("txtUsername"));
+				
 				/*
-				User user = FormFieldsClient.get(request.getParameter("txtUsername"));
-				//out.println(clientresponse.getEntityInputStream());
-				out.println("User ID from Hibernate is:"+user.getUser_id());
+				out.println("User-Username"+user.getUserName()+ "<br/>");
+				out.println("User-salt"+user.getSalt()+ "<br/>");
+				out.println("User-password"+user.getUserPassword()+ "<br/>");
+				out.println("PostPasswordHash:"+PasswordEncryption.encryptPassword(request.getParameter("txtPassword"), user.getSalt()) + "<br/>");
+				if(PasswordEncryption.encryptPassword(request.getParameter("txtPassword"), user.getSalt()) == user.getUserPassword())
+				{
+					out.println("Valid User");
+				}else
+				{
+					out.println("Invalid User");
+				}
+				*/
+				
 				
 				
 																			
@@ -87,7 +92,7 @@
 			    response.sendRedirect("login.jsp");				
 			}
 		}
-*/
+
 %>
 
 
