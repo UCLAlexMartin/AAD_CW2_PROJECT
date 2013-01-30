@@ -1,5 +1,9 @@
 package RESTservices;
 
+import hibernateEntities.Form;
+import hibernateEntities.FormFields;
+import hibernateEntities.HibernateUtil;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +24,6 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import charityDBHibernateEntities.Form;
-import charityDBHibernateEntities.FormFields;
-import charityDBHibernateEntities.HibernateUtil;
 
 
 /**

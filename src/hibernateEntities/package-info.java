@@ -1,0 +1,8 @@
+/**
+ * 
+ */
+/**
+ * @author irimnoho
+ *
+ */
+package hibernateEntities;

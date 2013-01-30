@@ -61,7 +61,7 @@ public class ConnectionManager {
 	private static Session getSession(){
 		if (factory ==null){
 			Configuration conf = new Configuration();
-			conf.configure();
+			conf.configure("/hibernateEntities/hibernate.cfg.xml");
 			factory = conf.buildSessionFactory();
 			return factory.openSession();
 		}

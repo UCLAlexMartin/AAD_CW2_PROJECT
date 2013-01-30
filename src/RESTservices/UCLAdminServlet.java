@@ -1,5 +1,7 @@
 package RESTservices;
 
+import hibernateEntities.*;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -15,7 +17,6 @@ import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import charityDBHibernateEntities.*;
 
 
 /**
