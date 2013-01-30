@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 import ConnectionManager.DatabaseManager;
+import RESTdataEntities.Charity;
 
 /**
  * REST Web Service

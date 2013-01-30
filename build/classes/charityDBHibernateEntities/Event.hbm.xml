@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+ <hibernate-mapping>
+  <class name="hibernateEntities.Event" table="event">
+      <id name="event_id" type="int" column="event_id">
+         <generator class="native"/>
+      </id>
+	<property name="event_name" column="event_name" type="string"/>
+	<property name="event_description" column="event_description" type="string"/>
+	<property name="event_location" column="event_location" type="string"/>
+	<property name="event_date" column="event_date" type="java.sql.Date"/>
+	<many-to-one name="user_id" class="hibernateEntities.User" unique="true" lazy="false">
+		<column name="user_id"/>
+	</many-to-one>
+	<property name="event_time" column="event_time" type="java.sql.Time"/>
+	<property name="timestamp" column="timestamp" type="java.sql.Timestamp"/>
+   </class>
+ </hibernate-mapping>

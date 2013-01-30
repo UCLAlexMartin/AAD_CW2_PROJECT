@@ -160,10 +160,13 @@
                         </ul>
 			     </div>  
 			     
-			     <div id="content_3" class="tabContent">
-			     		<iframe src="https://www.google.com/calendar/embed?src=mghh43qdbd9baft4ulhsugv3sc%40group.calendar.google.com&ctz=Europe/London" style="border: 5px" width="800" height="600" frameborder="0" scrolling="no">
-			     		</iframe>
-			     </div>  
+			    <div id="content_3" class="tabContent">
+					<ul id="menubar2">
+						<li><a href="ViewEvents.jsp"> View Events </a> <b>|</b> </li>
+	             	    <li><a href = "AddEvents.jsp"> Add Events </a>  </li>
+	                 </ul>
+				</div>         
+             
 			     
 			     <div id="content_4" class="tabContent">
 			     		<form id="frmSearch" name="frmSearch" method="post" action="">

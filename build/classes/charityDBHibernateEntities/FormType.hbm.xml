@@ -1,0 +1,15 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+ <hibernate-mapping>
+  <class name="hibernateEntities.FormType" table="form_type">
+      <meta attribute="class-description">
+         This class contains the filled form detail. 
+      </meta>
+      <id name="form_type_id" type="int" column="form_type_id">
+         <generator class="native"/>
+      </id>
+      <property name="form_type"  column="form_type" type="string"/>
+      <property name="isActive" column="isActive" type="boolean"/>
+   </class>
+ </hibernate-mapping>

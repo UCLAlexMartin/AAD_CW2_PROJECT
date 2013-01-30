@@ -4,11 +4,23 @@
 <%@ page import="staticResources.*" %>
 
 
+<%@ page import="com.sun.jersey.api.client.Client" %>
+<%@ page import="com.sun.jersey.api.client.ClientResponse" %>
+<%@ page import="com.sun.jersey.api.client.GenericType" %>
+<%@ page import="com.sun.jersey.api.client.config.ClientConfig" %>
+<%@ page import="com.sun.jersey.api.client.config.DefaultClientConfig" %>
+
+<%@ page import="org.codehaus.jackson.jaxrs.JacksonJsonProvider" %>
+<%@ page import="javax.ws.rs.core.MediaType" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.sun.jersey.api.client.config.ClientConfig" %>
+
 
 
 <%
-		
-		/*if(request.getParameter("LogginAttempt")!=null &&
+		/*
+		if(request.getParameter("LogginAttempt")!=null &&
 			request.getParameter("txtUsername")!=null &&
 			request.getParameter("txtPassword")!=null)
 		{
@@ -23,9 +35,32 @@
 			com.sun.jersey.api.client.config.ClientConfig 	JersyConfig = 	new com.sun.jersey.api.client.config.DefaultClientConfig();
 			com.sun.jersey.api.client.Client 				client 		= 	com.sun.jersey.api.client.Client.create(JersyConfig);
 			com.sun.jersey.api.client.WebResource 			service 	= 	client.resource(Configuration.SiteUrl);
-		    
-		    out.println(service.path("REST").path("UserLoginService").path("Username").path(request.getParameter("txtUsername")).accept(javax.ws.rs.core.MediaType.APPLICATION_XML).get(String.class));
-		    					
+			
+			try
+			{
+				*//*com.sun.jersey.api.client.ClientResponse clientresponse = service.path("REST")
+																				 .path("userService")
+																				 .path("userName")
+																				 .path(request.getParameter("txtUsername"))
+																				 .accept(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+																				 .get(com.sun.jersey.api.client.ClientResponse.class);
+				
+				*//*out.println(clientresponse.getEntityInputStream());
+				ClientConfig clientConfig = new DefaultClientConfig();
+				clientConfig.getClasses().add(JacksonJsonProvider.class);
+				Client Myclient = Client.create(clientConfig);
+				ClientResponse clientresponse = Myclient.resource("http://localhost:8080/CharityWare/REST/")
+						.path("userService").path("userName").path(request.getParameter("txtUsername"))
+						.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).
+						get(ClientResponse.class);
+				Map<Integer,ArrayList<String>> ABC = clientresponse.getEntity(new GenericType<Map<Integer,ArrayList<String>>>		
+				*/
+				/*
+																			
+			}catch(Exception e)
+			{
+				e.printStackTrace();				
+			}
 			
 		}
 		else
