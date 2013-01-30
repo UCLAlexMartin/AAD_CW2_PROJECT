@@ -11,7 +11,11 @@
 		<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
 		<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
 		<link rel="stylesheet" href="css/style1.css" type="text/css" media="all">
-			
+		
+		<script type="text/javascript" src="js/common-validator-2.0.min.js"></script>
+	  <script type="text/javascript" src="js/common-validator-messages.js"></script>
+	  <script type="text/javascript" src="js/common-validator-config.js"></script>
+	  	
 		<script type="text/javascript" src="js/tabsScript.js"></script>
 		<script type="text/javascript" src="js/charityManager.js"></script>
 		<script type="text/javascript" src="js/xhr.js"></script>
@@ -56,6 +60,7 @@
 	      {
 	    	  tabSwitch(1,5,'tab_', 'content_');
 	    	  document.getElementById("argc").value = 0;
+		  viewCurrentFormStructure();
 		  }
 	      
     	</script>
@@ -129,7 +134,7 @@
       					<fieldset id = "fieldselect">
       					<legend>Field wizard</legend>
       					<label for="fieldname">Field name</label>
-      					<input id="fieldname" type="text"/>
+      					<input id="fieldname" type="text" validate="notEmpty:true, English:ture"/>
       					<label for="typeoptions">Input type</label>
       					<select id="typeoptions" onchange="onRowTypeChanged()">
       					<c:forEach items="${fieldTypes}" var="iType">
@@ -200,7 +205,7 @@
 						      <option>Category3</option>
 						    </select>
 						:
-						<input type="text" />
+						<input type="text" validate="notEmpty:true" />
 						  </p>
 						  <p>&nbsp;</p>
 						  <p>

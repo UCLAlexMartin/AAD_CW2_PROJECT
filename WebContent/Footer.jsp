@@ -8,6 +8,9 @@
 		<link rel="stylesheet" href="css/style1.css" type="text/css" media="all">
 			
 		<script type="text/javascript" src="js/tabsScript.js"></script>
+		<script type="text/javascript" src="js/common-validator-2.0.min.js"></script>
+	   <script type="text/javascript" src="js/common-validator-messages.js"></script>
+	   <script type="text/javascript" src="js/common-validator-config.js"></script>
 </head>
 <body id="page1">
 
@@ -37,10 +40,10 @@
 					<table style="border-spacing:5px;border-collapse: inherit;">
 						<tr>
 							  	<td>Name<br/>
-							  		<input type="text" class="contactTextbox" style="width:240px;">
+							  		<input type="text" class="contactTextbox" style="width:240px;" validate="(notEmpty:true, english:true, wordchar: true)">
 							  	</td>
 							  	<td>Email<br/>
-							  		<input type="text" class="contactTextbox" style="width:240px;">
+							  		<input type="text" class="contactTextbox" style="width:240px;" validate="(notEmpty:true,checkemail:true)">
 							  	</td>
 						</tr>
 						<tr>
@@ -50,7 +53,7 @@
 						</tr>
 						<tr>
 							  	<td colspan=2>
-							  		<input type="submit" value="SUBMIT" class="contactSubmit"/>
+							  		<input type="submit" value="SUBMIT" class="contactSubmit" validate="(notEmpty:true)"/>
 							  	</td>
 						</tr>
 				 	</table>
