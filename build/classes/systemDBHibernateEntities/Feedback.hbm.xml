@@ -18,7 +18,7 @@
                 
       <property name="reviewed_date" column="ReviewedDate" type="java.sql.Date"/>
       <property name="isReviewed" column="isReviewed" type="boolean"/>
-      <property name="timestamp" column="timestamp" type="java.sql.Timestamp"/>
+      <property name="timestamp" column="Timestamp" type="java.sql.Timestamp"/>
 
    </class>
 </hibernate-mapping>
