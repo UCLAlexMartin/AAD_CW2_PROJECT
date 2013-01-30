@@ -10,7 +10,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
-import RESTservices.Charity;
 import RESTdataEntities.*;
 import staticResources.Configuration;
 

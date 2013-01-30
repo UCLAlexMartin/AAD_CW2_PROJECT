@@ -34,7 +34,7 @@ function createCalender(year, month, day)
 	var curDate = new Date();
 	var curDay = curDate.getDate();
 	var curMonth = curDate.getMonth();
-	var curYear = getRealYear(curDate)
+	var curYear = getRealYear(curDate);
 
 	 // if a date already exists, we calculate some values here
 	if (!year)
