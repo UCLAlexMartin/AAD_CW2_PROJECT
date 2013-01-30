@@ -9,8 +9,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import RESTdataEntities.*;
+import java.text.DateFormat;
 import staticResources.Configuration;
 
 public class DatabaseManager {
@@ -122,27 +125,24 @@ public class DatabaseManager {
      
      
      public static String readCharityDataV2() throws Exception {
-
-    	 StringBuilder result = new StringBuilder();
-
-    	 getCharityConn("Charity_Db_Test_Model");
-    	 statement = conn.createStatement();
-
-    	 resultSet = statement.executeQuery
-    	 ("SELECT Username as u,COUNT(*) as c FROM ( SELECT Users.Username AS Username,Filled_Form.User_Id as UserID, count(Filled_Form.Record_Id) as TotalInputs FROM Filled_Form INNER JOIN Form_Fields ON Filled_Form.Field_Id = Form_Fields.Field_Id INNER JOIN Users ON Filled_Form.User_Id = Users.User_Id WHERE Users.isActive = 1 AND Filled_Form.isActive = 1 AND Form_Fields.isActive = 1 GROUP BY Filled_Form.Record_Id) AS TEMP GROUP BY UserID"); 
-
-    	 result.append('[');
-    	 while(resultSet.next())
-    	 {
-    	 result.append(String.format("[\"%s\",%d],", resultSet.getString("u"), resultSet.getInt("c")));
-    	 }
-    	 result.setCharAt(result.length()-1, ']');
-    	 closeConn();
-
-    	 return result.toString();
-    }
-
-
+         
+    	 String result = "";
+    	 
+        	 getCharityConn("Charity_Db_Test_Model");
+        	 statement = conn.createStatement();
+        	 
+        	 resultSet = statement.executeQuery
+        	("SELECT Username as u,COUNT(*) as c FROM ( SELECT Users.Username AS Username,Filled_Form.User_Id as UserID, count(Filled_Form.Record_Id) as TotalInputs FROM Filled_Form INNER JOIN Form_Fields ON Filled_Form.Field_Id = Form_Fields.Field_Id INNER JOIN Users ON Filled_Form.User_Id = Users.User_Id WHERE Users.isActive = 1 AND Filled_Form.isActive = 1 AND Form_Fields.isActive = 1 GROUP BY Filled_Form.Record_Id) AS TEMP GROUP BY UserID"); 
+        	   
+        	 while(resultSet.next())
+        	 {
+        		result += String.format("['%s',%d],", resultSet.getString("u"), resultSet.getInt("c"));
+        	 }
+        	          
+        	 closeConn();
+             	 
+    	 return result;
+     }
      
      public static List<Charity> readCharityTable() throws Exception {
         Charity ch;
@@ -334,6 +334,40 @@ public class DatabaseManager {
          closeConn();
     	 return fd; 
      }          
+    public static boolean delSingleFeedback(int feedbackid) throws Exception{
+    	 
+    	 getSystemConn();
+    	 statement = conn.createStatement();
+         boolean result;
+    	 result = statement.execute(
+    			 "Delete from feedback where feedback.Feedback_id = " + feedbackid);
+    	 
+    	
+         closeConn();
+    	 return result; 
+     }  
+    
+     public static boolean updSingleFeedback(feedbackEntity fd) throws Exception{
+
+    	 getSystemConn();
+         boolean updSuccess;
+    	 statement = conn.createStatement();
+          DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+         
+         String sql =  "update feedback set Name = '" + fd.getName() + "', " +
+                         "Email = '" + fd.getEmail() + "'," +
+                         "Comment = '" + fd.getComment() + "'," +
+                         "ReviewedBy = " + fd.getReviewedBy().getUserId() + "," +
+                         "ReviewedDate = '" + df.format(fd.getReviewedDate()) + "'," +
+                         "isReviewed = " + fd.getIsReviewed() + 
+                         " where feedback_id = " + fd.getFeedbackId();
+    	 updSuccess = statement.execute(sql);
+    			
+         closeConn(); 
+         return updSuccess;
+     }              
+     
      
      public static void addFeedback(feedbackEntity fd) throws Exception{
 
