@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="ConnectionManager.*" %>
+<%@ page import="java.util.List"%>
+<%@page import="XMLParse.xmlParser"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -173,46 +175,73 @@
 			     		<iframe src="https://www.google.com/calendar/embed?src=mghh43qdbd9baft4ulhsugv3sc%40group.calendar.google.com&ctz=Europe/London" style="border: 5px" width="800" height="600" frameborder="0" scrolling="no">
 			     		</iframe>
 			     </div>  
-			     
-			     <div id="content_4" class="tabContent">
-			     		<form id="frmSearch" name="frmSearch" method="post" action="">
-						  <p>
-						    <label for=""></label>
-						    <select name="Category" id="Category">
-						      <option>Date</option>
-						      <option>Category1</option>
-						      <option>Category2</option>
-						      <option>Category3</option>
-						    </select>
-						    :
-						<input type="text" />
-						  </p>
-						  <p>
-						    <select name="Category2" id="Category2">
-						      <option>Date</option>
-						      <option>Category1</option>
-						      <option>Category2</option>
-						      <option>Category3</option>
-						    </select>
-						:
-						<input type="text" />
-						  </p>
-						  <p>
-						    <select name="Category3" id="Category3">
-						      <option>Date</option>
-						      <option>Category1</option>
-						      <option>Category2</option>
-						      <option>Category3</option>
-						    </select>
-						:
-						<input type="text" validate="notEmpty:true" />
-						  </p>
-						  <p>&nbsp;</p>
-						  <p>
-						    <input type="submit" name="Search" id="Search" value="Search" />
-						  </p>
-						</form>
-			     </div>  
+						<!-- /**
+ *  By Kede Bei
+ * 	Last Updated: 30/01/2012 2:22am
+ * **/ -->
+						<script type="text/javascript">
+							function sendGetRequest() {
+								var xmlhttp;
+								xmlhttp = new XMLHttpRequest();
+								xmlhttp
+										.open(
+												"GET",
+												"http://localhost:8080/WEB-INF/webresources/search",
+												false);
+								xmlhttp.setRequestHeader("Content-Type",
+										"application/xml");
+								xmlhttp.send(null);
+								alert(xmlhttp.responseText);
+							}
+
+							function sendPostRequest(a,b) {
+								window.location.href ="search.action?a"+a;
+								window.location.href ="search.action?b"+b;
+								var xmlhttp;
+								xmlhttp = new XMLHttpRequest();
+								xmlhttp
+										.open(
+												"POST",
+												"http://localhost:8080/WEB-INF/webresources/search",
+												false);
+								xmlhttp.setRequestHeader("Content-Type",
+										"application/xml");
+
+								xmlhttp.send("<"+a+">" + b
+										+ "</"+b+">");
+								alert(xmlhttp.responseText);
+							}
+						</script>
+						<div id="content_4" class="tabContent">
+							<Form id="charityAdmin.jsp" name="frmSearch" method="post"
+								action="search">
+								<p>
+									<label for=""></label> <select name="category" id="category"
+										name="category">
+
+										<%
+											List<String> list = ConnectionManager.DatabaseManager.searchtitle();
+											for (int i = 0; i < list.size(); i++) {
+										%>
+										<option>
+											<%=list.get(i)%>
+										</option>
+										<%
+											}
+										%>
+									</select> : <input type="text" name="keywords" />
+								</p>
+								<p>&nbsp;</p>
+								<p>
+									<%
+										String a = request.getParameter("category");
+										String b = request.getParameter("keywords");
+									%>
+									<input type="submit" name="Search" id="Search" value="Search"
+										onclick="PostRequset(<%=a%>,<%=b%>)" />
+								</p>
+							</form>
+						</div>
 			     
 			     <div id="content_5" class="tabContent">
 			     		<ul id="menubar2">

@@ -12,6 +12,7 @@ import java.util.TreeMap;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import RESTservices.Charity;
 import RESTdataEntities.*;
 import java.text.DateFormat;
 import staticResources.Configuration;
@@ -448,5 +449,44 @@ public class DatabaseManager {
                           "')");
          closeConn(); 
      }      
-    
+     /**
+      *  By Kede Bei
+      * 	Last Updated: 30/01/2012 3:08am
+      * **/
+
+     
+     public static List<String> searchtitle()
+     {
+     	List<String> list=new ArrayList<String>();
+        	 try {
+ 			 getCharityConn("Charity_Db_Test_Model");
+ 			 Statement statement = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE); 
+ 			 resultSet=statement.executeQuery("select * from form_fields");
+// 	       	 ResultSetMetaData rsmd = resultSet.getMetaData() ; 
+// 	       	 int columnCount = rsmd.getColumnCount();
+// 	       	 for (int i=1;i<=columnCount;i++)
+// 	       	 {
+// 	       		 list.add(rsmd.getColumnName(i));
+// 	       	  
+// 	       	 }
+ 	       	 while(resultSet.next())
+ 	       	 {
+ 	       		list.add(resultSet.getString("Field_Label"));
+// 	       	 ResultSetMetaData rsmd = resultSet.getMetaData() ; 
+// 	       	 for(int i=1;i<rsmd.getColumnCount();i++)
+// 	       	 {
+// 	       		 list.add(String.valueOf(resultSet.getString("Field_Label")));
+// 	       	 }
+ 	       	 }
+ 	     
+ 		} catch (Exception e) {
+ 			// TODO Auto-generated catch block
+ 			
+ 			System.out.print("can");
+ 		}
+			return list;
+        	
+
+     	
+     }
 }

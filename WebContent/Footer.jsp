@@ -32,7 +32,7 @@
 			          <li><a href="#" class="normaltip"><img src="images/icon1.gif" alt=""></a></li>
 			          <li><a href="#" class="normaltip"><img src="images/icon2.gif" alt=""></a></li>
 			          <li><a href="#" class="normaltip"><img src="images/icon3.gif" alt=""></a></li>
-			          <li><a href="#" class="normaltip"><img src="images/pp.png" height="20" alt=""></a></li>
+			          <li><a href="paypal.html" class="normaltip"><img src="images/pp.png" height="20" alt=""></a></li>
 			        </ul>
 				  </div>
 				  
@@ -62,7 +62,8 @@
 	     </div>
 	      <!-- Contact Us Footer -->
 	      
-	      <div id="footer_text">Copyright &copy; <a href="http://www.ucl.ac.uk">UCL</a> All Rights Reserved &nbsp;&nbsp;&nbsp;&nbsp;
+	      <div id="footer_text">Copyright &copy; 
+	      <a href="http://www.ucl.ac.uk">UCL</a> All Rights Reserved &nbsp;&nbsp;&nbsp;&nbsp;
 	        Design by <a target="_blank" href="http://www.ucl.ac.uk">UCL Computer Science</a></div>
 	    </footer>
 	  
