@@ -32,7 +32,7 @@
 	      // draws it.
 	      function populateData(data)
 	      {
-	    	  resp = xhr("/CharityWare/StatisticsDataServlet",false);
+	    	  resp = xhr("/CharityWare/StatisticsDataServlet","GET",false);
 	    	  obj = JSON.parse(resp);
 	    	  data.addRows(obj);
 	      }
@@ -51,11 +51,18 @@
 	        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 	        chart.draw(data, options);
 	      }
+
+	      function onBodyLoad()
+	      {
+	    	  tabSwitch(1,5,'tab_', 'content_');
+	    	  document.getElementById("argc").value = 0;
+		  }
+	      
     	</script>
     	
     	<!-- Google Charts Stuff -->
 </head>
-<body id="page1">
+<body id="page1" onload="onBodyLoad()">
 	<div class="body1">
 		<div class="main">
 	  
@@ -85,68 +92,65 @@
 			       <div id="content_1" class="tabContent">
       					<fieldset id="myforms">
       					<legend>My forms</legend>
-      					<div id="myformslist">
       					<c:choose>
       					<c:when test='${sentForms!= null && sentForms.size() > 0}'>
+      					<label for="myformslist">Form name:</label>
+      					<select id="myformslist" onchange="currentFormChanged()">
       				 	<c:forEach items="${sentForms}" var="theform">
-      				 	<div>
-      				 	<input type="hidden" value="${theform.getFormId() }" />
-      				 	<label for="myform_${theform.getFormId()}">Form name:</label>
-      				 	<input type="text" readonly id="myform_${theform.getFormId()}" value='${theform.getFormName() }'/>
-      				 	<button type="button" onclick="viewCurrentFormStructure(this)">View structure</button>
-      				 	<button type="button" onclick="viewCurrentFormData(this)">View data</button>
-      				 	<button type="button" onclick="">Remove</button>
-      				 	</div>
+      				    <option value="${theform.getFormId()}"><c:out value="${theform.getFormName() }"/></option>
       				 	</c:forEach>
+      				 	</select>
+      				 	<button type="button" onclick="viewCurrentFormStructure()">View structure</button>
+      				 	<button type="button" onclick="viewCurrentFormData()">View data</button>
+      				 	<button type="button" onclick="deleteCurrentForm()">Remove this form</button>
       					</c:when>
       					<c:otherwise>
       						Sorry, it appears you have no forms defined!
       				 	</c:otherwise>
-      				 	</c:choose>     				 	
-      					</div>
-      					<button type="button" onclick="showWizard(this)">Add new Form</button>
+      				 	</c:choose>  
+      				 	<br/>   				 	
+      					<button type="button" onclick="showFormWizard()">Add new Form</button>
       					</fieldset>
-      					<fieldset id="currentformrows" class="nodisplay"></fieldset>
+      					<c:if test="${sentForms!= null && sentForms.size() > 0}">
+      					<fieldset id="currentformstructure" class="nodisplay">
+      					<div id="currentformstructurefill"></div>
+      					<button type="button" onclick="hideCurrentFormStructure()">Hide</button>
+      					</fieldset>
+      					<fieldset id="currentformdata" class="nodisplay">
+      					<div id="currentformdatafill"></div>
+      					<button type="button" onclick="hideCurrentFormData()">Hide</button>
+      					</fieldset>
+      					</c:if>
       					<fieldset id="formwizard" class="nodisplay">
       					<legend>Form Wizard</legend>
-      					
-      					<fieldset>
-      					<legend>Form description</legend>
       					<label>Form name:</label>
       					<input id="formname" type="text" />
-      					<label>Description</label>
-      					<input id="formdesc" type="text"/>
-      					<button type="button" id="btnSubmitForm" onclick="submitForm()">Create this form!</button>
-      					</fieldset>
-      					
+      					<button type="button" id="btnSubmitForm" onclick="">Create this form!</button>   					
       					<fieldset id = "fieldselect">
       					<legend>Field wizard</legend>
       					<label for="fieldname">Field name</label>
       					<input id="fieldname" type="text"/>
       					<label for="typeoptions">Input type</label>
       					<select id="typeoptions" onchange="onRowTypeChanged()">
-      					<option value="int" selected>Integer</option>
-      					<option value="string">String</option>
-      					<option value="datetime">Date</option>
-      					<option value="text">Text</option>
-      					<option value="bool">Yes/No</option>
-      					<option value="img">Image</option>
-      					<option value="enum">Dropdown</option>
+      					<c:forEach items="${fieldTypes}" var="iType">
+      					<option value="${iType.getField_type_id()}">${iType.getField_Description()}</option>
+      					</c:forEach>
       					</select>
       					<input type="checkbox" id="rowrequired" name="rowrequired"/>
       					<label for="rowrequired">Mandatory?</label>
-      					<br/>
       					<button onclick="addRow()" type="button" >Add row</button>
       					<div id="extra" class="nodisplay"></div>
       					<div id="errmsg" class="nodisplay"></div>
       					</fieldset>
-      					<form id="rowset" action="CreateTableServlet" method="post">
+      					<form id="rowset" action="FormServlet" method="post">
       					<fieldset>
-      					<input type="hidden" id="argc" name="argc" />
+      					<input type="hidden" id="argc" name="argc" value="0"/>
+      					<input type="hidden" name="req" value="create"/>
       					<legend>Current rows:</legend>
       					<div id="rowsetrows"></div>
-      					</fieldset>
+      					<button type="button" onclick="hideFormWizard()">Hide</button>
       					<button type="button" id="clearbtn" onclick='removeChildren(document.getElementById("rowsetrows") ); document.getElementById("argc").value=0;'>Clear all rows</button>
+      					</fieldset>
       					</form>
       					</fieldset>
 				   
@@ -160,13 +164,10 @@
                         </ul>
 			     </div>  
 			     
-			    <div id="content_3" class="tabContent">
-					<ul id="menubar2">
-						<li><a href="ViewEvents.jsp"> View Events </a> <b>|</b> </li>
-	             	    <li><a href = "AddEvents.jsp"> Add Events </a>  </li>
-	                 </ul>
-				</div>         
-             
+			     <div id="content_3" class="tabContent">
+			     		<iframe src="https://www.google.com/calendar/embed?src=mghh43qdbd9baft4ulhsugv3sc%40group.calendar.google.com&ctz=Europe/London" style="border: 5px" width="800" height="600" frameborder="0" scrolling="no">
+			     		</iframe>
+			     </div>  
 			     
 			     <div id="content_4" class="tabContent">
 			     		<form id="frmSearch" name="frmSearch" method="post" action="">

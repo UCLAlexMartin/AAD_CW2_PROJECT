@@ -9,7 +9,11 @@ import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.envers.Audited;
+
+import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 @Audited
@@ -22,9 +26,8 @@ public class Form {
 	private String url;
 	private Boolean isActive;
 	private Timestamp timestamp;
-	private Set<FormFields> fields;
-	private Set<FormPermissions> permissions;
-	
+	private Set<FormFields> fields = new HashSet<FormFields>();
+	private Set<FormPermissions> permissions = new HashSet<FormPermissions>();	
 	
 	public Form(){}
 	public Form(FormType ft) {
@@ -85,6 +88,7 @@ public class Form {
 		this.timestamp = timestamp;
 	}
 	@XmlElement
+	@JsonIgnore
 	public Set<FormFields> getFields() {
 		return fields;
 	}

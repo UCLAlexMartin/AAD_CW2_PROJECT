@@ -1,4 +1,4 @@
-function xhr(url,async,callback)
+function xhr(url,method,async,callback)
 {
 	var xmlhttp = newXhr();
 	xmlhttp.onreadystatechange=function()
@@ -9,8 +9,22 @@ function xhr(url,async,callback)
 			  callback(xmlhttp.responseText);
 	    }
 	  };
-	xmlhttp.open("GET",url,async);
-	xmlhttp.send();
+	
+	switch(method)
+	{
+	case "GET" : 
+		xmlhttp.open(method,url,async);
+		xmlhttp.send();
+		break;
+	case "POST" : 
+		var location = url.split("?",2)[0];
+		var params = url.split("?",2)[1];
+		xmlhttp.open(method,location,async);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlhttp.send(params);
+		break;
+	default: throw "Unaccepted xhr method!";
+	}
 	return xmlhttp.responseText;
 }
 

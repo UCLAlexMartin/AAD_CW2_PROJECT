@@ -2,12 +2,15 @@ package hibernateEntities;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.envers.Audited;
+
+import javax.persistence.Entity;
 
 @Entity
 @Audited
@@ -16,7 +19,7 @@ public class FilledForm {
 	
 	private Integer filled_form_id;
 	private FormFields form_field_id;
-	//private List<FormFields> form_fields;
+	private List<FormFields> form_fields;
 	private String value;
 	private User user_id;
 	private Integer record_id;
@@ -85,11 +88,11 @@ public class FilledForm {
 	public void setForm_field_id(FormFields form_field_id) {
 		this.form_field_id = form_field_id;
 	}
-	/*@XmlElement
+	@XmlElement
 	public List<FormFields> getForm_fields() {
 		return form_fields;
 	}
 	public void setForm_fields(List<FormFields> form_fields) {
 		this.form_fields = form_fields;
-	}*/
+	}
 }

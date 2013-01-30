@@ -12,5 +12,8 @@
       </id>
       <property name="field_selection_value" column="field_selection_value" type="string"/>
       <property name="timestamp" column="Timestamp" type="java.sql.Timestamp"/>
+      <many-to-one cascade="save-update" unique="true" name="formField" class="hibernateEntities.FormFields">
+      	<column name="field_id" not-null="true"/>
+      </many-to-one>
    </class>
 </hibernate-mapping>

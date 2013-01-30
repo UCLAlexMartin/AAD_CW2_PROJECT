@@ -1,7 +1,5 @@
 package RESTservices;
 
-import hibernateEntities.*;
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -20,7 +18,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
+import hibernateEntities.Form;
+import hibernateEntities.HibernateUtil;
+import hibernateEntities.*;
 /**
  * Servlet implementation class CharityAdminServlet
  */
@@ -43,7 +43,9 @@ public class CharityAdminServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		try {
 			List<Form> userForms = getFormsForUser();
+			List<FieldType> allTypes = getAllFieldTypes();
 			request.setAttribute("sentForms", userForms);
+			request.setAttribute("fieldTypes",allTypes);
 			request.getRequestDispatcher("/charityAdmin.jsp").forward(request, response); // Forward to JSP page to display them in a HTML table.
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -60,7 +62,6 @@ public class CharityAdminServlet extends HttpServlet {
 	
 	private List<Form> getFormsForUser()
 	{
-		 
 		 List<Form> forms = new ArrayList<Form>();
 		 Session session = HibernateUtil.getSessionFactory().openSession();
 	      Transaction tx = null;
@@ -83,6 +84,29 @@ public class CharityAdminServlet extends HttpServlet {
 		
 		return forms;
 		
+	}
+	
+	private List<FieldType> getAllFieldTypes()
+	{
+		List<FieldType> forms = new ArrayList<FieldType>();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try{
+	         tx = session.beginTransaction();
+	         List tForm = session.createQuery("FROM FieldType").list();
+	         for(Object o : tForm)
+	         {
+	        	 forms.add((FieldType)o);
+	         }
+	      }catch (HibernateException e) {
+	         if (tx!=null) tx.rollback();
+	         e.printStackTrace(); 
+	      }finally {
+	         session.close(); 
+	      }
+		
+		
+		return forms;
 	}
 	
 

@@ -21,7 +21,7 @@
 
 
 <%
-		
+/*		
 		if(request.getParameter("LogginAttempt")!=null &&
 			request.getParameter("txtUsername")!=null &&
 			request.getParameter("txtPassword")!=null)
@@ -47,7 +47,7 @@
 																				 .accept(javax.ws.rs.core.MediaType.APPLICATION_JSON)
 																				 .get(com.sun.jersey.api.client.ClientResponse.class);
 				*/
-				
+				/*
 				User user = FormFieldsClient.get(request.getParameter("txtUsername"));
 				//out.println(clientresponse.getEntityInputStream());
 				out.println("User ID from Hibernate is:"+user.getUser_id());
@@ -87,7 +87,7 @@
 			    response.sendRedirect("login.jsp");				
 			}
 		}
-
+*/
 %>
 
 

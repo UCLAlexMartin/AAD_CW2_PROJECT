@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.envers.Audited;
 
 @Entity
@@ -17,6 +18,7 @@ public class FieldSelection {
 	private Integer field_selection_id;
 	private String field_selection_value;
 	private Timestamp timestamp;
+	private FormFields formField;
 	
 	public FieldSelection() {}
 	
@@ -46,6 +48,13 @@ public class FieldSelection {
 		this.timestamp = timestamp;
 	}
 	
+	@JsonIgnore
+	public FormFields getFormField() {
+		return this.formField;
+	}
 	
+	public void setFormField(FormFields ff) {
+		formField = ff;
+	}
 	
 }

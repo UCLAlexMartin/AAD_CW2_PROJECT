@@ -15,6 +15,12 @@
         <property name="isActive" type="boolean" column="isActive"/>
         <property name="url" type="string" column="url"/>
         <property name="timestamp" type="java.sql.Timestamp" column="Timestamp"/>
+        
+        <set name="fields" table="form_fields" inverse="true" lazy="true" cascade="all-delete-orphan">
+        	<key column="form_id" not-null="true"/>
+        	<one-to-many class="hibernateEntities.FormFields" />
+        </set>
+        
     </class>
 
 </hibernate-mapping>
