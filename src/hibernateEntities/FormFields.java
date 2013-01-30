@@ -7,8 +7,9 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
+import java.util.HashSet;
 import org.hibernate.envers.Audited;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Audited
@@ -17,7 +18,7 @@ public class FormFields {
 	private Integer f_id;
 	private String field_label;
 	private FieldType field_type_id;
-	private Set<FieldSelection> field_selections;
+	private Set<FieldSelection> field_selections = new HashSet<FieldSelection>();
 	private Float X_coordinate;
 	private Float Y_coordinate;
 	private Boolean isRequired;
@@ -29,6 +30,8 @@ public class FormFields {
 	private Date date_created;
 	private Form form_id;
 	private Timestamp timestamp;
+	
+	private Set<FilledForm> filledForms = new HashSet<FilledForm>();
 	
 	@XmlElement
 	public Timestamp getTimestamp() {
@@ -66,8 +69,12 @@ public class FormFields {
 		this.field_type_id = field_type_id;
 	}
 	@XmlElement
+	@JsonIgnore
 	public Set<FieldSelection> getField_selections() {
 		return field_selections;
+	}
+	public void setField_selections(Set<FieldSelection> s) {
+		field_selections = s;
 	}
 	public void setField_selection_Id(Set<FieldSelection> field_selections) {
 		this.field_selections = field_selections;
@@ -135,13 +142,22 @@ public class FormFields {
 	public void setDate_created(Date date_created) {
 		this.date_created = date_created;
 	}
-/*	public Timestamp getTimeStamp() {
-		return timeStamp;
+	
+	@JsonIgnore
+	public Set<FilledForm> getFilledForms() {
+		return this.filledForms;
+	}
+	public void setFilledForms(Set<FilledForm> s) {
+		filledForms = s;
+	}
+	/*
+	public Timestamp getTimeStamp() {
+		return timestamp;
 	}
 	public void setTimeStamp(Timestamp timeStamp) {
-		this.timeStamp = timeStamp;
+		this.timestamp = timeStamp;
 	}
-*/
-	
+
+	*/
 	
 }

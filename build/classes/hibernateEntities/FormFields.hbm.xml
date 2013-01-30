@@ -32,6 +32,16 @@
         <property name="isActive" column="isActive" type="boolean"/>
         <property name="date_created" column="date_created" type="java.sql.Date"/>
         <property name="timestamp" not-null="true" column="Timestamp" type="java.sql.Timestamp"/>
+        
+        <set name="filledForms" table="filled_form" inverse="true" lazy="true" cascade="all-delete-orphan">
+        	<key column="field_id" not-null="true" /> 
+        	<one-to-many class="hibernateEntities.FilledForm" />
+        </set>       
+        <set name="field_selections" table="field_selection" inverse="true" lazy="true" cascade="all-delete-orphan">
+        	<key column="field_id" not-null="true" />
+        	<one-to-many class="hibernateEntities.FieldSelection" />
+        </set>
+        
     </class>
 
 </hibernate-mapping>

@@ -11,7 +11,7 @@
    <property name="log4j.logger.org.hibernate.type">
  	TRACE
    </property>
-   <property name="hibernate.max_fetch_depth">3</property>
+   <property name="hibernate.max_fetch_depth">4</property>
    <property name="hibernate.connection.driver_class">
       com.mysql.jdbc.Driver
    </property>
@@ -47,9 +47,9 @@ org.hibernate.envers.event.AuditEventListener
    <property name="hibernate.connection.username">
       root
    </property>
-   <property name="hibernate.connection.password">
+ <property name="hibernate.connection.password">
       root
-   </property>
+   </property> 
 	    
 	    <!-- Test property -->
 	     <property name="javax.persistence.validation.mode">none</property>

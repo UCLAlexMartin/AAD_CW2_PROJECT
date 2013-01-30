@@ -1,47 +1,114 @@
-function viewCurrentFormStructure(sender)
+function deleteCurrentForm()
 {
-	var formId = sender.parentNode.getElementsByTagName("input")[0].value;
-	xhr("/CharityWare/FormStructureServlet?q="+formId,true,
-			function(respText) {
-				var colArray = JSON.parse(respText);
-				var currentRows = document.getElementById("currentformrows");
-				removeChildren(currentRows);
-				unhide(currentRows);
-				var theLegend = createLegend("Form "+sender.parentNode.getElementsByTagName("input")[1].value+":");
-				currentRows.appendChild(theLegend);
-				for(var i = 0; i < colArray.length; i++)
-				{
-					var div = document.createElement("div");
-					var inputname = createTextBox("crn_"+i,colArray[i].fieldLabel,true);
-					var inputtype = createTextBox("crt_"+i,colArray[i].field_type_id,true);
-					var namelabel = createLabel("Field name:",inputname.id);
-					var typelabel = createLabel("Field type:",inputtype.id);
-					div.appendChild(namelabel);
-					div.appendChild(inputname);
-					div.appendChild(typelabel);
-					div.appendChild(inputtype);
-					currentRows.appendChild(div);
-				}
-				
+	if(confirm("Are you sure you want to delete form "+getCurrentFormName()+"?"))
+	{
+		xhr("/CharityWare/FormServlet?req=delete&q="+getCurrentFormId(),"POST",false);
+		location.reload(true);
 	}
-	
-	);
 }
 
-function showWizard(obj)
+function viewCurrentFormStructure()
 {
-	obj.innerHTML="Hide wizard";
-	obj.onclick = function() { hideWizard(obj); };
+	var formId = getCurrentFormId();
+	xhr("/CharityWare/FormServlet?req=structure&q="+formId,"GET",true,writeFormStructure);
+}
+function writeFormStructure(respText) {
+	var colArray = JSON.parse(respText);
+	var currentRows = document.getElementById("currentformstructurefill");
+	removeChildren(currentRows);
+	unhide(currentRows.parentNode);
+	if(colArray.length > 0)
+	{
+	var theLegend = createLegend("Form " + getCurrentFormName()+" structure");
+	currentRows.appendChild(theLegend);
+	var structureTable = document.createElement("table");
+	var header = document.createElement("tr");
+	var nameHead = document.createElement("th");
+	nameHead.appendChild(document.createTextNode("Column name"));
+	var typeHead = document.createElement("th");
+	typeHead.appendChild(document.createTextNode("Column type"));
+	header.appendChild(nameHead);
+	header.appendChild(typeHead);
+	structureTable.appendChild(header);
+	for(var i = 0 ; i < colArray.length; i++)
+	{
+		var row = document.createElement("tr");
+		var nameRow = document.createElement("td");
+		nameRow.appendChild(document.createTextNode(colArray[i].field_label));
+		var typeRow = document.createElement("td");
+		typeRow.appendChild(document.createTextNode(colArray[i].field_type_id.field_Description));
+		row.appendChild(nameRow);
+		row.appendChild(typeRow);
+		structureTable.appendChild(row);
+	}
+	structureTable.className = "gridtable";
+	currentRows.appendChild(structureTable);
+	}
+	else 
+		currentRows.appendChild(document.createTextNode("Sorry, this table has no columns defined"));
+}
+
+function viewCurrentFormData()
+{
+	var formId = getCurrentFormId();
+	xhr("/CharityWare/FormServlet?req=records&q="+formId,"GET",true,writeFormData);
+}
+
+function writeFormData(respText)
+{
+	var dataArray = JSON.parse(respText);
+	var currentData = document.getElementById("currentformdatafill");
+	removeChildren(currentData);
+	unhide(currentData.parentNode);
+	if(dataArray.records.length > 0)
+	{
+	var theLegend = createLegend("Form "+getCurrentFormName()+" data");
+	currentData.appendChild(theLegend);
+	var dataTable = document.createElement("table");
+	var headerRow = document.createElement("tr");
+	for(var i = 0; i < dataArray.columns.length; i++)
+	{
+		var th = document.createElement("th");
+		th.appendChild(document.createTextNode(dataArray.columns[i]));
+		headerRow.appendChild(th);
+	}
+	dataTable.appendChild(headerRow);
+	for(var i = 0; i < dataArray.records.length; i++)
+	{
+		var row = document.createElement("tr");
+		for(var j = 0 ; j < dataArray.columns.length; j++)
+		{
+			var cell = document.createElement("td");
+			cell.appendChild(document.createTextNode(dataArray.records[i].colVals[dataArray.columns[j]]) || "&nbsp;");
+			row.appendChild(cell);
+		}
+		dataTable.appendChild(row);
+	}
+	dataTable.className = "gridtable";
+	currentData.appendChild(dataTable);
+	window.scrollTo(0,dataTable.offsetTop);
+	}
+	else 
+		currentData.appendChild(document.createTextNode("Sorry, this table has no data"));
+	
+}
+
+
+function getCurrentFormId()
+{
+	var myforms = document.getElementById("myformslist");
+	return myforms.options[myforms.selectedIndex].value;
+}
+function getCurrentFormName()
+{
+	var myforms = document.getElementById("myformslist");
+	return myforms.options[myforms.selectedIndex].text;
+}
+
+function showFormWizard()
+{
 	var wizard = document.getElementById("formwizard");
 	unhide(wizard);
-}
-
-function hideWizard(obj)
-{
-	obj.innerHTML="Add new form";
-	obj.onclick = function() { showWizard(obj); };
-	var wizard = document.getElementById("formwizard");
-	hide(wizard);
 }
 
 
@@ -93,17 +160,23 @@ function constructRow()
 
 	var inputName = createTextBox("name_"+count,document.getElementById("fieldname").value,true);
 	var labelName = createLabel("Name:",inputName.id);
-	var inputType = createTextBox("type_"+count,getCurrentRowType(),true);	
+	var inputType = createTextBox("type_"+count+"_name",getCurrentRowTypeName(),true);	
 	var labelType = createLabel("Type:",inputType.id);   
+	var hiddenType = document.createElement("input");
+	hiddenType.type="hidden";
+	hiddenType.value=getCurrentRowTypeId();
+	hiddenType.id="type_"+count;
+	hiddenType.name=hiddenType.id;
     divelem.appendChild(labelName);
     divelem.appendChild(inputName);
     divelem.appendChild(labelType);
     divelem.appendChild(inputType);
+    divelem.appendChild(hiddenType);
     
     
     var req = document.createElement("input");
     req.type = "checkbox";
-    req.id = "req_"+count;
+    req.id = "isReq_"+count;
     req.name = req.id;
     req.checked = document.getElementById("rowrequired").checked;
     req.disabled = true;
@@ -133,25 +206,41 @@ function constructRow()
     
 }
 
-function getCurrentRowType()
+function getCurrentRowTypeName()
 {
 	
 	    var opt = document.getElementById("typeoptions");
-	    var ctype = opt.options[opt.selectedIndex].value;
-	    //yuck -- Please make sure that 'dropdown' is the last value in the allowed data types, two functions rely on that assumption!
-	    if(opt.selectedIndex == opt.options.length - 1)
+	    var ctype = opt.options[opt.selectedIndex].text;
+	    //TODO comment this out when you're done with it
+	    if(opt.selectedIndex == getIndexOfDropdownOption())
 	    {
 	    	var cmb = document.getElementById("currenumvalues");
 	    	ctype+="[";
 	    	for(var i = 0; i < cmb.options.length-1; i++)
 	    	{
-	    		ctype+="'"+cmb.options[i].value+"',";
+	    		ctype+=cmb.options[i].value+",";
 	    	}
-	    	ctype+="'"+cmb.options[cmb.options.length-1].value+"']";
+	    	ctype+=cmb.options[cmb.options.length-1].value+"]";
 	    }
+	   
 	    return ctype;
 }
-
+function getCurrentRowTypeId()
+{
+	var opt = document.getElementById("typeoptions");
+    var ctype = opt.options[opt.selectedIndex].value;
+    if(opt.selectedIndex == getIndexOfDropdownOption())
+    {
+    	var cmb = document.getElementById("currenumvalues");
+    	ctype+="[";
+    	for(var i = 0; i < cmb.options.length-1; i++)
+    	{
+    		ctype+=cmb.options[i].value+",";
+    	}
+    	ctype+=cmb.options[cmb.options.length-1].value+"]";
+    }
+    return ctype;
+}
 
 function createTextBox(id,value,readonly)
 {
@@ -184,24 +273,15 @@ function createButton(text,onclickhandler,id)
 	return btn;
 }
 
-function submitForm()
+function createForm()
 {
 	var submitMe = document.getElementById("rowset");
 	var hiddenName = document.createElement("input");
-	var hiddenDesc = document.createElement("description");
 	hiddenName.type = "hidden";
-	hiddenDesc.type = "hidden";
-	formName = document.getElementById("formname");
-	formDesc = document.getElementById("formdesc");
-	
+	formName = document.getElementById("formname");	
 	hiddenName.name = "formname";
-	hiddenDesc.name = "formdesc";
-	
 	hiddenName.value = formName.value;
-	hiddenDesc.value = formDesc.value;
-	
 	submitMe.appendChild(hiddenName);
-	submitMe.appendChild(hiddenDesc);
 	
 	enableCheckboxes(submitMe);
 	
@@ -233,24 +313,16 @@ function onRowTypeChanged()
 {
 	var select = document.getElementById("typeoptions");
 	var extra = document.getElementById("extra");
+	hide(extra);
+	removeChildren(extra);
 	whatToAppend(extra,select);
-	
-	/*
-	<option value="int" selected>Integer</option>
-    <option value="string">String</option>
-    <option value="datetime">Date</option>
-    <option value="text">Text</option>
-    <option value="bool">Yes/No</option>
-    <option value="img">Image</option>
-    <option value="enum">Dropdown</option>
-	 */
 }
 
 function whatToAppend(extra,select)
 {
 	switch(select.selectedIndex)
 	{
-	case select.options.length - 1 :
+	case getIndexOfDropdownOption() :
 		{
 		var combo = document.createElement("select");
 		combo.id = "currenumvalues";
@@ -298,6 +370,24 @@ function whatToAppend(extra,select)
 	}
 }
 
+function hideCurrentFormStructure()
+{
+	hide(document.getElementById("currentformstructure"));
+	removeChildren(document.getElementById("currentformstructurefill"));
+}
+function hideCurrentFormData()
+{
+	hide(document.getElementById("currentformdata"));
+	removeChildren(document.getElementById("currentformdatafill"));
+}
+
+
+function currentFormChanged()
+{
+	hideCurrentFormStructure();
+	hideCurrentFormData();
+}
+
 
 function hide(element)
 {
@@ -307,4 +397,16 @@ function hide(element)
 function unhide(element)
 {
 	element.className = "yesdisplay";
+}
+
+function getIndexOfDropdownOption()
+{
+	var select = document.getElementById("typeoptions");
+	for(var i = 0; i < select.options.length; i++)
+	{
+		if(select.options[i].text == "Dropdown")
+			return i;
+	
+	}
+	return -1;
 }
