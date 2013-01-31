@@ -192,25 +192,25 @@
 			    <div class="tabbed_area">       
 			       <div id="content_1" class="tabContent">
       					<fieldset id="myforms">
-      					<legend>My forms</legend>
-      					<c:choose>
-      					<c:when test='${sentForms!= null && sentForms.size() > 0}'>
-      					<label for="myformslist">Form name:</label>
-      					<select id="myformslist" onchange="currentFormChanged()">
-      				 	<c:forEach items="${sentForms}" var="theform">
-      				    <option value="${theform.getFormId()}"><c:out value="${theform.getFormName() }"/></option>
-      				 	</c:forEach>
-      				 	</select>
-      				 	<button type="button" onclick="viewCurrentFormStructure()">View structure</button>
-      				 	<button type="button" onclick="viewCurrentFormData()">View data</button>
-      				 	<button type="button" onclick="deleteCurrentForm()">Remove this form</button>
-      					</c:when>
-      					<c:otherwise>
-      						Sorry, it appears you have no forms defined!
-      				 	</c:otherwise>
-      				 	</c:choose>  
-      				 	<br/>   				 	
-      					<button type="button" onclick="showFormWizard()">Add new Form</button>
+	      					<legend>My forms</legend>
+	      					<c:choose>
+	      					<c:when test='${sentForms!= null && sentForms.size() > 0}'>
+		      					<label for="myformslist">Form name:</label>
+		      					<select id="myformslist" onchange="currentFormChanged()">
+			      				 	<c:forEach items="${sentForms}" var="theform">
+			      				    	<option value="${theform.getFormId()}"><c:out value="${theform.getFormName() }"/></option>
+			      				 	</c:forEach>
+		      				 	</select>
+		      				 	<button type="button" onclick="viewCurrentFormStructure()">View structure</button>
+		      				 	<button type="button" onclick="viewCurrentFormData()">View data</button>
+		      				 	<button type="button" onclick="deleteCurrentForm()">Remove this form</button>
+	      					</c:when>
+	      					<c:otherwise>
+	      						Sorry, it appears you have no forms defined!
+	      				 	</c:otherwise>
+	      				 	</c:choose>  
+	      				 	<br/>   				 	
+	      					<button type="button" onclick="showFormWizard()">Add new Form</button>
       					</fieldset>
       					<c:if test="${sentForms!= null && sentForms.size() > 0}">
       					<fieldset id="currentformstructure" class="nodisplay">

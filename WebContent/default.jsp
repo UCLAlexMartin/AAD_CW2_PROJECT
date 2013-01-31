@@ -105,6 +105,11 @@
 		<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
 		<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
 		<link rel="stylesheet" href="css/style1.css" type="text/css" media="all">	
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+
+		
+		
 	</head>
 	
 	<body id="page1">
@@ -121,19 +126,19 @@
 	              <section class="col1">
 	                <h2><strong>R</strong>ed<span>Cross</span></h2>
 	                <div class="pad_bot1">
-	                  <figure><img src="images/page1_img1.jpg" alt=""></figure>
+	                  <figure><img id="image1" src="images/page1_img1.jpg" alt=""/></figure>
 	                </div>
 	                CharityWare has helped our charity's efficiency by reaching out to people more quickly.  </section>
 	              <section class="col1 pad_left1">
 	                <h2 class="color2"><strong>G</strong>row<span>Peace</span></h2>
 	                <div class="pad_bot1">
-	                  <figure><img src="images/page1_img2.jpg" alt=""></figure>
+	                  <figure><img id="image2" src="images/page1_img2.jpg" alt=""/></figure>
 	                </div>
 	                Our workers are up to date with information and we have faster access to data exchange. Thanks to CharityWare! </section>
 	              <section class="col1 pad_left1">
 	                <h2 class="color3"><strong>H</strong>ope<span> </span></h2>
 	                <div class="pad_bot1">
-	                  <figure><img src="images/page1_img3.jpg" alt=""></figure>
+	                  <figure><img id="image3" src="images/page1_img3.jpg" alt=""/></figure>
 	                </div>
 	               We could reach out to children who were in need. We are surely benefiting from this. </section>
 	            </div>
