@@ -17,47 +17,50 @@
 <%@ page import="com.sun.jersey.api.client.config.ClientConfig" %>
 <%@ page import="RESTClient.*"%>
 <%@ page import="systemDBHibernateEntities.*"%>
-
-
+<%@ page import="java.sql.*"%>
 
 <%
-		/*
+		
 		if(request.getParameter("LogginAttempt")!=null &&
 			request.getParameter("txtUsername")!=null &&
 			request.getParameter("txtPassword")!=null)
 		{
-			out.println("Loggin Attempted<br/>"); 
-			out.println("LogginAttempt:"+request.getParameter("LogginAttempt") + "<br/>"); 
-			out.println("txtUsername:"+request.getParameter("txtUsername") + "<br/>");
-			out.println("txtPassword:"+request.getParameter("txtPassword") + "<br/>");
-			out.println("GenerateSalt:"+PasswordEncryption.createSalt()+ "<br/>");
-			*//*
-			com.sun.jersey.api.client.config.ClientConfig 	JersyConfig = 	new com.sun.jersey.api.client.config.DefaultClientConfig();
-			com.sun.jersey.api.client.Client 				client 		= 	com.sun.jersey.api.client.Client.create(JersyConfig);
-			com.sun.jersey.api.client.WebResource 			service 	= 	client.resource(Configuration.SiteUrl);
-			*//*
 			try
 			{
-				*//*systemDBHibernateEntities.User user = *//*
-				System.out.println("default.jsp FormFieldsClient.get call");		
-				FormFieldsClient.get(request.getParameter("txtUsername"));
-				
-				*//*
-				out.println("User-Username"+user.getUserName()+ "<br/>");
-				out.println("User-salt"+user.getSalt()+ "<br/>");
-				out.println("User-password"+user.getUserPassword()+ "<br/>");
-				out.println("PostPasswordHash:"+PasswordEncryption.encryptPassword(request.getParameter("txtPassword"), user.getSalt()) + "<br/>");
-				if(PasswordEncryption.encryptPassword(request.getParameter("txtPassword"), user.getSalt()) == user.getUserPassword())
-				{
-					out.println("Valid User");
-				}else
-				{
-					out.println("Invalid User");
-				}
-				*//*
-				
-				
-				
+				String connString = Configuration.MySQLConUrl + "System_DB_Test_Model";
+				Connection conn;
+		        try 
+		        {
+		        	Class.forName(Configuration.MySQLdriver).newInstance();
+		        	conn  = DriverManager.getConnection(connString, Configuration.MySQLrootUser, Configuration.MySQLrootPassword);
+		        	 ConnectionManager.DatabaseManager.getSystemConn();
+			    	 Statement statement = conn.createStatement();
+			    	 ResultSet resultSet = statement.executeQuery(
+			    			 "SELECT * FROM users where Username='"+request.getParameter("txtUsername")+"'");//SQL INJECTION POINT, FIX WHEN APPLYING SECURITY
+			    			 String pwd ="";
+			    			 String slt = "";
+			    	 while(resultSet.next())
+			    	 {
+			    		 pwd = resultSet.getString("User_Password");
+			    		 slt = resultSet.getString("Salt");
+			    	 }
+			    	 conn.close();			    	 
+			    	 String nu = PasswordEncryption.encryptPassword(request.getParameter("txtPassword"), slt);
+			
+			    	 if(nu.trim().equals(pwd.trim()))
+					{
+						out.println("Valid User");
+					}else
+					{
+						out.println("Invalid User");
+					}
+			    	 
+		        } 
+		        catch (Exception e) 
+		        {
+		            System.err.println("Got an exception! ");
+		            System.err.println(e.getMessage());
+		        }	
 																			
 			}catch(Exception e)
 			{
@@ -92,7 +95,6 @@
 			    response.sendRedirect("login.jsp");				
 			}
 		}
-*/
 %>
 
 
