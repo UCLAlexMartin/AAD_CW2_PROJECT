@@ -51,8 +51,8 @@
 				<property name="hibernate.connection.username">
 					root
 				</property>
-				<!--   <property name="hibernate.connection.password"> root 
-				 </property>-->
+				   <property name="hibernate.connection.password">root 
+				 </property>
 
 				<!-- Test property -->
 				<property name="javax.persistence.validation.mode">none</property>

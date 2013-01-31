@@ -26,8 +26,8 @@
 			request.getParameter("txtUsername")!=null &&
 			request.getParameter("txtPassword")!=null)
 		{
-			out.println("Loggin Attempted<br/>");
-			out.println("LogginAttempt:"+request.getParameter("LogginAttempt") + "<br/>");
+			out.println("Loggin Attempted<br/>"); 
+			out.println("LogginAttempt:"+request.getParameter("LogginAttempt") + "<br/>"); 
 			out.println("txtUsername:"+request.getParameter("txtUsername") + "<br/>");
 			out.println("txtPassword:"+request.getParameter("txtPassword") + "<br/>");
 			out.println("GenerateSalt:"+PasswordEncryption.createSalt()+ "<br/>");

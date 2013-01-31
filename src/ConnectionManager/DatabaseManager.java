@@ -73,26 +73,22 @@ public class DatabaseManager {
          }
      }
      
-     public static String Test()
-     {
-    	 String result = "";
-    	 try {
-    	 getCharityConn("Charity_Db_Test_Model");
-    	 statement = conn.createStatement();
-    	 
-    	 resultSet = statement.executeQuery("SELECT Username FROM Users");
-    	 
-			while(resultSet.next())
-			 {
-				result +=  resultSet.getString("Username");
-				 
-			 }
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	 return result;
-     }
+      public static void generateSchema(int CharityId) throws Exception{
+	    	
+   		String CharityName = "charity" + CharityId;
+   		getSystemConn();
+   		
+   		try {
+   			
+   			CallableStatement statement = conn.prepareCall("{call spSchemaGeneration(?)}");
+   			statement.setString("DB_Name", CharityName);
+   	    	statement.executeQuery();
+   	    	//GenerateConfig.execute(CharityName);
+   	    	
+   			}catch(Exception e){
+   				e.printStackTrace();
+   			}	
+   	}
      
      public static Map<Integer,ArrayList<String>> readEvents() throws Exception{
      

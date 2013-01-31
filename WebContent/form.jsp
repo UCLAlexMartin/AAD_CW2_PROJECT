@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="ConnectionManager.*" %> 
-    <%@ page import= "java.util.TreeMap"%>
+    <%@ page import= "java.util.Map"%>
     <%@ page import= "java.util.ArrayList"%>
     <%@ page import= "java.util.Set"%>
     <%@ page import= "java.util.Map.Entry"%>
     <%@ page import= "java.util.Iterator"%>
+    <%@ page import= "RESTClient.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,7 +19,7 @@
 <table>
 
 <% 
-	TreeMap<Integer,ArrayList<String>> datamap =  (TreeMap<Integer,ArrayList<String>>)DatabaseManager.readFormData(1);
+	Map<Integer,ArrayList<String>> datamap = FormFieldsClient.getData(1) ;//(TreeMap<Integer,ArrayList<String>>)DatabaseManager.readFormData(1);
 	Set<Entry<Integer,ArrayList<String>>> entryset = datamap.entrySet();
 	Iterator<Entry<Integer, ArrayList<String>>> iter =  entryset.iterator();
 	
@@ -41,7 +42,7 @@
 
 				
 				<% if ((iterlist.get(3)).contentEquals("Dropdown")) { 
-					ArrayList<String> dropdownData = DatabaseManager.readSelectionValues(Integer.parseInt(iterlist.get(5)));
+					ArrayList<String> dropdownData =FieldSelectionClient.getEvents(Integer.parseInt(iterlist.get(5))); //DatabaseManager.readSelectionValues(Integer.parseInt(iterlist.get(5)));
 				%>
 					<select id= <%=iterlist.get(0) %> >
 					
@@ -59,7 +60,7 @@
 				
 				<% } else { %>						
 				<input type="<%=iterlist.get(1) %>" style="width:240px;" name="txt<%=iterlist.get(0) %>" id="txt<%=iterlist.get(0) %>" 
-				<% if (Integer.parseInt(iterlist.get(4)) == 1) { %>
+				<% if (iterlist.get(3).equals("true")) { %>
 					required
 					<%} %>>
 					

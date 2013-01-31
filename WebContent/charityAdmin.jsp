@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="ConnectionManager.*" %>
-<%@ page import="java.util.List"%>
-<%@ page import= "java.util.TreeMap"%>
+	<%@ page import="ConnectionManager.*" %>
+    <%@ page import= "java.util.TreeMap"%>
+    <%@ page import= "java.util.Map"%>
+    <%@ page import= "java.util.List"%>
     <%@ page import= "java.util.ArrayList"%>
     <%@ page import= "java.util.Set"%>
     <%@ page import= "java.util.Map.Entry"%>
     <%@ page import= "java.util.Iterator"%> 
 <%@page import="XMLParse.xmlParser"%>
+<%@ page import= "RESTClient.*"%>  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -32,6 +34,7 @@
 		<script type="text/javascript" src="js/xhr.js"></script>
 		<script type="text/javascript" src="js/panelSwitcher.js"></script>
     	<script type="text/javascript" src="js/GoogleCalendar.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     	<script type="text/javascript">
     	  //Number of Records inputted per User	 
 	      
@@ -50,9 +53,10 @@
 	      
 	      function populateData(data)
 	      {
-	    	  resp = xhr("/CharityWare/StatisticsDataServlet","GET",false);
-	    	  obj = JSON.parse(resp);
-	    	  data.addRows(obj);
+	    	  
+	    	  
+	    	  data.addRows(<%=FilledFormClient.getRecordsData() %>);
+	    	  
 	      }
 	      jQuery(document).ready(function($){
 	    	  
@@ -157,8 +161,7 @@
 		  //Tabs Scripts
 	      function onBodyLoad()
 	      {
-	    	  tabSwitch(1,5,'tab_', 'content_');
-	    	  document.getElementById("argc").value = 0;
+	    	  init();
 		  }
 	      
     	</script>
@@ -192,25 +195,25 @@
 			    <div class="tabbed_area">       
 			       <div id="content_1" class="tabContent">
       					<fieldset id="myforms">
-	      					<legend>My forms</legend>
-	      					<c:choose>
-	      					<c:when test='${sentForms!= null && sentForms.size() > 0}'>
-		      					<label for="myformslist">Form name:</label>
-		      					<select id="myformslist" onchange="currentFormChanged()">
-			      				 	<c:forEach items="${sentForms}" var="theform">
-			      				    	<option value="${theform.getFormId()}"><c:out value="${theform.getFormName() }"/></option>
-			      				 	</c:forEach>
-		      				 	</select>
-		      				 	<button type="button" onclick="viewCurrentFormStructure()">View structure</button>
-		      				 	<button type="button" onclick="viewCurrentFormData()">View data</button>
-		      				 	<button type="button" onclick="deleteCurrentForm()">Remove this form</button>
-	      					</c:when>
-	      					<c:otherwise>
-	      						Sorry, it appears you have no forms defined!
-	      				 	</c:otherwise>
-	      				 	</c:choose>  
-	      				 	<br/>   				 	
-	      					<button type="button" onclick="showFormWizard()">Add new Form</button>
+      					<legend>My forms</legend>
+      					<c:choose>
+      					<c:when test='${sentForms!= null && sentForms.size() > 0}'>
+      					<label for="myformslist">Form name:</label>
+      					<select id="myformslist" onchange="onCurrentFormChanged()">
+      				 	<c:forEach items="${sentForms}" var="theform">
+      				    <option value="${theform.getFormId()}"><c:out value="${theform.getFormName() }"/></option>
+      				 	</c:forEach>
+      				 	</select>
+      				 	<button type="button" onclick="viewCurrentFormStructure()">View structure</button>
+      				 	<button type="button" onclick="viewCurrentFormData()">View data</button>
+      				 	<button type="button" onclick="deleteCurrentForm()">Remove this form</button>
+      					</c:when>
+      					<c:otherwise>
+      						Sorry, it appears you have no forms defined!
+      				 	</c:otherwise>
+      				 	</c:choose>  
+      				 	<br/>   				 	
+      					<button type="button" onclick="showFormWizard()">Add new Form</button>
       					</fieldset>
       					<c:if test="${sentForms!= null && sentForms.size() > 0}">
       					<fieldset id="currentformstructure" class="nodisplay">
@@ -226,7 +229,7 @@
       					<legend>Form Wizard</legend>
       					<label>Form name:</label>
       					<input id="formname" type="text" />
-      					<button type="button" id="btnSubmitForm" onclick="">Create this form!</button>   					
+      									
       					<fieldset id = "fieldselect">
       					<legend>Field wizard</legend>
       					<label for="fieldname">Field name</label>
@@ -249,9 +252,14 @@
       					<input type="hidden" name="req" value="create"/>
       					<legend>Current rows:</legend>
       					<div id="rowsetrows"></div>
+      					
+      					<!-- <button type="button" id="clearbtn" onclick='removeChildren(document.getElementById("rowsetrows") ); document.getElementById("argc").value=0;'>Clear all rows</button>
+      					 -->
+      					 </fieldset>
       					<button type="button" onclick="hideFormWizard()">Hide</button>
+      					<button type="button" id="btnSubmitForm" onclick="createForm()">Create this form!</button>
       					<button type="button" id="clearbtn" onclick='removeChildren(document.getElementById("rowsetrows") ); document.getElementById("argc").value=0;'>Clear all rows</button>
-      					</fieldset>
+      					
       					</form>
       					</fieldset>
 				   

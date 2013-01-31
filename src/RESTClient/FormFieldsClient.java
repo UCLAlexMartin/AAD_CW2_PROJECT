@@ -17,11 +17,11 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 public class FormFieldsClient {
 	
-	public static Map<Integer,ArrayList<String>> getData(){
+	public static Map<Integer,ArrayList<String>> getData(Integer form_id){
 		ClientConfig clientConfig = new DefaultClientConfig();
 		clientConfig.getClasses().add(JacksonJsonProvider.class);
 		Client client = Client.create(clientConfig);
-		ClientResponse clientresponse = client.resource("http://localhost:8080/CharityWare/REST/formFieldsService").path("/json/formFields/1").
+		ClientResponse clientresponse = client.resource("http://localhost:8080/CharityWare/REST/formFieldsService").path("/json/formFields/"+form_id).
 				accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).
 				get(ClientResponse.class);
 		return clientresponse.getEntity(new GenericType<Map<Integer,ArrayList<String>>>(){});
