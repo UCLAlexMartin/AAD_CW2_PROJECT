@@ -939,3 +939,37 @@ table.gridtable td {
 	border-color: #666666;
 	background-color: #ffffff;
 }
+
+#th1 {
+	width:30%
+	margin:3,3,3,3;
+	border:1.5px solid;
+}
+
+#tableView {
+	border:2px solid;
+	width:90%;
+	margin-left:20px;
+	collapse:collapse;
+}
+
+#tableDelete {
+	border:2px solid;
+	width:90%;
+	margin-left:20px;
+	collapse:collapse;
+}
+
+#tr1 {
+	margin-left:5px;
+	width:20%;
+	text-align:center;
+}
+
+#lists {
+	border: 2px solid black;
+	height:100px;
+	width:150px;
+	margin-right:5px;
+	
+	}

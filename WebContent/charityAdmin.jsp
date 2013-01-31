@@ -2,6 +2,11 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="ConnectionManager.*" %>
 <%@ page import="java.util.List"%>
+<%@ page import= "java.util.TreeMap"%>
+    <%@ page import= "java.util.ArrayList"%>
+    <%@ page import= "java.util.Set"%>
+    <%@ page import= "java.util.Map.Entry"%>
+    <%@ page import= "java.util.Iterator"%> 
 <%@page import="XMLParse.xmlParser"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -14,60 +19,149 @@
 		<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
 		<link rel="stylesheet" href="css/style1.css" type="text/css" media="all">
 		
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+				  
 		<script type="text/javascript" src="js/common-validator-2.0.min.js"></script>
-	  <script type="text/javascript" src="js/common-validator-messages.js"></script>
-	  <script type="text/javascript" src="js/common-validator-config.js"></script>
-	  	
+		<script type="text/javascript" src="js/common-validator-messages.js"></script>
+		<script type="text/javascript" src="js/common-validator-config.js"></script>
+		
 		<script type="text/javascript" src="js/tabsScript.js"></script>
 		<script type="text/javascript" src="js/charityManager.js"></script>
 		<script type="text/javascript" src="js/xhr.js"></script>
-		<!-- Google Charts Stuff -->
-
-		<!--Load the AJAX API-->
-    	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript" src="js/panelSwitcher.js"></script>
+    	<script type="text/javascript" src="js/GoogleCalendar.js"></script>
     	<script type="text/javascript">
-
-	      // Load the Visualization API and the piechart package.
+    	  //Number of Records inputted per User	 
+	      
+    	  // Load the Visualization API and the piechart package.
 	      google.load('visualization', '1.0', {'packages':['corechart']});
 	
 	      // Set a callback to run when the Google Visualization API is loaded.
 	      google.setOnLoadCallback(drawChart);
-	
+	      function drawChart(point) {
+	    	  var data = new google.visualization.DataTable();
+	    	  
+	      }
 	      // Callback that creates and populates a data table,
 	      // instantiates the pie chart, passes in the data and
 	      // draws it.
+	      
 	      function populateData(data)
 	      {
 	    	  resp = xhr("/CharityWare/StatisticsDataServlet","GET",false);
 	    	  obj = JSON.parse(resp);
 	    	  data.addRows(obj);
 	      }
-	      function drawChart() {
-	
-	        // Create the data table.
-	        var data = new google.visualization.DataTable();
-	        data.addColumn('string', 'User');
-	        data.addColumn('number', 'Records');
-	        populateData(data);
-	        var options = {'title':'Records inputted by each User',
-	                       'width':500,
-	                       'height':400};
-	
-	        // Instantiate and draw our chart, passing in some options.
-	        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-	        chart.draw(data, options);
-	      }
+	      jQuery(document).ready(function($){
+	    	  
+		      $('#chart0').click(function(){
+		    	  $('.content_5_charts').hide();
 
+		    	  var data = new google.visualization.DataTable();
+		    	  data.addColumn('string', 'User');
+			       data.addColumn('number', 'Records');
+			       populateData(data);
+			       var options = {'title':'Records inputted by each User',
+			                       'width':500,
+			                       'height':400};
+			       
+			        // Instantiate and draw our chart, passing in some options.
+			        var chart0 = new google.visualization.PieChart(document.getElementById('chart0_div'));
+			        chart0.draw(data, options);
+			        $('#chart0_div').fadeIn();
+			        return false;
+			        
+		      });
+		      
+		      $('#chart1').click(function(){
+		    	  $('.content_5_charts').hide();
+		    	  
+		    	  var data = new google.visualization.DataTable();
+
+		    	  data.addColumn('string', 'Account');
+					data.addColumn('number', 'Records');
+					data.addRows([
+					<%=DatabaseManager.readCharityActiveAccount()%>]);
+					var options = { 'title':'Active Account VS Disable Account',
+		                       		'width':500,
+		                        	'height':400};
+		
+		        // Instantiate and draw our chart, passing in some options.
+		        var chart1 = new google.visualization.PieChart(document.getElementById('chart1_div'));
+		        chart1.draw(data, options);
+		        $('#chart1_div').fadeIn();
+			        return false;  
+		      });
+		      
+		      $('#chart2').click(function(){
+		    	  $('.content_5_charts').hide();
+		    	  var data = new google.visualization.DataTable();
+
+		    	  data.addColumn('string', 'Date');
+					data.addColumn('number', 'Records');
+					data.addRows([
+					<%=DatabaseManager.readCharityFormDuration()%>]);
+					var options = { 'title':'Date of Creating Forms',
+		                       		'width':500,
+		                        	'height':400};
+		        // Instantiate and draw our chart, passing in some options.
+		        var chart2 = new google.visualization.PieChart(document.getElementById('chart2_div'));
+		        chart2.draw(data, options);
+		        $('#chart2_div').fadeIn();
+			        return false;  
+		      });
+		      
+		      $('#chart3').click(function(){
+		    	  $('.content_5_charts').hide();
+			    	  var data = new google.visualization.DataTable();
+
+		    	  	data.addColumn('string', 'Date');
+					data.addColumn('number', 'Records');
+					data.addRows([
+					<%=DatabaseManager.readCharityAccountDuration()%>]);
+						
+					var options = { 'title':'Date of Creating Accounts',
+		                  		'width':500,
+		                    	'height':400};
+						
+					// Instantiate and draw our chart, passing in some options.
+				    var chart3 = new google.visualization.PieChart(document.getElementById('chart3_div'));
+				    chart3.draw(data, options);
+				    $('#chart3_div').fadeIn();
+			        return false;  
+		      });
+		      
+		      $('#chart4').click(function(){
+		    	  $('.content_5_charts').hide();
+		    	  var data = new google.visualization.DataTable();
+
+		    	  data.addColumn('string', 'Account');
+					data.addColumn('number', 'Records');
+					data.addRows([
+					<%=DatabaseManager.readCharityActiveAccount()%>]); 		
+					var options = { 'title':'Active Account VS Disable Account',
+	                   		'width':500,
+	                    	'height':400};
+					
+					// Instantiate and draw our chart, passing in some options.
+			        var chart4 = new google.visualization.PieChart(document.getElementById('chart4_div'));
+			        chart4.draw(data, options);
+			        $('#chart4_div').fadeIn();
+		        return false;  
+	      		});
+	      });
+	      
+	
+		  //Tabs Scripts
 	      function onBodyLoad()
 	      {
 	    	  tabSwitch(1,5,'tab_', 'content_');
 	    	  document.getElementById("argc").value = 0;
-		  viewCurrentFormStructure();
 		  }
 	      
     	</script>
-    	
-    	<!-- Google Charts Stuff -->
 </head>
 <body id="page1" onload="onBodyLoad()">
 	<div class="body1">
@@ -165,10 +259,211 @@
 			     
 			     <div id="content_2" class="tabContent">
 			     		<ul id="menubar2">
-				     		<li><a href =""> View Accounts </a> <b>|</b> </li>
-	             	       	<li><a href = ""> Change Password Requests </a> <b>|</b> </li>
-	                        <li><a href = ""> Delete Accounts </a></li>
+				     		<li><a href ="#" onclick="changePanel('viewUser','content2'); return false;"> View Users </a> <b>|</b> </li>
+	             	       	<li><a href ="#" onclick="changePanel('addUser','content2'); return false;"> Add Users </a> <b>|</b> </li>
+	                        <li><a href ="#" onclick="changePanel('deleteUser','content2'); return false;"> Delete Users </a></li>
+	                        <li><a href ="#" onclick="changePanel('mailingList','content2'); return false;"> Mailing List </a></li>
                         </ul>
+                        
+                        <div id="viewUser" class="subContent2" style="display:none;">
+                        
+                      	<form id="viewUser" name="viewUser" method="post" action="">
+						<table id="tableView">
+						
+						<tr>
+							<th id="tr1"> <label for="uname">Username</label> </th>
+							<th id="tr1"> <label for="ucat">User Category</label> </th>
+							<th id="tr1"> <label for="uemail">Email</label> </th>
+							<th id="tr1"> <label for="uper">Permissions</label> </th>
+							
+			      		</tr>
+			      		<%     
+            			TreeMap<Integer,ArrayList<String>> datamap =(TreeMap<Integer,ArrayList<String>>)DatabaseManager.readUsers();
+        				Set<Entry<Integer,ArrayList<String>>> entryset = datamap.entrySet();
+        				Iterator<Entry<Integer, ArrayList<String>>> iter =  entryset.iterator();
+            
+						while (iter.hasNext()){
+							ArrayList<String> userDetails =  iter.next().getValue();
+            		%>
+			      		
+			      			<tr>
+			      			<td id="th1"><%out.println(userDetails.get(0));%></td>
+			      			<td id="th1"><%out.println(userDetails.get(1));%></td>
+			      			<td id="th1"><%out.println(userDetails.get(2));%></td>
+			      			<td id="th1"><%out.println(userDetails.get(3));%></td>
+			      			
+			      			</tr>
+			      			<%} %>
+			      		
+						
+					  </table>
+				    </form>
+                        
+                        </div>
+                        <div id="addUser" class="subContent2" style="display:none;">
+
+                        <form id="addUser" name="addUser" method="post" action="">
+						<table style="border-spacing:5px;border-collapse: inherit;">
+						<tr/><tr/> <tr/><tr/>
+						<tr>
+							<td> <label for="uname">Username</label> </td>
+			      			<td> <input type="text" class="loginTextbox" name="uname" id="uname" required> </td>
+			      		</tr>
+			      			<tr></tr>
+			      		<tr>
+							<td> <label for="pwd">Password</label> </td>
+			      			<td> <input type="text" class="loginTextbox"  name="pwd" id="pwd" required> </td>
+			      		</tr>
+			      			<tr></tr>
+			      		<tr>
+							<td> <label for="uemail">Email</label> </td>
+			      			<td> <input type="text" class="loginTextbox" name="uemail" id="uemail" required> </td>
+			      		</tr>
+			      		<tr></tr>	
+			      		<tr>
+			      			
+							<td> <label for="ucat">User Category</label> </td>
+							<td>	
+								<select value="ucat" id="marg_top">
+									<option value="0"> --Select-- </option>
+									<% ArrayList<String> utype = (ArrayList<String>) DatabaseManager.UserType();									
+									
+									for(int i=0;i<utype.size();i++) {
+									
+									%>
+									<option value="i"> <%out.println(utype.get(i));%> </option>
+									<%} %>
+								</select>
+								</td>										      			
+			      		</tr>
+			      		<tr></tr>
+			      		<tr>
+							<td> <label for="uper">Form Permissions</label> </td>
+			      			<tr> 
+			      			<td/> <td>	
+			      				
+									<% ArrayList<String> fm = (ArrayList<String>) DatabaseManager.FormNames();									
+									
+									for(int i=0;i<fm.size();i++) {
+									
+									%>
+									
+									<input type="checkbox" name="<%fm.get(i);%>" value="<%fm.get(i);%>"> <%out.println(fm.get(i));%>
+									
+									
+									<% }%>
+									
+			      			 </td>
+			      		</tr>
+                       <tr></tr> <tr></tr>
+					
+						<tr>
+							<td> <input class="contactSubmit" name="button1" type="submit" id="button1" value="Add User"> </td>
+						</tr>
+						
+					  </table>
+				    </form>
+                        
+                        </div>
+                        <div id="deleteUser" class="subContent2" style="display:none;">
+                        
+                         <form id="deleteUser" name="deleteUser" method="post" action="">
+						<table id="tableDelete">
+						
+						<tr>
+							<th id="tr1"> <label for="uname">Username</label> </th>
+							<th id="tr1"> <label for="ucat">User Category</label> </th>
+							<th id="tr1"> <label for="uemail">Email</label> </th>
+							<th id="tr1"> <label for="uper">Permissions</label> </th>
+							<th id="tr1"> <label for="udel">Delete</label> </th>
+			      		</tr>
+			      		<%     
+            			TreeMap<Integer,ArrayList<String>> datamap2 =(TreeMap<Integer,ArrayList<String>>)DatabaseManager.readUsers();
+        				Set<Entry<Integer,ArrayList<String>>> entryset2 = datamap2.entrySet();
+        				Iterator<Entry<Integer, ArrayList<String>>> iter2 =  entryset2.iterator();
+            
+						while (iter.hasNext()){
+							ArrayList<String> userDetails =  iter2.next().getValue();
+            		%>
+			      		
+			      			<tr>
+			      			<td id="th1"><%out.println(userDetails.get(0));%></td>
+			      			<td id="th1"><%out.println(userDetails.get(1));%></td>
+			      			<td id="th1"><%out.println(userDetails.get(2));%></td>
+			      			<td id="th1"><%out.println(userDetails.get(3));%></td>
+			      			<td id="th1"><a href="">Delete</a></td>
+			      			</tr>
+			      			<%} %>
+			      		
+						
+					  </table>
+				    </form>
+                        
+                        </div>
+ 						<div id="mailingList" class="subContent2" style="display:none;">
+                        
+                        <form id="addlist" name="addlist" method="post" action="">
+						<table style="border-spacing:5px;border-collapse: inherit;">
+						<tr/><tr/> <tr/><tr/>
+						<tr>
+							<td> <label for="uname">Mailing List Name</label> </td>
+			      			<td> <input type="text" class="loginTextbox" name="mlname" id="mlname" required> </td>
+			      			<td><td/><td><td/>
+							<td> <input class="contactSubmit" name="button1" type="submit" id="button1" value="Add Mailing List"> </td>
+						
+			      		</tr>
+                    	</table>
+                    </form>
+                    
+                    <hr width=100% size="5" color=black> 
+                    
+                     <form id="maillist" name="maillist" method="post" action="">
+						<table style="border-spacing:5px;border-collapse: inherit;">
+						<tr/><tr/> <tr/><tr/>
+						<tr>
+							<td> <label for="uname">Mailing List Name</label> </td>
+			      			<td>  </td>
+			      			<td> 
+			      				<select value="mlist" id="marg_top" >
+			      				<option value="0"> --Select-- </option>
+									<% ArrayList<String> mlist = (ArrayList<String>) DatabaseManager.MailingList();									
+									
+									for(int i=0;i<mlist.size();i++) {
+									
+									%>
+									<option value=i> <%out.println(mlist.get(i));%> </option>
+									<%} %>
+			      				</select>
+			      			</td>
+			      		</tr>
+			      		<tr/><tr/> <tr/><tr/><tr/><tr/> <tr/><tr/><tr/><tr/> <tr/><tr/>
+			      		<tr>
+			      		<td>
+			      			<select id="lists" size="10" >
+			      			
+			      			</select>
+			      		</td>
+			      		<td><td/>
+			      		<td>
+			      		<input class="contactSubmit" name="button1" type="submit" id="button1" value="Add User ->">
+			      		<td/>
+			      		<td><td/><td><td/><td><td/><td><td/><td><td/><td><td/><td><td/>
+			      		<td>
+			      			<select id="lists" size=10>
+			      				<% ArrayList<String> mlist1 = (ArrayList<String>) DatabaseManager.MailingListOldUsers();									
+									
+									for(int i=0;i<mlist1.size();i++) {
+									
+									%>
+									<option value=i> <%out.println(mlist1.get(i));%> </option>
+									<%} %>
+			      			</select>
+			      		</td>
+			      		</tr>
+                    	</table>
+                    </form>
+                        
+                        </div>
 			     </div>  
 			     
 			     <div id="content_3" class="tabContent">
@@ -245,13 +540,23 @@
 			     
 			     <div id="content_5" class="tabContent">
 			     		<ul id="menubar2">
-				     		<li><a href =""> Report 1 </a> <b>|</b> </li>
-	             	       	<li><a href = ""> Report 2 </a> <b>|</b> </li>
-	                        <li><a href = ""> Report 3 </a></li>
+			     			<li><a id="chart0" href ="#"> Records inputted per User </a> <b>|</b> </li>
+	             	       	<li><a id="chart1" href ="#"> Account Status </a> <b>|</b> </li>
+	             	       	<li><a id="chart2" href ="#"> Access Form Duration </a> <b>|</b> </li>
+	             	  		<li><a id="chart3" href ="#"> Account Duration </a> <b>|</b> </li>
+	             	  		<li><a id="chart4" href ="#"> Active Account VS Disable Account</a></li>
+	             	 
                         </ul>
-			     
-			     		<!--Div that will hold the pie chart-->
-    					<div id="chart_div"></div>
+                        
+                        <br/>
+                        <br/>
+			
+			     		<!--Div that will hold thchart-->
+    					<div id="chart0_div" class="content_5_charts"></div>
+    					<div id="chart1_div" class="content_5_charts"></div>
+    					<div id="chart2_div" class="content_5_charts"></div>
+    					<div id="chart3_div" class="content_5_charts"></div>
+    					<div id="chart4_div" class="content_5_charts"></div>
 			     </div>  
 			    </div>  
 				
@@ -262,9 +567,7 @@
 	    
 		 <jsp:include page="Footer.jsp"></jsp:include>   
 	      
-	      <div id="footer_text">Copyright &copy; <a href="http://www.ucl.ac.uk">UCL</a> All Rights Reserved &nbsp;&nbsp;&nbsp;&nbsp;
-	        Design by <a target="_blank" href="http://www.ucl.ac.uk">UCL Computer Science</a></div>
-	    </footer>
+	    
 	    
 	  </div>
 	</div>

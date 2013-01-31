@@ -12,7 +12,7 @@ import java.util.TreeMap;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import RESTservices.Charity;
+import RESTdataEntities.Charity;
 import RESTdataEntities.*;
 import java.text.DateFormat;
 import staticResources.Configuration;
@@ -126,24 +126,27 @@ public class DatabaseManager {
      
      
      public static String readCharityDataV2() throws Exception {
-         
-    	 String result = "";
-    	 
-        	 getCharityConn("Charity_Db_Test_Model");
-        	 statement = conn.createStatement();
-        	 
-        	 resultSet = statement.executeQuery
-        	("SELECT Username as u,COUNT(*) as c FROM ( SELECT Users.Username AS Username,Filled_Form.User_Id as UserID, count(Filled_Form.Record_Id) as TotalInputs FROM Filled_Form INNER JOIN Form_Fields ON Filled_Form.Field_Id = Form_Fields.Field_Id INNER JOIN Users ON Filled_Form.User_Id = Users.User_Id WHERE Users.isActive = 1 AND Filled_Form.isActive = 1 AND Form_Fields.isActive = 1 GROUP BY Filled_Form.Record_Id) AS TEMP GROUP BY UserID"); 
-        	   
-        	 while(resultSet.next())
-        	 {
-        		result += String.format("['%s',%d],", resultSet.getString("u"), resultSet.getInt("c"));
-        	 }
-        	          
-        	 closeConn();
-             	 
-    	 return result;
-     }
+
+    	 StringBuilder result = new StringBuilder();
+
+    	 getCharityConn("Charity_Db_Test_Model");
+    	 statement = conn.createStatement();
+
+    	 resultSet = statement.executeQuery
+    	 ("SELECT Username as u,COUNT(*) as c FROM ( SELECT Users.Username AS Username,Filled_Form.User_Id as UserID, count(Filled_Form.Record_Id) as TotalInputs FROM Filled_Form INNER JOIN Form_Fields ON Filled_Form.Field_Id = Form_Fields.Field_Id INNER JOIN Users ON Filled_Form.User_Id = Users.User_Id WHERE Users.isActive = 1 AND Filled_Form.isActive = 1 AND Form_Fields.isActive = 1 GROUP BY Filled_Form.Record_Id) AS TEMP GROUP BY UserID"); 
+
+    	 result.append('[');
+    	 while(resultSet.next())
+    	 {
+    	 result.append(String.format("[\"%s\",%d],", resultSet.getString("u"), resultSet.getInt("c")));
+    	 }
+    	 result.setCharAt(result.length()-1, ']');
+    	 closeConn();
+
+    	 return result.toString();
+    }
+
+
      
      public static List<Charity> readCharityTable() throws Exception {
         Charity ch;
@@ -489,4 +492,263 @@ public class DatabaseManager {
 
      	
      }
+public static ArrayList<String> FormNames() throws Exception{
+    	 
+    	 ArrayList<String> forms = new ArrayList<String>();
+    	 getCharityConn("Charity_Db_Test_Model");
+    	 statement = conn.createStatement();
+    	 resultSet = statement.executeQuery(
+    			 "SELECT Form_Name from `form`");
+    	 
+    	 while(resultSet.next())
+    	 {
+    		 forms.add(resultSet.getString(1));
+    	 }
+    	 
+    	 return forms; 
+     }
+    
+ public static ArrayList<String> UserType() throws Exception{
+	 
+	 ArrayList<String> utype = new ArrayList<String>();
+	 getCharityConn("Charity_Db_Test_Model");
+	 statement = conn.createStatement();
+	 resultSet = statement.executeQuery(
+			 " SELECT User_Type from `user_type`;");
+	 
+	 while(resultSet.next())
+	 {
+		 utype.add(resultSet.getString(1));
+	 }
+	 
+	 return utype; 
+ }
+ public static Map<Integer,ArrayList<String>> readUsers() throws Exception {
+	 //String result = "";
+	 Map<Integer,ArrayList<String>> users = new TreeMap<Integer,ArrayList<String>>();
+	 getCharityConn("Charity_Db_Test_Model");
+	 statement = conn.createStatement();
+	 resultSet = statement.executeQuery
+			 	("SELECT Users.Username, User_Type.User_Type, Users.User_Email, GROUP_CONCAT(Form_Name) AS permissions, Users.User_Id " +
+	"FROM User_Type INNER JOIN Users ON User_Type.User_Type_Id = Users.User_Type_Id "+
+	"INNER JOIN Form_Permissions ON Form_Permissions.User_Type_Id = User_Type.User_Type_Id "+
+	"INNER JOIN Form ON Form.Form_Id = Form_Permissions.Form_Id "+
+			 	"GROUP BY User_Id ");
+
+	 while(resultSet.next())
+	 {
+		 ArrayList<String> userdata = new ArrayList<String>();
+		 userdata.add(resultSet.getString(1));
+		 userdata.add(resultSet.getString(2));
+		 userdata.add(resultSet.getString(3));
+		 userdata.add(resultSet.getString(4));
+		
+		 
+		 users.put(resultSet.getInt(5), userdata);
+	 }
+	 	return users;
+	}
+ 
+ public static ArrayList<String> MailingList() throws Exception{
+	 
+	 ArrayList<String> mlist = new ArrayList<String>();
+	 getCharityConn("Charity_Db_Test_Model");
+	 statement = conn.createStatement();
+	 resultSet = statement.executeQuery(
+			 " SELECT Mailing_Group from `mailing_group`;");
+	 
+	 while(resultSet.next())
+	 {
+		 mlist.add(resultSet.getString(1));
+	 }
+	 
+	 return mlist; 
+ }
+ 
+
+ 
+public static ArrayList<String> MailingListOldUsers() throws Exception{
+	 
+	 ArrayList<String> mlist = new ArrayList<String>();
+	 getCharityConn("Charity_Db_Test_Model");
+	 statement = conn.createStatement();
+	 resultSet = statement.executeQuery(
+			 " SELECT User_Id, Mailing_Group_ID from `mailing_list` where Mailing_Group_ID = 1 ");
+	 while(resultSet.next())
+	 {
+		 mlist.add(resultSet.getString(1));
+	 }
+	 
+	 return mlist; 
+ }
+     /*** MENGYENG BEGIN ***/
+     
+     // return Active and Disable Account For UCLAdmin
+ 	public static String readSystemActiveAccount() throws Exception {
+ 		Integer countActive = 0, countDisable = 0;
+ 		String result = "";
+ 		getCharityConn("System_DB_Test_Model");
+ 		statement = conn.createStatement();
+ 		String sqlActive = "select count(*) as count from Users where isActive=1";
+ 		resultSet = statement.executeQuery(sqlActive);
+ 		if (resultSet.next()) {
+ 			countActive = resultSet.getInt("count");
+ 		}
+ 		String sqlDisable = "select count(*) as count from Users where isActive=0";
+ 		resultSet = statement.executeQuery(sqlDisable);
+ 		if (resultSet.next()) {
+ 			countDisable = resultSet.getInt("count");
+ 		}
+ 		closeConn();
+ 		result = String.format("['%s',%d],", "Active Account", countActive)
+ 				+ String.format("['%s',%d],", "Disable Account", countDisable);
+ 		return result;
+ 	}
+ 	
+ 	// return Verified and Unverified Charity For UCLdmin
+ 	public static String readSystemVerificationCharity() throws Exception {
+ 		Integer countActive = 0, countDisable = 0;
+ 		String result = "";
+ 		getCharityConn("System_DB_Test_Model");
+ 		statement = conn.createStatement();
+ 		String sqlActive = "select count(*) as count from Charity where isVerified=1";
+ 		resultSet = statement.executeQuery(sqlActive);
+ 		if (resultSet.next()) {
+ 			countActive = resultSet.getInt("count");
+ 		}
+ 		String sqlDisable = "select count(*) as count from Charity where isVerified=0";
+ 		resultSet = statement.executeQuery(sqlDisable);
+ 		if (resultSet.next()) {
+ 			countDisable = resultSet.getInt("count");
+ 		}
+ 		closeConn();
+ 		result = String.format("['%s',%d],", "Verified Account", countActive)
+ 				+ String.format("['%s',%d],", "Unverified Account", countDisable);
+ 		return result;
+ 	}
+ 	
+ 	// return the date user created the account for UCLAdmin
+ 	public static String readSystemAccountDuration() throws Exception {
+ 		Integer justCreated = 0, oneDay = 0, oneWeek = 0, oneMonth = 0, others = 0;
+ 		String result = "";
+ 		getCharityConn("System_DB_Test_Model");
+ 		statement = conn.createStatement();
+ 		String sql = "Select Date_Created from Users";
+ 		resultSet = statement.executeQuery(sql);
+ 		while (resultSet.next()) {
+
+ 			long lDuration = (System.currentTimeMillis() - resultSet
+ 					.getTimestamp(1).getTime()) / 100000;
+ 			if (lDuration > 36 && lDuration <= 864) {
+ 				oneDay++;
+ 			} else if (lDuration <= 36) {
+ 				justCreated++;
+ 			} else if (lDuration > 864 && lDuration <= 6048) {
+ 				oneWeek++;
+ 			} else if (lDuration > 6048 && lDuration <= 25920) {
+ 				oneMonth++;
+ 			} else {
+ 				others++;
+ 			}
+ 		}
+ 		closeConn();
+ 		result = String.format("['%s',%d],", "Just Created", justCreated)
+ 				+ String.format("['%s',%d],", "Within One Day", oneDay)
+ 				+ String.format("['%s',%d],", "Within One Week", oneWeek)
+ 				+ String.format("['%s',%d],", "Within One Month", oneMonth)
+ 				+ String.format("['%s',%d],", "Else", others);
+ 		return result;
+ 	}
+ 	
+ 	// return Active and Disable Account For CharityAdmin
+ 	public static String readCharityActiveAccount() throws Exception {
+ 		Integer countActive = 0, countDisable = 0;
+ 		String result = "";
+ 		getCharityConn("Charity_Db_Test_Model");
+ 		statement = conn.createStatement();
+ 		String sqlActive = "select count(*) as count from Users where isActive=1";
+ 		resultSet = statement.executeQuery(sqlActive);
+ 		if (resultSet.next()) {
+ 			countActive = resultSet.getInt("count");
+ 		}
+ 		String sqlDisable = "select count(*) as count from Users where isActive=0";
+ 		resultSet = statement.executeQuery(sqlDisable);
+ 		if (resultSet.next()) {
+ 			countDisable = resultSet.getInt("count");
+ 		}
+ 		closeConn();
+ 		result = String.format("['%s',%d],", "Active Account", countActive)
+ 				+ String.format("['%s',%d],", "Disable Account", countDisable);
+ 		return result;
+ 	}
+
+ 	// return form duration for CharityAdmin
+ 	public static String readCharityFormDuration() throws Exception {
+ 		Integer justCreated = 0, oneDay = 0, oneWeek = 0, oneMonth = 0, others = 0;
+ 		String result = "";
+ 		getCharityConn("Charity_Db_Test_Model");
+ 		statement = conn.createStatement();
+ 		String sql = "Select Date_Created from Form";
+ 		resultSet = statement.executeQuery(sql);
+ 		while (resultSet.next()) {
+
+ 			long lDuration = (System.currentTimeMillis() - resultSet
+ 					.getTimestamp(1).getTime()) / 100000;
+ 			if (lDuration > 36 && lDuration <= 864) {
+ 				oneDay++;
+ 			} else if (lDuration <= 36) {
+ 				justCreated++;
+ 			} else if (lDuration > 864 && lDuration <= 6048) {
+ 				oneWeek++;
+ 			} else if (lDuration > 6048 && lDuration <= 25920) {
+ 				oneMonth++;
+ 			} else {
+ 				others++;
+ 			}
+ 		}
+ 		closeConn();
+ 		result = String.format("['%s',%d],", "Just Created", justCreated)
+ 				+ String.format("['%s',%d],", "Within One Day", oneDay)
+ 				+ String.format("['%s',%d],", "Within One Week", oneWeek)
+ 				+ String.format("['%s',%d],", "Within One Month", oneMonth)
+ 				+ String.format("['%s',%d],", "Else", others);
+ 		return result;
+ 	}
+
+ 	// return the date user created the account for CharityAdmin
+ 	public static String readCharityAccountDuration() throws Exception {
+ 		Integer justCreated = 0, oneDay = 0, oneWeek = 0, oneMonth = 0, others = 0;
+ 		String result = "";
+ 		getCharityConn("Charity_Db_Test_Model");
+ 		statement = conn.createStatement();
+ 		String sql = "Select Date_Created from Users";
+ 		resultSet = statement.executeQuery(sql);
+ 		while (resultSet.next()) {
+
+ 			long lDuration = (System.currentTimeMillis() - resultSet
+ 					.getTimestamp(1).getTime()) / 100000;
+ 			if (lDuration > 36 && lDuration <= 864) {
+ 				oneDay++;
+ 			} else if (lDuration <= 36) {
+ 				justCreated++;
+ 			} else if (lDuration > 864 && lDuration <= 6048) {
+ 				oneWeek++;
+ 			} else if (lDuration > 6048 && lDuration <= 25920) {
+ 				oneMonth++;
+ 			} else {
+ 				others++;
+ 			}
+ 		}
+ 		closeConn();
+ 		result = String.format("['%s',%d],", "Just Created", justCreated)
+ 				+ String.format("['%s',%d],", "Within One Day", oneDay)
+ 				+ String.format("['%s',%d],", "Within One Week", oneWeek)
+ 				+ String.format("['%s',%d],", "Within One Month", oneMonth)
+ 				+ String.format("['%s',%d],", "Else", others);
+ 		return result;
+ 	}
+ 	
+     
+ 	/*** MENGYENG END ***/ 
 }
+
