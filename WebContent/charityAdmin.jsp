@@ -267,10 +267,10 @@
 			     
 			     <div id="content_2" class="tabContent">
 			     		<ul id="menubar2">
-				     		<li><a href ="#" onclick="changePanel('viewUser','content2'); return false;"> View Users </a> <b>|</b> </li>
-	             	       	<li><a href ="#" onclick="changePanel('addUser','content2'); return false;"> Add Users </a> <b>|</b> </li>
-	                        <li><a href ="#" onclick="changePanel('deleteUser','content2'); return false;"> Delete Users </a></li>
-	                        <li><a href ="#" onclick="changePanel('mailingList','content2'); return false;"> Mailing List </a></li>
+				     		<li><a href ="#" onclick="changePanel('subContent2','viewUser'); return false;"> View Users </a> <b>|</b> </li>
+	             	       	<li><a href ="#" onclick="changePanel('subContent2','addUser'); return false;"> Add Users </a> <b>|</b> </li>
+	                        <li><a href ="#" onclick="changePanel('subContent2','deleteUser'); return false;"> Delete Users </a></li>
+	                        <li><a href ="#" onclick="changePanel('subContent2','mailingList'); return false;"> Mailing List </a></li>
                         </ul>
                         
                         <div id="viewUser" class="subContent2" style="display:none;">
@@ -286,12 +286,12 @@
 							
 			      		</tr>
 			      		<%     
-            			TreeMap<Integer,ArrayList<String>> datamap =(TreeMap<Integer,ArrayList<String>>)DatabaseManager.readUsers();
-        				Set<Entry<Integer,ArrayList<String>>> entryset = datamap.entrySet();
-        				Iterator<Entry<Integer, ArrayList<String>>> iter =  entryset.iterator();
+            			Map<Integer,List<String>> datamap = UserClient.getForms();//(TreeMap<Integer,ArrayList<String>>)DatabaseManager.readUsers();
+        				Set<Entry<Integer,List<String>>> entryset = datamap.entrySet();
+        				Iterator<Entry<Integer, List<String>>> iter =  entryset.iterator();
             
 						while (iter.hasNext()){
-							ArrayList<String> userDetails =  iter.next().getValue();
+							List<String> userDetails =  iter.next().getValue();
             		%>
 			      		
 			      			<tr>
@@ -386,12 +386,12 @@
 							<th id="tr1"> <label for="udel">Delete</label> </th>
 			      		</tr>
 			      		<%     
-            			TreeMap<Integer,ArrayList<String>> datamap2 =(TreeMap<Integer,ArrayList<String>>)DatabaseManager.readUsers();
-        				Set<Entry<Integer,ArrayList<String>>> entryset2 = datamap2.entrySet();
-        				Iterator<Entry<Integer, ArrayList<String>>> iter2 =  entryset2.iterator();
+            			Map<Integer,List<String>> datamap2 =UserClient.getForms();//(TreeMap<Integer,ArrayList<String>>)DatabaseManager.readUsers();
+        				Set<Entry<Integer,List<String>>> entryset2 = datamap2.entrySet();
+        				Iterator<Entry<Integer, List<String>>> iter2 =  entryset2.iterator();
             
 						while (iter.hasNext()){
-							ArrayList<String> userDetails =  iter2.next().getValue();
+							List<String> userDetails =  iter2.next().getValue();
             		%>
 			      		
 			      			<tr>
@@ -475,8 +475,35 @@
 			     </div>  
 			     
 			     <div id="content_3" class="tabContent">
-			     		<iframe src="https://www.google.com/calendar/embed?src=mghh43qdbd9baft4ulhsugv3sc%40group.calendar.google.com&ctz=Europe/London" style="border: 5px" width="800" height="600" frameborder="0" scrolling="no">
-			     		</iframe>
+			     		  <div class="wrapper">
+        <div class="box2">
+          <div class="line1">
+            <div class="line2 wrapper">
+			     		  <% 
+            
+            Map<Integer,List<String>> datamap3 =EventClient.getEvents(); //(TreeMap<Integer,ArrayList<String>>)DatabaseManager.readEvents();
+        	Set<Entry<Integer,List<String>>> entryset3 = datamap3.entrySet();
+        	Iterator<Entry<Integer,List<String>>> iter3 =  entryset3.iterator();
+            
+			while (iter3.hasNext()){
+				List<String> eventsDetails =  iter3.next().getValue();
+            %>
+            <section class="col1">
+           
+                <h4><span><%=eventsDetails.get(0)%></span></h4>
+               
+				<p class="pad_bot2"><strong>DESCRIPTION </strong><%=eventsDetails.get(1)%></p>
+				 <p class="pad_bot2"><strong>VENUE </strong><%=eventsDetails.get(2)%></p>
+				  <p class="pad_bot2"><strong>TIME </strong><%=eventsDetails.get(3)%></p>
+                
+				 
+                 </section>
+              <%
+              } %>
+			      </div>
+          </div>
+        </div>
+      </div>		
 			     </div>  
 						<!-- /**
  *  By Kede Bei
