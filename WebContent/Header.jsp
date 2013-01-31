@@ -27,9 +27,9 @@
 	    </header>
 	    <!-- header -->
 	    <!-- Main Content -->
-	    <div class="wrapper">
-	    	<p class="quot"> Help all charities to reach out to people and help them. The data exchange feature allows your charity workers to exchange data and be informed about what is happening around in the world. <img src="images/quot2.png" alt=""> </p>
-	    </div>
+	    <div class="wrapper" style="height:220px;">
+            
+        </div>
 	    </div>
 	    </div>
 	    </body>
