@@ -39,10 +39,12 @@
 			    			 "SELECT * FROM users where Username='"+request.getParameter("txtUsername")+"'");//SQL INJECTION POINT, FIX WHEN APPLYING SECURITY
 			    			 String pwd ="";
 			    			 String slt = "";
+			    			Integer usrt = 0;
 			    	 while(resultSet.next())
 			    	 {
 			    		 pwd = resultSet.getString("User_Password");
 			    		 slt = resultSet.getString("Salt");
+			    		 usrt = Integer.parseInt(resultSet.getString("User_Type_Id"));
 			    	 }
 			    	 conn.close();			    	 
 			    	 String nu = PasswordEncryption.encryptPassword(request.getParameter("txtPassword"), slt);
@@ -50,8 +52,15 @@
 			    	 if(nu.trim().equals(pwd.trim()))
 					{
 						out.println("Valid User");
+						if(usrt == 1)
+						{
+							response.sendRedirect("/CharityWare/uclAdmin.jsp");
+						}else if(usrt == 2){
+							response.sendRedirect("/CharityWare/charityAdmin.jsp");
+						}
 					}else
 					{
+						response.sendRedirect("login.jsp");
 						out.println("Invalid User");
 					}
 			    	 
