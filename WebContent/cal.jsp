@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="ConnectionManager.*" %>
-    <%@ page import= "java.util.TreeMap"%>
-    <%@ page import= "java.util.ArrayList"%>
+    <%@ page import= "java.util.Map"%>
+    <%@ page import= "java.util.List"%>
     <%@ page import= "java.util.Set"%>
     <%@ page import= "java.util.Map.Entry"%>
-    <%@ page import= "java.util.Iterator"%> 
+    <%@ page import= "java.util.Iterator"%>
+    <%@ page import= "RESTClient.*"%> 
        
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -31,12 +32,12 @@
             <div class="line2 wrapper">
             <% 
             
-            TreeMap<Integer,ArrayList<String>> datamap =  (TreeMap<Integer,ArrayList<String>>)DatabaseManager.readEvents();
-        	Set<Entry<Integer,ArrayList<String>>> entryset = datamap.entrySet();
-        	Iterator<Entry<Integer, ArrayList<String>>> iter =  entryset.iterator();
+            Map<Integer,List<String>> datamap =EventClient.getEvents(); //(TreeMap<Integer,ArrayList<String>>)DatabaseManager.readEvents();
+        	Set<Entry<Integer,List<String>>> entryset = datamap.entrySet();
+        	Iterator<Entry<Integer,List<String>>> iter =  entryset.iterator();
             
 			while (iter.hasNext()){
-				ArrayList<String> eventsDetails =  iter.next().getValue();
+				List<String> eventsDetails =  iter.next().getValue();
             %>
             <section class="col1">
            

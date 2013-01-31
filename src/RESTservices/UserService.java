@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import systemDBHibernateEntities.User;
+import hibernateEntities.User;
 import hibernateManagers.UserManager;
 
 import javax.ws.rs.GET;
@@ -18,7 +18,7 @@ import javax.ws.rs.core.GenericEntity;
 
 @Path("/userService")
 public class UserService {
-	/*
+	
 	@GET
 	@Path("/users/")
 	@Produces("application/xml")
@@ -32,7 +32,7 @@ public class UserService {
 	public User getUser(@PathParam("userid")Integer userid){
 		return UserManager.getUser(userid);       
 	}
-	*/
+	
 	@GET
 	@Path("/userName/{username}")
 	@Produces("application/json")
@@ -43,7 +43,7 @@ public class UserService {
 
 		return holder.get(0);    
 	}
-	/*
+	
 	
     @GET
     @Path("/json/users/")
@@ -63,5 +63,15 @@ public class UserService {
 	@Path("/user/{name}/{pass}")
     public void addUser(@PathParam("name") String name,@PathParam("pass") String pass){
     	UserManager.addUserSample(name, pass);
-    }*/
+    }
+    
+    @GET
+	@Path("/json/users/forms/")
+    @Produces("application/json")
+    public GenericEntity<Map<Integer,List<String>>> getForms(){
+    	Map<Integer,List<String>> map = (Map<Integer,List<String>>) UserManager.getForms();
+    	GenericEntity<Map<Integer, List<String>>> entity = new GenericEntity<Map<Integer, List<String>>>(map){};
+    	return entity;
+    }
+    
 }

@@ -1,3 +1,19 @@
+function init()
+{
+	 tabSwitch(1,5,'tab_', 'content_');
+	 document.getElementById("argc").value = 0;
+	 removeChildren(document.getElementById("extra"));
+	 removeChildren(document.getElementById("errmsg"));
+	 document.getElementById("typeoptions").selectedIndex = 0;
+	 document.getElementById("fieldname").value = "";
+}
+
+function hideFormWizard()
+{
+	var wizard = document.getElementById("formwizard");
+	hide(wizard);
+}
+
 function deleteCurrentForm()
 {
 	if(confirm("Are you sure you want to delete form "+getCurrentFormName()+"?"))
@@ -210,15 +226,15 @@ function getCurrentRowTypeName()
 	    var opt = document.getElementById("typeoptions");
 	    var ctype = opt.options[opt.selectedIndex].text;
 	    //TODO comment this out when you're done with it
+	    var valArray = new Array();
 	    if(opt.selectedIndex == getIndexOfDropdownOption())
 	    {
 	    	var cmb = document.getElementById("currenumvalues");
-	    	ctype+="[";
-	    	for(var i = 0; i < cmb.options.length-1; i++)
-	    	{
-	    		ctype+=cmb.options[i].value+",";
-	    	}
-	    	ctype+=cmb.options[cmb.options.length-1].value+"]";
+	    	for(var i = 0; i < cmb.options.length; i++)
+		    	valArray[i] = cmb.options[i].text;
+	    	
+	    	ctype += JSON.stringify(valArray);
+
 	    }
 	   
 	    return ctype;
@@ -227,15 +243,15 @@ function getCurrentRowTypeId()
 {
 	var opt = document.getElementById("typeoptions");
     var ctype = opt.options[opt.selectedIndex].value;
+    var valArray = new Array();
     if(opt.selectedIndex == getIndexOfDropdownOption())
     {
     	var cmb = document.getElementById("currenumvalues");
-    	ctype+="[";
-    	for(var i = 0; i < cmb.options.length-1; i++)
-    	{
-    		ctype+=cmb.options[i].value+",";
-    	}
-    	ctype+=cmb.options[cmb.options.length-1].value+"]";
+    	
+    	for(var i = 0; i < cmb.options.length; i++)
+	    	valArray[i] = cmb.options[i].text;
+    	
+    	ctype += JSON.stringify(valArray);
     }
     return ctype;
 }
@@ -380,7 +396,7 @@ function hideCurrentFormData()
 }
 
 
-function currentFormChanged()
+function onCurrentFormChanged()
 {
 	hideCurrentFormStructure();
 	hideCurrentFormData();

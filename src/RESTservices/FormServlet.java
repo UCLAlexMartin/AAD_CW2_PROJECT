@@ -30,6 +30,7 @@ import hibernateEntities.Form;
 import hibernateEntities.FormType;
 import hibernateEntities.HibernateUtil;
 import hibernateEntities.FormFields;
+import hibernateEntities.FieldSelection;
 /**
  * Servlet implementation class FormDataServlet
  */
@@ -112,7 +113,7 @@ public class FormServlet extends HttpServlet {
 		else if(what.equals(REQ_CREATE))
 		{
 			insertForm(request);
-			request.getRequestDispatcher("/CharityAdminServlet").forward(request, response);
+			response.sendRedirect("/CharityWare/CharityAdminServlet");
 		}
 		
 		else result = "Error, no such request!";
@@ -157,11 +158,28 @@ public class FormServlet extends HttpServlet {
 	    		 ff.setIsActive(true);
 	    		 ff.setIsRequired(req.getParameter("isReq_"+i) != null);
 	    		 
-	    	 }
-	    	 
-	    	 tx.rollback();
-	    	 //tx.commit();
-	    	 	      }
+	    		 session.save(ff);
+					if(m.group(2) != null && !m.group(2).isEmpty()) //there's more than just the id, there are also the values for the selection
+					{
+						String json = m.group(2);
+						ObjectMapper mapper = new ObjectMapper();
+						String[] selections = mapper.readValue(json, String[].class);
+						for(int j = 0; j < selections.length; j++)
+						{
+							FieldSelection selection = new FieldSelection();
+							selection.setField_selection_value(selections[i]);
+							selection.setFormField(ff);
+							selection.setTimestamp(new java.sql.Timestamp(secondsAtInsert));
+							session.save(selection);
+						}
+					}
+					
+
+				}
+
+				tx.commit();
+			}
+
 	      catch (HibernateException e) {
 	    	  
 	    	 tx.rollback();
