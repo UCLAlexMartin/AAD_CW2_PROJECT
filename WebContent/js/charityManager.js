@@ -92,8 +92,6 @@ function writeFormData(respText)
 		currentData.appendChild(document.createTextNode("Sorry, this table has no data"));
 	
 }
-
-
 function getCurrentFormId()
 {
 	var myforms = document.getElementById("myformslist");

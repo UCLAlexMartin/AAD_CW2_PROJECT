@@ -481,7 +481,7 @@
 								xmlhttp
 										.open(
 												"GET",
-												"http://localhost:8080/WEB-INF/webresources/search",
+												"http://localhost:8080/WEB-INF/RESTservices",
 												false);
 								xmlhttp.setRequestHeader("Content-Type",
 										"application/xml");
@@ -497,7 +497,7 @@
 								xmlhttp
 										.open(
 												"POST",
-												"http://localhost:8080/WEB-INF/webresources/search",
+												"http://localhost:8080/WEB-INF/RESTservices",
 												false);
 								xmlhttp.setRequestHeader("Content-Type",
 										"application/xml");
@@ -511,8 +511,8 @@
 							<Form id="charityAdmin.jsp" name="frmSearch" method="post"
 								action="search">
 								<p>
-									<label for=""></label> <select name="category" id="category"
-										name="category">
+									<label for=""></label> 
+									<select name="category" id="category" name="category">
 
 										<%
 											List<String> list = ConnectionManager.DatabaseManager.searchtitle();
@@ -533,7 +533,7 @@
 										String b = request.getParameter("keywords");
 									%>
 									<input type="submit" name="Search" id="Search" value="Search"
-										onclick="PostRequset(<%=a%>,<%=b%>)" />
+										onclick="sendGetRequest(<%=a%>,<%=b%>)" />
 								</p>
 							</form>
 						</div>
