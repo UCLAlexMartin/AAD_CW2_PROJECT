@@ -16,7 +16,7 @@
 	    <!-- header -->
 	    <header>    
 	    <div class="wrapper">
-	   		<h1 id="Mh1"> <a href="Default.jsp" id="footer_logo"><span>&nbsp;Charity</span>Ware</a></h1>
+	   		<h1 id="Mh1"> <a href="default.jsp" id="footer_logo"><span>&nbsp;Charity</span>Ware</a></h1>
 	          <ul id="menubar">
 		          <li><a href="default.jsp">Home</a></li> 
 		          <li><a href="login.jsp">Login</a></li> 

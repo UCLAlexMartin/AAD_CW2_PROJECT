@@ -2,7 +2,10 @@ package hibernateEntities;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import staticResources.DOMUtil;
  
+
 public class HibernateUtil {
  
 	private static final SessionFactory sessionFactory = buildSessionFactory();
@@ -10,9 +13,9 @@ public class HibernateUtil {
 	private static SessionFactory buildSessionFactory() {
 		try {
 			// load from different directory
-			SessionFactory sf = new Configuration().configure(
-					"hibernateEntities/hibernate.cfg.xml").buildSessionFactory();
-		
+			//SessionFactory sf = new Configuration().configure(
+				//	"hibernateEntities/hibernate.cfg.xml").buildSessionFactory();
+			SessionFactory sf = new Configuration().configure(DOMUtil.buildHibernateCFG("Charity_DB_Test_Model")).buildSessionFactory();
 			return sf;
  
 		} catch (Throwable ex) {

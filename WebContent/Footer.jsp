@@ -29,9 +29,9 @@
 					<br/>
 					
 					<ul id="icons">
-			          <li><a href="#" class="normaltip"><img src="images/icon1.gif" alt=""></a></li>
-			          <li><a href="#" class="normaltip"><img src="images/icon2.gif" alt=""></a></li>
-			          <li><a href="#" class="normaltip"><img src="images/icon3.gif" alt=""></a></li>
+			          <li><a href="http://www.facebook.com/universitycollegelondonUCL?ref=ts&fref=ts" class="normaltip"><img src="images/icon1.gif" alt=""></a></li>
+			          <li><a href="https://twitter.com/uclnews" class="normaltip"><img src="images/icon2.gif" alt=""></a></li>
+			          <li><a href="http://www.linkedin.com/company/university-college-london" class="normaltip"><img src="images/icon3.gif" alt=""></a></li>
 			          <li><a href="paypal.html" class="normaltip"><img src="images/pp.png" height="20" alt=""></a></li>
 			        </ul>
 				  </div>
