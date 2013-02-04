@@ -51,7 +51,7 @@
 				<property name="hibernate.connection.username">
 					root
 				</property>
-				   <property name="hibernate.connection.password">root 
+				   <property name="hibernate.connection.password">Student2012 
 				 </property>
 
 				<!-- Test property -->

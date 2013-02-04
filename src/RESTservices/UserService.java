@@ -74,4 +74,12 @@ public class UserService {
     	return entity;
     }
     
+    @GET
+	@Path("/json/users/formEntities/{username}")
+    @Produces("application/json")
+    public GenericEntity<Map<Integer,Map<Integer,List<String>>>> getFormEntities(@PathParam("username")String username){
+    	Map<Integer,Map<Integer,List<String>>> map = UserManager.getFormEntities(username);
+    	GenericEntity<Map<Integer,Map<Integer,List<String>>>> entity = new GenericEntity<Map<Integer,Map<Integer,List<String>>>>(map){};
+    	return entity;
+    }
 }
