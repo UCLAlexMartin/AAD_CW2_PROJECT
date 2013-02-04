@@ -92,7 +92,7 @@ public class DOMUtil {
 		javax.xml.transform.Source xmlSource =
 				new javax.xml.transform.stream.StreamSource(docToInputStream(buildSourceForTemplate(dbname)));
 		javax.xml.transform.Source xsltSource =
-				new javax.xml.transform.stream.StreamSource("C:\\Users\\Alex\\Desktop\\AAD_CW2_PROJECT_CURRENT\\src\\staticResources\\hibernatecfgtemplate.xsl");
+				new javax.xml.transform.stream.StreamSource("C:\\Users\\WBalasundaram\\workspace\\FinalVersion\\src\\src\\staticResources\\hibernatecfgtemplate.xsl");
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		javax.xml.transform.Result result =

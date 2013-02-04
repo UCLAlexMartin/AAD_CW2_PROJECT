@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="ConnectionManager.*" %>   
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -126,43 +128,77 @@
 			    </div> 
 			    <div class="tabbed_area">       
 			       <div id="content_1" class="tabContent">
-			         <form name="frmRequests" method="post" action="">
+			       <%
+			       	List<Charity> fields = ApproveCharityRequests.httpGet("http://localhost:8080/CharityWare/REST/charity/charities");
+			       %>
+			          <form name="frmRequests" method="POST" action="">
       					Manage Charity Requests
 				        <br/>
 				        <br/>
-				        
-						<table class="resultSet">
+				        <table class="resultSet">
 						<tr>
-					          
 				            <td>Serial Number </td>
 				            <td>Charity Name </td>
-				            <td>Charity ID </td>
+				            <td>Charity Registration Number </td>
 						    <td>Charity Email </td>
 						    <td>Purpose </td>
-						    <td>Comments </td>
 					        <td>Action </td>      
 						 </tr>
-						 <tr>
-						    <td></td>
-					        <td></td>
-					        <td></td>
-						    <td></td>
-						    <td></td>
-						    <td></td>
-					        <td>
-					        <input type="radio" name="Action" value="yes" > Approve <br/>
-						    <input type="radio" name="Action" value="no"> Decline </td>
-						</tr>
+						<%
+						
+				    		 
+				    				 for(int i=0; i<fields.size();i++){
+				    					 out.println("<tr>");
+				    					 out.println("<td>" + (i+1));
+				    					 out.println("<td>" + fields.get(i).getCharityName());
+				    					 out.println("<td>" + fields.get(i).getRegistrationNo());
+				    					 out.println("<td>" + fields.get(i).getEmail());
+				    					 out.println("<td>" + fields.get(i).getCharityDescription());
+				    					 out.println("<td>" +"<input type= radio name=Action value= yes onclick = DatabaseManager.generateSchema(request.getParameter(fields.get(i).getCharityId()));>" + "Approve <br/>");
+				    					 out.println("<input type= radio name=Action value= no>" + "Decline <br/>");
+				    					 out.println("<tr>");
+				    				 }
+				    				 
+				    	%>
 				        </table>        
      				</form>
 			     </div>
 			     
 			     <div id="content_2" class="tabContent">
-			     		<ul id="menubar2">
-				     		<li><a href =""> View Accounts </a> <b>|</b> </li>
-	             	       	<li><a href = ""> Change Password Requests </a> <b>|</b> </li>
-	                        <li><a href = ""> Delete Accounts </a></li>
-                        </ul>
+			     		<form name="listAccounts" method="POST" action="listAccounts.jsp">
+      								Manage User Accounts
+				        		<br/>
+				        		<br/>
+				        
+				        		<table class="resultSet">
+								<tr>
+					            
+								<td> Serial Number </td>
+								<td> Charity Name </td>
+								<td> Charity Email  </td>
+								<td> Charity Description </td>
+								<td> Delete Account</td>
+								</tr>
+								<%
+						
+				    		 		 List<Charity> fields1 = EditAccounts.httpGet("http://localhost:8080/CharityWare/REST/charity/charities");
+				    				 for(int i=0; i<fields1.size();i++){
+				    					 out.println("<tr>");
+				    					 out.println("<td>" + (i+1));
+				    					 out.println("<td>" + fields1.get(i).getCharityName());
+				    					 out.println("<td>" + fields1.get(i).getEmail()); 
+				    					 out.println("<td>" + fields1.get(i).getCharityDescription());
+				    					 out.println("<td>" +"<input type= checkbox method = POST value = Delete>" + "Delete <br/>");
+				    					 out.println("<tr>");
+				    				 }
+				    				 
+				    	%>
+								
+				        </table>        
+				        
+				        
+						
+     				</form>
 			     </div>  
 			     
 			     <div id="content_3" class="tabContent">

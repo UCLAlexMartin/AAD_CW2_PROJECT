@@ -1,6 +1,7 @@
 package hibernateManagers;
 
 import hibernateEntities.Form;
+import hibernateEntities.FormFields;
 import hibernateEntities.FormPermissions;
 import hibernateEntities.User;
 
@@ -71,6 +72,49 @@ public class UserManager {
 			userdata.add(value);			
 			results.put(user_cur.getUser_id(),userdata);
 		}
+		return results;
+	}
+	public static Map<Integer,Map<Integer,List<String>>> getFormEntities(String username){
+		
+		ArrayList<User> users = (ArrayList<User>)ConnectionManager.getTable("User where userName = '" + username+"'");
+		User user = users.get(0);
+		ArrayList<FormPermissions> formpermissions = (ArrayList<FormPermissions>) ConnectionManager.getTable("FormPermissions");
+		ArrayList<FormFields> formfieldsData = (ArrayList<FormFields>) ConnectionManager.getTable("FormFields");
+		//ArrayList<String> formFields_results = new ArrayList<String>();
+		Map<Integer,Map<Integer,List<String>>> results = new TreeMap<Integer,Map<Integer,List<String>>>();
+		Iterator<FormPermissions> formperm_iterator = formpermissions.iterator();
+		while(formperm_iterator.hasNext()){
+			FormPermissions formpermisions = formperm_iterator.next();
+			
+			Map<Integer,List<String>> formfields_map = new TreeMap<Integer,List<String>>();
+			Form current_form = formpermisions.getPk().getForm();
+			if(formpermisions.getPk().getUser_type().getUserTypeId().equals(user.getUserTypeId().getUserTypeId())&&current_form.getIsActive()){
+				Iterator<FormFields> formfields_iterator = formfieldsData.iterator();
+				while(formfields_iterator.hasNext()){
+					FormFields formfields = formfields_iterator.next();
+					if(formfields.getIsActive()){
+						ArrayList<String> formFields_results = new ArrayList<String>();
+						formFields_results.add(current_form.getFormName());
+						if(formfields.getField_label()!=null)formFields_results.add(formfields.getField_label());
+						if(formfields.getIsRequired()!=null)formFields_results.add(formfields.getIsRequired().toString());
+						if(formfields.getDefault_value()!=null)formFields_results.add(formfields.getDefault_value().toString());
+						if(formfields.getMaxValue()!=null)formFields_results.add(formfields.getMaxValue().toString());
+						if(formfields.getMinValue()!=null)formFields_results.add(formfields.getMinValue().toString());
+						if(formfields.getDate_created()!=null)formFields_results.add(formfields.getDate_created().toString());
+						if(formfields.getField_type_id()!=null)formFields_results.add(formfields.getField_type_id().getField_type_id().toString());
+						if(formfields.getX_coordinate()!=null)formFields_results.add(formfields.getX_coordinate().toString());
+						if(formfields.getY_coordinate()!=null)formFields_results.add(formfields.getY_coordinate().toString());
+						formfields_map.put(formfields.getF_id(),formFields_results);
+					}
+					
+				}
+				if(formfields_map.size()!=0){
+					results.put(current_form.getFormId(), formfields_map);
+				}
+			
+			}
+				
+		}		
 		return results;
 	}
 	

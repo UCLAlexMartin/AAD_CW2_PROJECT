@@ -43,7 +43,8 @@ public class CharityResource {
      * Retrieves representation of an instance of RESTservices.CharityResource
      * @return an instance of RESTservices.Charity
      */
-    /*@GET
+    @Path("/charities/")
+    @GET 
     @Produces("application/xml")
     public List<Charity> getCharities() {
         //TODO return proper representation object
@@ -57,7 +58,7 @@ public class CharityResource {
             
         }
         return chs;
-    }*/
+    }
 
     /**
      * PUT method for updating or creating an instance of CharityResource

@@ -5,7 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import hibernateEntities.User;
+import hibernateManagers.UserManager;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 
@@ -38,6 +43,16 @@ public class UserClient {
 				accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).
 				get(ClientResponse.class);
 		return clientresponse.getEntity(new GenericType<Map<Integer,List<String>>>(){});
+	}
+	
+	public static Map<Integer,Map<Integer,List<String>>> getFormEntities(String username){
+		ClientConfig clientConfig = new DefaultClientConfig();
+		clientConfig.getClasses().add(JacksonJsonProvider.class);
+		Client client = Client.create(clientConfig);
+		ClientResponse clientresponse = client.resource("http://localhost:8080/CharityWare/REST/userService/").path("json/users/formEntities/").
+				path(username).accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).
+				get(ClientResponse.class);
+		return clientresponse.getEntity(new GenericType<Map<Integer,Map<Integer,List<String>>>>(){});
 	}
 
 }

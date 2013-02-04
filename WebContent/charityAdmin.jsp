@@ -1,6 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 	<%@ page import="ConnectionManager.*" %>
+	<%@ page import= "RESTdataEntities.*" %>
+	<%@ page import= "com.sun.jersey.api.client.Client" %>
+	<%@ page import= "com.sun.jersey.api.client.ClientResponse" %>
+	<%@ page import= "com.sun.jersey.api.client.WebResource" %>
+	<%@ page import= "com.sun.jersey.api.client.config.ClientConfig" %>
+	<%@ page import= "com.sun.jersey.api.client.config.DefaultClientConfig" %>
+	<%@ page import= "javax.ws.rs.core.UriBuilder" %>
+	<%@ page import= "javax.ws.rs.core.MediaType" %>
+	<%@ page import= "java.net.URI" %>
+	<%@ page import= "com.sun.jersey.api.representation.Form" %>
+	
     <%@ page import= "java.util.TreeMap"%>
     <%@ page import= "java.util.Map"%>
     <%@ page import= "java.util.List"%>
@@ -305,12 +316,12 @@
 			      		
 						
 					  </table>
-				    </form>
+				    </form >
                         
                         </div>
                         <div id="addUser" class="subContent2" style="display:none;">
 
-                        <form id="addUser" name="addUser" method="post" action="">
+                        <form id="addUser" name="addUser" method="post">
 						<table style="border-spacing:5px;border-collapse: inherit;">
 						<tr/><tr/> <tr/><tr/>
 						<tr>
@@ -366,7 +377,40 @@
                        <tr></tr> <tr></tr>
 					
 						<tr>
-							<td> <input class="contactSubmit" name="button1" type="submit" id="button1" value="Add User"> </td>
+							<td> <input class="contactSubmit" name="button1" type="submit" id="button1" value="Add User" onclick = "sendAddUser()" /> 
+							<!--  <button type="button" onclick="sendAddUser()">Add user</button> -->
+							<script type="text/javascript">
+							function sendAddUser() {
+								String uname = request.getParameter("uname");
+								String pwd = request.getParameter("pwd");
+								String uemail = request.getParameter("uemail");
+								userEntity user = new userEntity();
+								user.setName(uname);
+								user.setPassword(pwd);
+								user.setUserEmail(uemail);
+								//DatabaseManager.addUser(user);
+								System.err.Println("atsend");
+								Form form = new Form();
+							    form.add("Username", uname);
+							    form.add("User_Type_Id", 2);
+							    form.add("User_Password",pwd);
+							    form.add("User_Email", uemail);
+							    form.add("isActive", 1);
+							    
+								
+								ClientConfig config1 = new DefaultClientConfig();
+								com.sun.jersey.api.client.Client client = com.sun.jersey.api.client.Client.create(config1);
+							    WebResource service = client.resource(UriBuilder.fromUri("http://localhost:8080/CharityWare").build());//(getBaseURI());
+							    
+								service.path("REST").path("users")
+						        .type(MediaType.APPLICATION_FORM_URLENCODED)
+						        .post(ClientResponse.class, form);
+							}
+								
+								</script>
+								
+								
+							</td>
 						</tr>
 						
 					  </table>
@@ -390,7 +434,7 @@
         				Set<Entry<Integer,List<String>>> entryset2 = datamap2.entrySet();
         				Iterator<Entry<Integer, List<String>>> iter2 =  entryset2.iterator();
             
-						while (iter.hasNext()){
+						while (iter2.hasNext()){
 							List<String> userDetails =  iter2.next().getValue();
             		%>
 			      		
@@ -521,7 +565,7 @@
 								xmlhttp.setRequestHeader("Content-Type",
 										"application/xml");
 								xmlhttp.send(null);
-								alert(xmlhttp.responseText);
+								//alert(xmlhttp.responseText);
 							}
 
 							function sendPostRequest(a,b) {

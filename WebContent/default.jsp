@@ -69,6 +69,7 @@
 		        {
 		            System.err.println("Got an exception! ");
 		            System.err.println(e.getMessage());
+		            response.sendRedirect("login.jsp");
 		        }	
 																			
 			}catch(Exception e)
