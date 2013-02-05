@@ -209,31 +209,31 @@
       					<legend>My forms</legend>
       					<c:choose>
       					<c:when test='${sentForms!= null && sentForms.size() > 0}'>
-      					<label for="myformslist">Form name:</label>
+      					<label id="fnm" for="myformslist">Form name:</label>
       					<select id="myformslist" onchange="onCurrentFormChanged()">
-      				 	<c:forEach items="${sentForms}" var="theform">
+      				 	<c:forEach  items="${sentForms}" var="theform">
       				    <option value="${theform.getFormId()}"><c:out value="${theform.getFormName() }"/></option>
       				 	</c:forEach>
       				 	</select>
-      				 	<button type="button" onclick="viewCurrentFormStructure()">View structure</button>
-      				 	<button type="button" onclick="viewCurrentFormData()">View data</button>
-      				 	<button type="button" onclick="deleteCurrentForm()">Remove this form</button>
+      				 	<button id="structure" type="button" onclick="viewCurrentFormStructure()">View structure</button>
+      				 	<button id="data" type="button" onclick="viewCurrentFormData()">View data</button>
+      				 	<button id="delete" type="button" onclick="deleteCurrentForm()">Remove this form</button>
       					</c:when>
       					<c:otherwise>
       						Sorry, it appears you have no forms defined!
       				 	</c:otherwise>
       				 	</c:choose>  
       				 	<br/>   				 	
-      					<button type="button" onclick="showFormWizard()">Add new Form</button>
+      					<button id="formSubmission" type="button" onclick="showFormWizard()">Add new Form</button>
       					</fieldset>
       					<c:if test="${sentForms!= null && sentForms.size() > 0}">
       					<fieldset id="currentformstructure" class="nodisplay">
       					<div id="currentformstructurefill"></div>
-      					<button type="button" onclick="hideCurrentFormStructure()">Hide</button>
+      					<button id="hide2" type="button" onclick="hideCurrentFormStructure()">Hide</button>
       					</fieldset>
       					<fieldset id="currentformdata" class="nodisplay">
       					<div id="currentformdatafill"></div>
-      					<button type="button" onclick="hideCurrentFormData()">Hide</button>
+      					<button id="hide" type="button" onclick="hideCurrentFormData()">Hide</button>
       					</fieldset>
       					</c:if>
       					<fieldset id="formwizard" class="nodisplay">
@@ -252,8 +252,8 @@
       					</c:forEach>
       					</select>
       					<input type="checkbox" id="rowrequired" name="rowrequired"/>
-      					<label for="rowrequired">Mandatory?</label>
-      					<button onclick="addRow()" type="button" >Add row</button>
+      					<label id="mandat" for="rowrequired">Mandatory?</label>
+      					<button id="row" onclick="addRow()" type="button" >Add row</button>
       					<div id="extra" class="nodisplay"></div>
       					<div id="errmsg" class="nodisplay"></div>
       					</fieldset>
@@ -267,7 +267,7 @@
       					<!-- <button type="button" id="clearbtn" onclick='removeChildren(document.getElementById("rowsetrows") ); document.getElementById("argc").value=0;'>Clear all rows</button>
       					 -->
       					 </fieldset>
-      					<button type="button" onclick="hideFormWizard()">Hide</button>
+      					<button id="hd" type="button" onclick="hideFormWizard()">Hide</button>
       					<button type="button" id="btnSubmitForm" onclick="createForm()">Create this form!</button>
       					<button type="button" id="clearbtn" onclick='removeChildren(document.getElementById("rowsetrows") ); document.getElementById("argc").value=0;'>Clear all rows</button>
       					
@@ -278,10 +278,10 @@
 			     
 			     <div id="content_2" class="tabContent">
 			     		<ul id="menubar2">
-				     		<li><a href ="#" onclick="changePanel('subContent2','viewUser'); return false;"> View Users </a> <b>|</b> </li>
-	             	       	<li><a href ="#" onclick="changePanel('subContent2','addUser'); return false;"> Add Users </a> <b>|</b> </li>
-	                        <li><a href ="#" onclick="changePanel('subContent2','deleteUser'); return false;"> Delete Users </a></li>
-	                        <li><a href ="#" onclick="changePanel('subContent2','mailingList'); return false;"> Mailing List </a></li>
+				     		<li><a id="usersView" href ="#" onclick="changePanel('subContent2','viewUser'); return false;"> View Users </a> <b>|</b> </li>
+	             	       	<li><a id="addUsers" href ="#" onclick="changePanel('subContent2','addUser'); return false;"> Add Users </a> <b>|</b> </li>
+	                        <li><a id="deleteUsers" href ="#" onclick="changePanel('subContent2','deleteUser'); return false;"> Delete Users </a></li>
+	                        <li><a id="mailingList" href ="#" onclick="changePanel('subContent2','mailingList'); return false;"> Mailing List </a></li>
                         </ul>
                         
                         <div id="viewUser" class="subContent2" style="display:none;">
@@ -322,7 +322,7 @@
                         <div id="addUser" class="subContent2" style="display:none;">
 
                         <form id="addUser" name="addUser" method="post">
-						<table style="border-spacing:5px;border-collapse: inherit;">
+						<table id="major" style="border-spacing:5px;border-collapse: inherit;">
 						<tr/><tr/> <tr/><tr/>
 						<tr>
 							<td> <label for="uname">Username</label> </td>
