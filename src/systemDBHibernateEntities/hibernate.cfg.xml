@@ -48,7 +48,7 @@ org.hibernate.envers.event.AuditEventListener
       root
    </property>
 <property name="hibernate.connection.password">
-      Student2012
+      root
    </property>
     <!-- Test property -->
 	     <property name="javax.persistence.validation.mode">none</property>

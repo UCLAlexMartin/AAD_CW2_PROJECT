@@ -3,7 +3,7 @@ package staticResources;
 public  class Configuration {
 
 	public static String MySQLrootUser="root";
-	public static String MySQLrootPassword="Student2012";
+	public static String MySQLrootPassword="root";
 	public static String MySQLdriver="com.mysql.jdbc.Driver";
 	public static String MySQLConUrl = "jdbc:mysql://127.0.0.1:3306/";
 	
