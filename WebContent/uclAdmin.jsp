@@ -154,8 +154,10 @@
 				    					 out.println("<td>" + fields.get(i).getRegistrationNo());
 				    					 out.println("<td>" + fields.get(i).getEmail());
 				    					 out.println("<td>" + fields.get(i).getCharityDescription());
-				    					 out.println("<td>" +"<input type= radio name=Action value= yes onclick = DatabaseManager.generateSchema(request.getParameter(fields.get(i).getCharityId()));>" + "Approve <br/>");
-				    					 out.println("<input type= radio name=Action value= no>" + "Decline <br/>");
+				    					 String approve = "approve"+i;
+				    					 String reject = "reject"+i;
+				    					 out.println("<td>" +"<input id="+approve+" type= radio name=Action value= yes onclick = DatabaseManager.generateSchema(request.getParameter(fields.get(i).getCharityId()));>" + "Approve <br/>");
+				    					 out.println("<input id="+reject+" type= radio name=Action value= no>" + "Decline <br/>");
 				    					 out.println("<tr>");
 				    				 }
 				    				 
@@ -188,7 +190,8 @@
 				    					 out.println("<td>" + fields1.get(i).getCharityName());
 				    					 out.println("<td>" + fields1.get(i).getEmail()); 
 				    					 out.println("<td>" + fields1.get(i).getCharityDescription());
-				    					 out.println("<td>" +"<input type= checkbox method = POST value = Delete>" + "Delete <br/>");
+				    					 String input = "inpt"+i;
+				    					 out.println("<td>" +"<input id="+input+" type= checkbox method = POST value = Delete>" + "Delete <br/>");
 				    					 out.println("<tr>");
 				    				 }
 				    				 
