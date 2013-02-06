@@ -48,7 +48,7 @@ org.hibernate.envers.event.AuditEventListener
       root
    </property>
 	<property name="hibernate.connection.password">
-      hasvad379
+      root
    </property>
 	    
 	    <!-- Test property -->
