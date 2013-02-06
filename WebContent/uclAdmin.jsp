@@ -135,8 +135,8 @@
       					Manage Charity Requests
 				        <br/>
 				        <br/>
-				        <table class="resultSet">
-						<tr>
+				        <table id="requests" class="resultSet">
+						<tr id="header">
 				            <td>Serial Number </td>
 				            <td>Charity Name </td>
 				            <td>Charity Registration Number </td>
@@ -148,11 +148,11 @@
 						
 				    		 
 				    				 for(int i=0; i<fields.size();i++){
-				    					 out.println("<tr>");
+				    					 out.println("<tr id=row" +i+ ">");
 				    					 out.println("<td>" + (i+1));
 				    					 out.println("<td>" + fields.get(i).getCharityName());
 				    					 out.println("<td>" + fields.get(i).getRegistrationNo());
-				    					 out.println("<td>" + fields.get(i).getEmail());
+				    					 out.println("<td>" +  fields.get(i).getEmail());
 				    					 out.println("<td>" + fields.get(i).getCharityDescription());
 				    					 String approve = "approve"+i;
 				    					 String reject = "reject"+i;
