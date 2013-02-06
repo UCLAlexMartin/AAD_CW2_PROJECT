@@ -48,18 +48,18 @@ org.hibernate.envers.event.AuditEventListener
       root
    </property>
 <property name="hibernate.connection.password">
-      root
+      hasvad379
    </property>
     <!-- Test property -->
 	     <property name="javax.persistence.validation.mode">none</property>
 	     <!-- Test property -->
 	     
    <!-- List of XML mapping files -->
-   	  <mapping resource="/systemDBHibernateEntities/AccessLog.hbm.xml"/>	
-      <mapping resource="/systemDBHibernateEntities/User.hbm.xml"/>
-      <mapping resource="/systemDBHibernateEntities/Feedback.hbm.xml"/>
-      <mapping resource="/systemDBHibernateEntities/Charity.hbm.xml"/>
-      <mapping resource="/systemDBHibernateEntities/UserType.hbm.xml"/>
+   	  <mapping resource="systemDBHibernateEntities/AccessLog.hbm.xml"/>	
+      <mapping resource="systemDBHibernateEntities/User.hbm.xml"/>
+      <mapping resource="systemDBHibernateEntities/Feedback.hbm.xml"/>
+      <mapping resource="systemDBHibernateEntities/Charity.hbm.xml"/>
+      <mapping resource="systemDBHibernateEntities/UserType.hbm.xml"/>
  
 </session-factory>
 
