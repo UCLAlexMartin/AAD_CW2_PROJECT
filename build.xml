@@ -217,6 +217,14 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
+    <target name="unit-test">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="no" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="LoginManagerTest" todir="${junit.output.dir}"/>
+            <classpath refid="CharityWare.classpath"/>
+        </junit>
+   	</target>
     <target name="test">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="no" printsummary="withOutAndErr">
