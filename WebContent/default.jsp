@@ -18,52 +18,49 @@
 <%@ page import="RESTClient.*"%>
 <%@ page import="systemDBHibernateEntities.*"%>
 <%@ page import="java.sql.*"%>
+<%@ page import="login.LoginManager" %>
+
 
 <%
+	LoginManager loginManager = new LoginManager();
 		
 		if(request.getParameter("LogginAttempt")!=null &&
-			request.getParameter("txtUsername")!=null &&
-			request.getParameter("txtPassword")!=null)
+	request.getParameter("txtUsername")!=null &&
+	request.getParameter("txtPassword")!=null)
 		{
-			try
-			{
-				String connString = Configuration.MySQLConUrl + "System_DB_Test_Model";
-				Connection conn;
+	try
+	{
+		//String connString = Configuration.MySQLConUrl + "System_DB_Test_Model";
+		//Connection conn;
 		        try 
 		        {
-		        	Class.forName(Configuration.MySQLdriver).newInstance();
-		        	conn  = DriverManager.getConnection(connString, Configuration.MySQLrootUser, Configuration.MySQLrootPassword);
-		        	 ConnectionManager.DatabaseManager.getSystemConn();
-			    	 Statement statement = conn.createStatement();
-			    	 ResultSet resultSet = statement.executeQuery(
-			    			 "SELECT * FROM users where Username='"+request.getParameter("txtUsername")+"'");//SQL INJECTION POINT, FIX WHEN APPLYING SECURITY
-			    			 String pwd ="";
-			    			 String slt = "";
-			    			Integer usrt = 0;
-			    	 while(resultSet.next())
-			    	 {
-			    		 pwd = resultSet.getString("User_Password");
-			    		 slt = resultSet.getString("Salt");
-			    		 usrt = Integer.parseInt(resultSet.getString("User_Type_Id"));
-			    	 }
-			    	 conn.close();			    	 
-			    	 String nu = PasswordEncryption.encryptPassword(request.getParameter("txtPassword"), slt);
-			
-			    	 if(nu.trim().equals(pwd.trim()))
-					{
-						out.println("Valid User");
-						if(usrt == 1)
-						{
-							response.sendRedirect("/CharityWare/uclAdmin.jsp");
-						}else if(usrt == 2){
-							response.sendRedirect("/CharityWare/CharityAdminServlet");
-						}
-					}else
-					{
-						response.sendRedirect("login.jsp");
-						out.println("Invalid User");
-					}
-			    	 
+
+	    	ResultSet resultSet = loginManager.getResultSetbyUsername(request.getParameter("txtUsername"));
+	    	String pwd ="";
+	    			 String slt = "";
+	    			Integer usrt = 0;
+	    			
+	    	 while(resultSet.next())
+	    	 {
+	    		 pwd = resultSet.getString("User_Password");
+	    		 slt = resultSet.getString("Salt");
+	    		 usrt = Integer.parseInt(resultSet.getString("User_Type_Id"));
+	    	 }
+	    	 //conn.close();			    	 
+	    	 String nu = PasswordEncryption.encryptPassword(request.getParameter("txtPassword"), slt);
+	
+	    	 if(nu.trim().equals(pwd.trim()))
+			{
+				out.println("Valid User");
+				
+				String destination = loginManager.getDestination(usrt);
+				response.sendRedirect(destination);
+			}else
+			{
+				response.sendRedirect("login.jsp");
+				out.println("Invalid User");
+			}
+	    	 
 		        } 
 		        catch (Exception e) 
 		        {
@@ -71,39 +68,39 @@
 		            System.err.println(e.getMessage());
 		            response.sendRedirect("login.jsp");
 		        }	
-																			
-			}catch(Exception e)
-			{
-				e.printStackTrace();				
-			}
-			
+																	
+	}catch(Exception e)
+	{
+		e.printStackTrace();				
+	}
+	
 		}
 		else
 		{
-			out.println("Loggin Not-Attempted<br/>");
-			
-			if(request.getSession(false)!=null)
-			{
-				out.println("Session is ready<br/>");
-				if(session.getAttribute("Authorized")=="true")
-				{
-					//Carry on Sir/Ma'am
-				}
-				else
-				{
-					//GTFO!
-					response.sendRedirect("login.jsp");
-				}
-			}
-			else
-			{
-				out.println("Session isnt ready<br/>");
-				request.getSession(true);
-			    String AuthorizedVal = "false";
-			    session.setAttribute("Authorized", AuthorizedVal);
-			    //GTFO!
-			    response.sendRedirect("login.jsp");				
-			}
+	out.println("Loggin Not-Attempted<br/>");
+	
+	if(request.getSession(false)!=null)
+	{
+		out.println("Session is ready<br/>");
+		if(session.getAttribute("Authorized")=="true")
+		{
+			//Carry on Sir/Ma'am
+		}
+		else
+		{
+			//GTFO!
+			response.sendRedirect("login.jsp");
+		}
+	}
+	else
+	{
+		out.println("Session isnt ready<br/>");
+		request.getSession(true);
+	    String AuthorizedVal = "false";
+	    session.setAttribute("Authorized", AuthorizedVal);
+	    //GTFO!
+	    response.sendRedirect("login.jsp");				
+	}
 		}
 %>
 
