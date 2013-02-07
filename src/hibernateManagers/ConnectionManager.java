@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import hibernateEntities.Event;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -21,7 +22,11 @@ public class ConnectionManager {
 		closeSession(session);
 		return result;
 	}
-	
+
+    public static List<Event> getEventTable() {
+        return (List<Event>) getTable("Event");
+    }
+
 	public static Object get(Class arg0,Serializable serial){
 		Session session = getSession();
 		Object result = session.get(arg0, serial);

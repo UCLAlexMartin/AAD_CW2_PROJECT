@@ -1,19 +1,19 @@
 package hibernateManagers;
 
+import com.google.common.annotations.VisibleForTesting;
 import hibernateEntities.Event;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class EventManager {
-	
-	
+
+    /**
+     * get a list of events from database and returns oncoming events.
+     * @return map from eventId to a list storing event information.
+     */
 	public static Map<Integer,ArrayList<String>> getEvents(){
-		ArrayList<Event> events = (ArrayList<Event>) ConnectionManager.getTable("Event");
+		List<Event> events = ConnectionManager.getEventTable();
 		Iterator<Event> iter = events.iterator();
 		Map<Integer,ArrayList<String>> results = new TreeMap<Integer,ArrayList<String>>();
 		while(iter.hasNext()){
@@ -31,7 +31,7 @@ public class EventManager {
 			}
 		}
 		return results;
-		
+
 	}
 
 }
