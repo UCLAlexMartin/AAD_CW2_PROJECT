@@ -56,7 +56,7 @@
 						{
 							response.sendRedirect("/CharityWare/uclAdmin.jsp");
 						}else if(usrt == 2){
-							response.sendRedirect("/CharityWare/charityAdmin.jsp");
+							response.sendRedirect("/CharityWare/CharityAdminServlet");
 						}
 					}else
 					{
