@@ -57,6 +57,26 @@ public class LoginTest extends CharityWareBaseTestCase {
         assertEquals(tab1.getAttribute("className"), "active");
     }
 
+    @Test
+    public void testCharityAdminLoginSuccess() {
+        inputValuesAndSubmit("charityadmin", "open");
+
+        WebDriverWait wait = getDefaultWait();
+        wait.until(new ExpectedCondition<Boolean>(){
+
+            @Override
+            public Boolean apply(WebDriver d) {
+                WebElement h2 = driver.findElement(By.tagName("h2"));
+                return "Charity Administration Panel".equals(h2.getText());
+            }
+        });
+
+        // confirm that first tab is initially active: class value of active tab is set to 'active' by JavaScript
+        WebElement tab1 = driver.findElement(By.id("tab_1"));
+        // assertEquals(expected, actual);
+        assertEquals(tab1.getAttribute("className"), "active");
+    }
+
     private void inputValuesAndSubmit(String userName, String password) {
         WebElement userNameInput = driver.findElement(By.id("txtUsername"));
         WebElement passwordInput = driver.findElement(By.id("txtPassword"));
