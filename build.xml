@@ -221,15 +221,28 @@
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="no" printsummary="withOutAndErr">
             <formatter type="xml"/>
-            <test name="LoginManagerTest" todir="${junit.output.dir}"/>
+            <test name="login.LoginManagerTest" todir="${junit.output.dir}"/>
             <classpath refid="CharityWare.classpath"/>
         </junit>
+    	
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
    	</target>
-    <target name="test">
+    <target name="gui-test">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="no" printsummary="withOutAndErr">
             <formatter type="xml"/>
             <test name="LoginTest" todir="${junit.output.dir}"/>
+            <classpath refid="CharityWare.classpath"/>
+        </junit>
+    	
+        <junit fork="no" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="CharityAdminServletTest" todir="${junit.output.dir}"/>
             <classpath refid="CharityWare.classpath"/>
         </junit>
     	
